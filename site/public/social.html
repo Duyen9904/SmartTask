@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SmartTask Social Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#6c5ce7",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0A0A1A",
+                        "card-dark": "#141432",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(20, 20, 50, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(108, 92, 231, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+        .glass-nav {
+            background: rgba(10, 10, 26, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(108, 92, 231, 0.15);
+        }
+        .indigo-glow {
+            box-shadow: 0 0 15px rgba(108, 92, 231, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- Sticky Navigation -->
+<nav class="glass-nav sticky top-0 z-50 px-6 py-3">
+<div class="max-w-[1280px] mx-auto flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center indigo-glow">
+<span class="material-symbols-outlined text-white">grid_view</span>
+</div>
+<h1 class="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white">SmartTask</h1>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-primary transition-colors" href="#">Tasks</a>
+<a class="text-sm font-bold text-primary border-b-2 border-primary pb-1" href="#">Social</a>
+<a class="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-primary transition-colors" href="#">AI Assistant</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-primary/20 rounded-lg transition-all relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-background-dark"></span>
+</button>
+<div class="size-9 rounded-full bg-primary/20 border border-primary/40 overflow-hidden">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="User profile avatar smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFSrlnaShCnp3_rauXZ3sr0GV09RHewW9D17zYEUIHW7wNDOmPCCdOg5aNMfh5Lgn3mIuhotAUwp_KTzoQmoqmj3FOOIidzt1Kb_aPw8a6cZVRx9ElcOWVp7ny7RKN8joEQLQ198LWjHDsRKkUNMHkDl4Gg0v_5VceUOXcneVJs_M89ersaxEISlyLFYC9hv5IuKmTbuaLPtYcwgIHMnCAY8E-tTQTpHMusH67KcJWHXxlAoFHc4iIH5vwZ-OeZSM4aznnGgksd1Fd"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="max-w-[1280px] mx-auto px-6 py-8">
+<!-- Header Section -->
+<header class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+<div>
+<h2 class="text-4xl font-black text-slate-900 dark:text-white mb-2">Social Hub</h2>
+<p class="text-slate-500 dark:text-slate-400 text-lg">Connect, collaborate, and stay accountable</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-6 py-3 bg-gradient-to-r from-primary to-indigo-400 text-white font-bold rounded-xl indigo-glow hover:opacity-90 transition-opacity flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">add</span>
+                    Create Group
+                </button>
+<button class="px-6 py-3 border border-primary/40 text-primary font-bold rounded-xl hover:bg-primary/10 transition-colors">
+                    Find Friends
+                </button>
+</div>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Activity Feed (65%) -->
+<div class="lg:col-span-8 space-y-6">
+<!-- Filters -->
+<div class="flex items-center gap-6 border-b border-slate-200 dark:border-slate-800 pb-2 overflow-x-auto no-scrollbar">
+<button class="pb-3 px-1 text-sm font-bold text-primary border-b-2 border-primary whitespace-nowrap">All Activity</button>
+<button class="pb-3 px-1 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 whitespace-nowrap">Friends</button>
+<button class="pb-3 px-1 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 whitespace-nowrap">Groups</button>
+<button class="pb-3 px-1 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 whitespace-nowrap">Achievements</button>
+</div>
+<!-- Feed Cards -->
+<div class="space-y-4">
+<!-- Sarah Chen Card -->
+<div class="glass-card rounded-2xl p-5 flex gap-4">
+<img alt="Sarah" class="size-12 rounded-full object-cover" data-alt="Sarah Chen portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbwSJSbwyh3DV1Qc_iGfXoRt3HCIsrJV8N1UAu4_bA477mFo1tfptxk463Qw1uOUYoydNuCxgC4DbbAr83lPxVSlVq01ptFfxjDf02dSkj1KkrxQ7ut29YIpX4rZ19350--RyFa4XucAEkE9p4JDckkTNdh-06UP9bMgTuN74MLAtpmXv55Dr27_okiEbuk2c02NiQw5UvxL3f_FePLzg9QCkt5YppQUJuyftsU3Ss_VIMB2v2EbnLAnUxHZx-8gIuLIUyE4M4YkwH"/>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h4 class="font-bold text-white">Sarah Chen</h4>
+<p class="text-xs text-slate-500">2 hours ago</p>
+</div>
+<span class="px-3 py-1 bg-orange-500/20 text-orange-400 text-xs font-bold rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">local_fire_department</span>
+                                    14 DAY STREAK
+                                </span>
+</div>
+<p class="text-slate-300 mb-4">Just finished 4 hours of Deep Work! Focused on the UI overhaul for the client project. 🚀</p>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">favorite</span> Cheer
+                                </button>
+<button class="flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">chat_bubble</span> Comment
+                                </button>
+</div>
+</div>
+</div>
+<!-- Mike Rodriguez Card -->
+<div class="glass-card rounded-2xl p-5 flex gap-4">
+<img alt="Mike" class="size-12 rounded-full object-cover" data-alt="Mike Rodriguez portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA13RKzuENR-W4YuElu4p5c1s889b-6AsewQjou1Y5_hYYoxplQPSg16kb7L1Q-i_PI6G89CxhQGn7SR89Zxx73_IgdSlGVQuu0T7-YZs0SHsScpMxumoO29qAARZiGdX2R8fvM-mxL4um3P14bKaHwASqN4wtZf15wfIEy0vsACWEEcAyCp1-wNMxjME5Bsup6sM7l7JG-cjH0PUbvotrxMXA9Tb1bCv307A-AlGCthzaDjPHdBKVuWkEk8UuVEh7bIYiRlCxjlwhq"/>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h4 class="font-bold text-white">Mike Rodriguez</h4>
+<p class="text-xs text-slate-500">4 hours ago</p>
+</div>
+<div class="bg-primary/20 p-1.5 rounded-lg border border-primary/30">
+<span class="material-symbols-outlined text-primary text-xl">military_tech</span>
+</div>
+</div>
+<p class="text-slate-300">Earned the <span class="text-primary font-bold">"Early Risen"</span> badge for completing 5 tasks before 8:00 AM this week!</p>
+<div class="mt-4 flex -space-x-2">
+<img class="size-7 rounded-full border-2 border-background-dark object-cover" data-alt="Friend avatar 1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5llE7MKrUWwCk4bDS16fcZPHJ1RVyAD8SZlFElFElOPvTJVf0SMQFSnjtoOAB7PNUQ5C1J1toCzEShfOdhEMiWpOHAVxDeVEPqbPqRBC9MbxpB1-4w8TrpLScPOTy0AwCoKolQIf8l3PNU6kEhnc5asV0FiSrJh4F0SGs9KbMLFWL0l-JI-V891uZJqhthnCxPtscswa90ncLwe8WbKAtshI-AyjcbmIQy5nWxWFQiJ2xAuJ6hWBqmIW187QE5YUDeFzF4f2rCFtm"/>
+<img class="size-7 rounded-full border-2 border-background-dark object-cover" data-alt="Friend avatar 2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLQHCDi3FXA3TarlftSH46WOxmH2Bxkrjg2H9KKwhpvseWOe9iaWsYo90I0wVBzAuax3HiFqp5IWXKFFBlmOFg4IMX-Io6QHwi2G2m7NKZ0dndkXTLY3M5K0LcCLMQ19a5_LaEgz4MkPcDZauN20NVGwd1E1i5Pwr4nTzZq1onYO_ZeQDxTb28gcAmPjuExnmjtWognRXimnMiZ0F7zxUlSzy1yaxiaJLVJbWIgU5eMJo6XJdojxPxFocAnt6NDkWGZT-ys3SGwKPI"/>
+<div class="size-7 rounded-full border-2 border-background-dark bg-slate-800 flex items-center justify-center text-[10px] text-slate-400 font-bold">+12</div>
+</div>
+</div>
+</div>
+<!-- Study Buddies Group Progress -->
+<div class="glass-card rounded-2xl p-5">
+<div class="flex items-center gap-3 mb-4">
+<div class="size-10 bg-indigo-500/20 rounded-xl flex items-center justify-center text-indigo-400 border border-indigo-500/30">
+<span class="material-symbols-outlined">group</span>
+</div>
+<div>
+<h4 class="font-bold text-white">Study Buddies</h4>
+<p class="text-xs text-slate-500">Group Progress • 85% Weekly Goal</p>
+</div>
+</div>
+<div class="h-2 w-full bg-slate-800 rounded-full mb-4 overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 85%"></div>
+</div>
+<p class="text-sm text-slate-400 mb-4 italic">"We're almost at our weekly study goal, team! Keep the momentum up for the final sprint."</p>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<button class="text-primary text-xs font-bold hover:underline">View Standings</button>
+</div>
+<button class="bg-primary/20 text-primary text-xs font-bold px-3 py-1 rounded-lg">High Five 🖐️</button>
+</div>
+</div>
+<!-- Emma Wilson Card -->
+<div class="glass-card rounded-2xl p-5 flex gap-4 border-l-4 border-primary">
+<img alt="Emma" class="size-12 rounded-full object-cover" data-alt="Emma Wilson portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBl2M0DEfpESf_axhnc9R7dsNLLd3dPkofII9ERS1ScTYkcnVPOqkazdlbRGdhdA_x0i-nsLcz49YvZ_YbOAuyJxsURoYN8q24gEJ3pnuU15r3FsXFrypJWECbtiOv_AHp0AD5HmtfzCwAMCo106LQg2kMq0GkPNO6ABNrwwfgI3vc5-fuahGUqhIdbrPg7YZkZLfzM23WxheZgoxf1kYIGXhLdwiTaqCQOQbpfe_mpq4669M1ej81eItcMoEEGo5rWrOl4OZk0-l-Y"/>
+<div class="flex-1">
+<div class="mb-2">
+<h4 class="font-bold text-white">Emma Wilson</h4>
+<p class="text-xs text-slate-500">Shared a new template • 1h ago</p>
+</div>
+<div class="bg-slate-900/50 rounded-xl p-3 border border-slate-700/50 flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">description</span>
+<div>
+<p class="text-sm font-bold text-slate-200">Ultimate Morning Routine</p>
+<p class="text-[10px] text-slate-500">7 Tasks • 420 Downloads</p>
+</div>
+</div>
+<button class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-sm">download</span>
+</button>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-1.5 text-xs font-semibold text-slate-400">
+<span class="material-symbols-outlined text-sm">thumb_up</span> 24
+                                </button>
+<button class="flex items-center gap-1.5 text-xs font-semibold text-slate-400">
+<span class="material-symbols-outlined text-sm">share</span> Share
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Sidebar (35%) -->
+<aside class="lg:col-span-4 space-y-8">
+<!-- Friends Panel -->
+<section class="glass-card rounded-2xl p-5">
+<div class="flex items-center justify-between mb-6">
+<h5 class="font-bold text-white">Friends <span class="text-primary ml-1">12 Online</span></h5>
+<button class="text-xs text-primary font-bold">See All</button>
+</div>
+<div class="space-y-4">
+<!-- Friend Item -->
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-3">
+<div class="relative">
+<img class="size-10 rounded-full object-cover" data-alt="David Park" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGk8KO-3lChBr8MB6EywxFJyUgr3NvrOoP1c8eXWGV4ID9RElTokDQLCXVJmX5jqjhGovX3GQsZkADDkeRq5Wm8QOPfIz-XpwLoJ0zwo_o5RMe8xcB2u2hsYd-_1RaILQCSHcPqH1KIqswxy14iUOjFX6rsAMiS3jJ2YMyvJf12C4kWGScliKEBR-ofq3TjV1htoOH11cF9LMx023i1AJIecx0tvJTPs2Op8km2D4_g_nWIz7bzuczcInigH1NtzXWjrtUjlMaSusZ"/>
+<span class="absolute bottom-0 right-0 size-2.5 bg-green-500 rounded-full border-2 border-[#141432]"></span>
+</div>
+<div>
+<p class="text-sm font-bold text-white group-hover:text-primary transition-colors">David Park</p>
+<p class="text-[10px] text-slate-500 italic">Designing UI Kit...</p>
+</div>
+</div>
+<span class="text-[10px] font-bold text-orange-400 flex items-center">
+<span class="material-symbols-outlined text-[12px] mr-1">local_fire_department</span> 8
+                            </span>
+</div>
+<!-- Friend Item -->
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-3">
+<div class="relative">
+<img class="size-10 rounded-full object-cover" data-alt="Friend 2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDs8LbCS48iQTevfs5X_YLT85_etmaOiS27dYrQ7XGnFbvEDP9YKBlzKTisMqsJQ5m2O5_WZu6LmP87L_8gU7GmpRrFhPG4ozu1R6XZKaPeF63vSY4Xbqu66MmgeXWMzncE5xJxnkATC51vHL2NRdN2wcvzl2arGSX3ee8pGoOjvhpOlvcCzgbFaAW3LgbVkjV_1oDpSZdgXL_o_x3xMAW3W_n_n8qJJRn2CqMyC5TPhaxLzbu8OXCDQ2bUgT__CoDVaLGsej38pN9n"/>
+<span class="absolute bottom-0 right-0 size-2.5 bg-green-500 rounded-full border-2 border-[#141432]"></span>
+</div>
+<div>
+<p class="text-sm font-bold text-white group-hover:text-primary transition-colors">Alex Rivera</p>
+<p class="text-[10px] text-slate-500 italic">Deep Work Session</p>
+</div>
+</div>
+<span class="text-[10px] font-bold text-orange-400 flex items-center">
+<span class="material-symbols-outlined text-[12px] mr-1">local_fire_department</span> 21
+                            </span>
+</div>
+<!-- Friend Item -->
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-3">
+<div class="relative">
+<img class="size-10 rounded-full object-cover" data-alt="Friend 3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2lbLFnEuf02tF2-uu8Ik1KfHAjmfV89sYRDXO4EiiE0QVReKOqbPDZI5sQrh7uxx94PF3z_sd9txsPAub6-c53M_44dwHiHzM8T7Wp5PPZ8xltQ-lzZxC59kbYu9QqxE_G42NUp5x8yWUQJje3vrZnns2YKRmEuSDw_Ov11-IoB-HyWYojj9tJLIy45S6ng0xdXU1Z6DeHz7l5OPPD_1oqcjMyS6nPZsjwtRxrY-P-1JodOeP3cULVmwSmkIryJf715Fqf9QFqJkk"/>
+<span class="absolute bottom-0 right-0 size-2.5 bg-slate-600 rounded-full border-2 border-[#141432]"></span>
+</div>
+<div>
+<p class="text-sm font-bold text-white group-hover:text-primary transition-colors">Jason Lee</p>
+<p class="text-[10px] text-slate-500 italic">Offline</p>
+</div>
+</div>
+<span class="text-[10px] font-bold text-slate-500 flex items-center">
+<span class="material-symbols-outlined text-[12px] mr-1">local_fire_department</span> 3
+                            </span>
+</div>
+</div>
+</section>
+<!-- My Groups -->
+<section class="glass-card rounded-2xl p-5">
+<h5 class="font-bold text-white mb-6">My Groups</h5>
+<div class="space-y-4">
+<div class="flex items-center gap-3 p-2 hover:bg-primary/10 rounded-xl transition-colors cursor-pointer">
+<div class="size-9 bg-primary/20 text-primary rounded-lg flex items-center justify-center font-bold">SB</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-white">Study Buddies</p>
+<p class="text-[10px] text-slate-500">24 Members • Active</p>
+</div>
+</div>
+<div class="flex items-center gap-3 p-2 hover:bg-primary/10 rounded-xl transition-colors cursor-pointer">
+<div class="size-9 bg-green-500/20 text-green-400 rounded-lg flex items-center justify-center font-bold">WW</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-white">Wellness Warriors</p>
+<p class="text-[10px] text-slate-500">156 Members • Active</p>
+</div>
+</div>
+<div class="flex items-center gap-3 p-2 hover:bg-primary/10 rounded-xl transition-colors cursor-pointer">
+<div class="size-9 bg-purple-500/20 text-purple-400 rounded-lg flex items-center justify-center font-bold">DA</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-white">Dev Team Alpha</p>
+<p class="text-[10px] text-slate-500">8 Members • Deep Work</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Leaderboard Widget -->
+<section class="glass-card rounded-2xl p-5">
+<h5 class="font-bold text-white mb-6">Weekly Leaderboard</h5>
+<div class="space-y-4">
+<!-- Top 1 -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="text-sm font-black text-yellow-500 w-4">1</span>
+<img class="size-6 rounded-full object-cover" data-alt="Sarah Chen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWovwwo8AihqI9L-JjNoFCASz5gqTZKE9nQgwEkpwz3bZ5n7-39ewPd8wX9WOMRghAoPe4RH26uedcd93GQ69YliQUlS0iyqltFQ37cbyMn-SPWONACsWiRotmlS6AXBkCFocwjS4IVtEbTc0iv4e_4l6cGKfN05jAvzglfUwC0AtCI9Ir79hIFIKylrPlxy0-Pho_riwp0Md4PDtuh9YFdILQMTaIhMMJV0c-B8QRPrxGeK535JpHXoQzVR1peenEV4EwKEDhHBoc"/>
+<p class="text-sm text-slate-200">Sarah Chen</p>
+</div>
+<p class="text-xs font-bold text-white">12,450 <span class="text-slate-500 text-[10px]">pts</span></p>
+</div>
+<!-- Top 2 -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="text-sm font-black text-slate-400 w-4">2</span>
+<img class="size-6 rounded-full object-cover" data-alt="David Park" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXmXE5ePZAn_KOPwiwvmddm7UzcZgQncML7V-zJzKkOvuwMpc0hAEvG6HnaREBioxJDKzEQyb-b5ZVhADJl8DEOzZobxJ1O-3HJ_JL2x69nacLGnblehfYReJTVO8dhSNfneTrxYqsKBXHVru8l3fw6fLIQ1pQUH-w4DFbEC--6FLirnued8zt2eqzaH9D5O1t7S3uWNIa-wsLdr4v81se0rdohnGzHSjejm8NxExzyZ6llEujd9AnOSalzC2NUKaQBMFy_jTjbp4N"/>
+<p class="text-sm text-slate-200">David Park</p>
+</div>
+<p class="text-xs font-bold text-white">11,200 <span class="text-slate-500 text-[10px]">pts</span></p>
+</div>
+<!-- Top 3 -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="text-sm font-black text-orange-600 w-4">3</span>
+<img class="size-6 rounded-full object-cover" data-alt="Mike R" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaxdQ-voNuFFJAxhApPhc5LRTJ0Iqq4nIgIrcWnH5z87zpGtb5W3WPLmsiQsA-NnPbftKMr0XHyPHFAbNn1CvZrldqVo_TUwBw7rRxatJaFJlUy6VWH1__7k_KmRG7Iv93QPiCqnSjou2Oft7DKfIbgYrqRE_XjPqpGmRntsPomP9rZdKvfGnfFcsCIc6llOrVQmUqPJVfALfVjy0f0SAZd0tVwJPWjgv1yWQxP1zTCJX64kGG6OV2TLdwSHZ-5cWFBut5LGPSwZYg"/>
+<p class="text-sm text-slate-200">Mike R.</p>
+</div>
+<p class="text-xs font-bold text-white">9,800 <span class="text-slate-500 text-[10px]">pts</span></p>
+</div>
+</div>
+</section>
+</aside>
+</div>
+<!-- Bottom Banner: Group Challenges -->
+<section class="mt-12">
+<div class="bg-gradient-to-r from-primary/30 to-indigo-900/40 border border-primary/30 rounded-3xl p-8 flex flex-col md:flex-row items-center justify-between gap-8 backdrop-blur-xl">
+<div class="flex flex-col md:flex-row items-center gap-6">
+<div class="size-16 bg-white/10 rounded-2xl flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-4xl">emoji_events</span>
+</div>
+<div class="text-center md:text-left">
+<h3 class="text-2xl font-black text-white mb-2">Group Challenges</h3>
+<p class="text-slate-300">Join 1,200+ users in the <span class="text-primary font-bold">"21-Day Focus Sprint"</span> starting tomorrow.</p>
+<div class="flex flex-wrap justify-center md:justify-start gap-4 mt-4">
+<div class="flex items-center gap-2 bg-white/5 px-3 py-1.5 rounded-lg border border-white/10">
+<span class="material-symbols-outlined text-sm text-green-400">task_alt</span>
+<span class="text-xs font-bold text-slate-200">15 Active Challenges</span>
+</div>
+<div class="flex items-center gap-2 bg-white/5 px-3 py-1.5 rounded-lg border border-white/10">
+<span class="material-symbols-outlined text-sm text-orange-400">trending_up</span>
+<span class="text-xs font-bold text-slate-200">Trending Now</span>
+</div>
+</div>
+</div>
+</div>
+<button class="bg-white text-primary px-8 py-4 rounded-2xl font-black shadow-xl hover:scale-105 transition-transform">
+                    Join a Challenge
+                </button>
+</div>
+</section>
+</main>
+<footer class="max-w-[1280px] mx-auto px-6 py-12 mt-12 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6 opacity-60">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">grid_view</span>
+<span class="text-sm font-bold">SmartTask © 2024</span>
+</div>
+<div class="flex items-center gap-8 text-xs font-medium">
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-primary transition-colors" href="#">Support</a>
+</div>
+</footer>
+</body></html>

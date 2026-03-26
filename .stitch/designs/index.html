@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SmartTask - AI-Powered Social Task Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#6b5be6",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#131121",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .text-gradient {
+            background: linear-gradient(to right, #6b5be6, #a78bfa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bg-indigo-gradient {
+            background: linear-gradient(135deg, #6b5be6 0%, #4f46e5 100%);
+        }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display selection:bg-primary/30 overflow-x-hidden">
+<!-- Sticky Nav Bar -->
+<nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-white/5 px-6 py-4">
+<div class="max-w-7xl mx-auto flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-xl">bolt</span>
+</div>
+<span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">SmartTask</span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#features">Features</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#how-it-works">How It Works</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#pricing">Pricing</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#signin">Sign In</a>
+</div>
+<button class="bg-indigo-gradient hover:opacity-90 text-white px-5 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/20 transition-all">
+                Get Started Free
+            </button>
+</div>
+</nav>
+<!-- Hero Section -->
+<section class="relative pt-40 pb-24 px-6 overflow-hidden">
+<div class="orb w-[400px] h-[400px] bg-primary/20 top-[-10%] left-[-10%]"></div>
+<div class="orb w-[300px] h-[300px] bg-pink-500/10 bottom-[10%] right-[-5%]"></div>
+<div class="max-w-7xl mx-auto text-center relative z-10">
+<h1 class="text-5xl md:text-7xl font-black mb-6 leading-[1.1] tracking-tight">
+                Plan Smarter.<br/>
+<span class="text-gradient">Achieve Together.</span>
+</h1>
+<p class="text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+                AI-powered task management with social accountability. Experience the next generation of productivity designed for the modern team.
+            </p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
+<button class="w-full sm:w-auto px-8 py-4 bg-indigo-gradient text-white font-bold rounded-xl shadow-xl shadow-primary/30 hover:scale-[1.02] transition-transform">
+                    Start Free Trial
+                </button>
+<button class="w-full sm:w-auto px-8 py-4 border border-slate-200 dark:border-white/10 dark:hover:bg-white/5 font-bold rounded-xl transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">play_circle</span>
+                    Watch Demo
+                </button>
+</div>
+<!-- UI Mockup Cards (Floating) -->
+<div class="relative max-w-5xl mx-auto h-[400px] md:h-[600px]">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-slate-200 dark:bg-white/5 rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+<img class="w-full h-full object-cover opacity-60" data-alt="Main application dashboard showing task lists and calendar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZvsNPuKzrQ8KkEkhtF6ZBNkRNk4KgdLkfIxXtlZiCRE3whkceofwZ2bRThm0aByGctCpsO0YA3zSBwsmBhZ-Rw38klWdJWKyC_a92X8y4QRwrW3dOKdA2kRcNj1hoDbtJ3W81VclAY-Jl2TSRDIRTB6VUGmFjKpeD33u2PAW8of1g1m2JuA-Gk_VvHrcz_jg1IT6l-0AfvrDILhI73o9sNHU6slnW-lCZTC7-Kv4VTexT_ozOvicweasla1ymamiOGtrDR8G6UNAB"/>
+</div>
+<div class="absolute -top-10 -left-6 md:left-[-5%] glass p-4 rounded-xl shadow-2xl w-48 md:w-64 rotate-[-3deg]">
+<div class="flex items-center gap-3 mb-3">
+<span class="material-symbols-outlined text-primary">auto_awesome</span>
+<span class="text-xs font-bold uppercase tracking-wider opacity-60">AI Suggestion</span>
+</div>
+<p class="text-sm font-medium mb-1">Focus on Design Sprint</p>
+<p class="text-[10px] opacity-50">Best time: 9:00 AM - 11:30 AM</p>
+</div>
+<div class="absolute bottom-20 -right-6 md:right-[-5%] glass p-4 rounded-xl shadow-2xl w-48 md:w-64 rotate-[3deg]">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-bold opacity-60 uppercase">Weekly Streak</span>
+<span class="material-symbols-outlined text-orange-500">local_fire_department</span>
+</div>
+<div class="flex gap-1">
+<div class="h-1 flex-1 bg-primary rounded-full"></div>
+<div class="h-1 flex-1 bg-primary rounded-full"></div>
+<div class="h-1 flex-1 bg-primary rounded-full"></div>
+<div class="h-1 flex-1 bg-primary rounded-full"></div>
+<div class="h-1 flex-1 bg-slate-700 rounded-full"></div>
+</div>
+<p class="text-xl font-black mt-2">14 Days</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Trusted By -->
+<section class="py-12 border-y border-white/5 px-6">
+<div class="max-w-7xl mx-auto text-center">
+<p class="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] mb-8">Trusted by 50,000+ productive people</p>
+<div class="flex flex-wrap justify-center items-center gap-12 md:gap-20 opacity-40 grayscale">
+<img class="h-6" data-alt="Abstract tech company logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdGqG0zwFz-uOMmP0_Ws2mbQo-6WFtgNN76efxfIcj_YuvrOMhcCUElmYEW8QvCVXhbEk87v_YNkU9Wnice1yiiTsijka_qpEd4ZdZyRlSjjNYhuRv8GiFvXe_uTTS3zGGfVDGkj2g50o4i8Mu1qnrXP14lCXN-yctdZjezfAb8qwioyicFA4aiOn9oG1fJhYNjIdZrjxFYyWtaRqHPGXQmtOlQFoE5t9EqYV7HP1usPLT5-rAknbmMqUfyQxh4jjBLVBLYx7n5nFX"/>
+<img class="h-6" data-alt="University logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDIdSZv4iAss_TPnTEJCfaqncZzzYxwyKZ6UMXM2-3DQiWlI76s97iTFl2qHqGiZq1nLECSiYlIOA1mFAGiKuCCBXK8k5TfUOiPqU1eIbjv-Znb6R12XbaINdGtwAleoH-7kJmG3GJ3H-nE7g1cPCyKSmxBJKgW3H17cOmIOfnG953Suz-S-UsilrXp6lfGcqYh3kA1Zv-oDPA-1mweluSge8BxYSYt6GBhACy5rsiGT38ORTcbv4nCwulyJwLR67O_mFQOLuN4vow"/>
+<img class="h-6" data-alt="Corporate venture logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACGE407uoSbxBhZuO1l9ms_n5NHMnQHwukMXG3sb6uTVhJ3Fs160Xrdm3Hz9XWKlCtNqyFuqjtHSQ24OJPgwBDv5ycaOj0Vx3KrC5KKJWs_UdqPEqprKgVe1FGblywfG59cbF6y2cWsI0xzH7zNTrf0VlQY8wAGoGPaTZ-fXxiaiaNomUgtN1xFHPSC82x8x9eiDM7TyS8KRiVIi0G46IMKyJyN17HpSwH0LMi09m6mD5wigbvMoN4vwA0SVPdYQ4BS4s3llA0OYyf"/>
+<img class="h-6" data-alt="Modern startup logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCq-A8bKSj2AfKEBMC_sC4Qi5kqJMpRbzOnHixdkkKlwwrSOzzUymvWXzR3c-bWqaORGbgpSGab7vblOKT4bXxYkxGYkPsis3C6PzczIg6uRIsTZ7v58n1WAu_8fFJy3zIPpNuuW05XNgSkvIMuVAnHSn6R5twy7hkXSsu65D0iZam0gJs78dTy8pPzPysJ8Pta0GinRlIZlJaGeUZk6quagavq-ymcxtv2mPOCcsSob6JZ3HNqOH-vlcXBGsZ50wC9Qo1vHw9dMvt"/>
+<img class="h-6" data-alt="Global institution logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBccR_tXpxhzklHNbz9e-WPvcvhac3VCtfMX5PJqUkFnpOoKtrUvbP49p4oO41A6UPnGVa6Yf2Ug_35ju7UXmbRywQ25239_Z-qaXZquMHgQJjd7GVgjlGD_ltXLsXBMMybowESjsu_tgdKt9i4UqD43uAN8Q9G-ZiN4FmXXeDbiwmAZXXuwZJvNJIEGJxvh27MOZgxKzJ6VjVsD2TX6xWBs54xnqhBgG1Wh_uQSZucwCKwuEtWBIRag7WiwkoH_jgCxSLpPrJ1gdYX"/>
+</div>
+</div>
+</section>
+<!-- Features Grid -->
+<section class="py-24 px-6 bg-slate-50 dark:bg-transparent" id="features">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16">
+<h2 class="text-3xl md:text-5xl font-bold mb-4">Master Your Workflow</h2>
+<p class="text-slate-500 dark:text-slate-400 max-w-xl mx-auto">Everything you need to stop procrastinating and start achieving your wildest goals.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="glass p-8 rounded-2xl hover:bg-white/10 transition-colors group">
+<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary">smart_toy</span>
+</div>
+<h3 class="text-xl font-bold mb-3">AI Smart Scheduling</h3>
+<p class="text-slate-500 dark:text-slate-400 leading-relaxed">AI analyzes your habits and generates optimal daily schedules tailored to your peak focus hours.</p>
+</div>
+<!-- Card 2 -->
+<div class="glass p-8 rounded-2xl hover:bg-white/10 transition-colors group">
+<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary">groups</span>
+</div>
+<h3 class="text-xl font-bold mb-3">Social Accountability</h3>
+<p class="text-slate-500 dark:text-slate-400 leading-relaxed">Share tasks with friends and groups for motivation. Get gentle nudges from your accountability partners.</p>
+</div>
+<!-- Card 3 -->
+<div class="glass p-8 rounded-2xl hover:bg-white/10 transition-colors group">
+<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary">military_tech</span>
+</div>
+<h3 class="text-xl font-bold mb-3">Streaks &amp; Gamification</h3>
+<p class="text-slate-500 dark:text-slate-400 leading-relaxed">Build consistency with streaks, badges, and productivity scores. Turn daily chores into a rewarding game.</p>
+</div>
+<!-- Card 4 -->
+<div class="glass p-8 rounded-2xl hover:bg-white/10 transition-colors group">
+<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary">dashboard_customize</span>
+</div>
+<h3 class="text-xl font-bold mb-3">Task Templates</h3>
+<p class="text-slate-500 dark:text-slate-400 leading-relaxed">Reuse proven routines and share high-performance templates with the global SmartTask community.</p>
+</div>
+<!-- Card 5 -->
+<div class="glass p-8 rounded-2xl hover:bg-white/10 transition-colors group">
+<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary">mood</span>
+</div>
+<h3 class="text-xl font-bold mb-3">Mood Check-ins</h3>
+<p class="text-slate-500 dark:text-slate-400 leading-relaxed">Quick mood tracking that influences your AI schedule. Burnt out? We'll prioritize recovery tasks.</p>
+</div>
+<!-- Card 6 -->
+<div class="glass p-8 rounded-2xl hover:bg-white/10 transition-colors group">
+<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary">query_stats</span>
+</div>
+<h3 class="text-xl font-bold mb-3">Progress Insights</h3>
+<p class="text-slate-500 dark:text-slate-400 leading-relaxed">Beautiful interactive analytics showing your productivity trends and where your time actually goes.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- How It Works -->
+<section class="py-24 px-6 overflow-hidden" id="how-it-works">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-20">
+<h2 class="text-3xl md:text-5xl font-bold mb-4">Three Steps to Freedom</h2>
+<p class="text-slate-500 dark:text-slate-400">Transforming your chaos into clarity is simpler than you think.</p>
+</div>
+<div class="relative grid grid-cols-1 md:grid-cols-3 gap-12">
+<!-- Connecting Line (Desktop Only) -->
+<div class="hidden md:block absolute top-12 left-[15%] right-[15%] h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+<div class="relative flex flex-col items-center text-center">
+<div class="w-24 h-24 bg-background-dark border-4 border-primary rounded-full flex items-center justify-center text-3xl font-black mb-6 z-10 shadow-[0_0_30px_rgba(107,91,230,0.3)]">1</div>
+<h4 class="text-xl font-bold mb-3">Create Tasks</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Add tasks, set priorities, and pick from community templates in seconds.</p>
+</div>
+<div class="relative flex flex-col items-center text-center">
+<div class="w-24 h-24 bg-background-dark border-4 border-primary rounded-full flex items-center justify-center text-3xl font-black mb-6 z-10 shadow-[0_0_30px_rgba(107,91,230,0.3)]">2</div>
+<h4 class="text-xl font-bold mb-3">AI Plans Your Day</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Our AI engine arranges your day based on deadlines and energy levels.</p>
+</div>
+<div class="relative flex flex-col items-center text-center">
+<div class="w-24 h-24 bg-background-dark border-4 border-primary rounded-full flex items-center justify-center text-3xl font-black mb-6 z-10 shadow-[0_0_30px_rgba(107,91,230,0.3)]">3</div>
+<h4 class="text-xl font-bold mb-3">Achieve Together</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Share progress, earn rewards, and stay accountable with your inner circle.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonials -->
+<section class="py-24 px-6 bg-primary/5">
+<div class="max-w-7xl mx-auto">
+<h2 class="text-3xl font-bold text-center mb-16">Loved by High-Achievers</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Testimonial 1 -->
+<div class="glass p-8 rounded-2xl flex flex-col h-full">
+<div class="flex gap-1 text-orange-400 mb-6">
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+</div>
+<p class="text-lg italic mb-8 grow leading-relaxed">"The AI scheduling is a game-changer. It knows exactly when I'm most productive and slots my deep work right there."</p>
+<div class="flex items-center gap-4">
+<img class="w-12 h-12 rounded-full border border-primary/20" data-alt="User avatar headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC49Qje3DCRgF2jLhNcOtzxbiDqwb6fBCODb8huRCLdvayuUWuWIWeANROC6fvSTIv98ioDFh2L8JNpKXnDwNdn6xlRJFPLoNZoMAEuN8MH79G1NnPpzzKr5caZ2hl8LWbQlV6xOb2yJU7cfM6zSGLevVgyBNhV4jd4qSFtaAVgRTHgTDd1bWE-iYv3iGdT1q8wdJ_k8SDCpeLkLsvg-1tjlLuaj9Ho2iKbMZcbKnUGAyjcRexQhZCrv7V4-DhwVUw7lKC7vmFV8_J6"/>
+<div>
+<h5 class="font-bold text-sm">Sarah Jenkins</h5>
+<p class="text-xs opacity-50">Lead Designer, Aura</p>
+</div>
+</div>
+</div>
+<!-- Testimonial 2 -->
+<div class="glass p-8 rounded-2xl flex flex-col h-full">
+<div class="flex gap-1 text-orange-400 mb-6">
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+</div>
+<p class="text-lg italic mb-8 grow leading-relaxed">"Social accountability keeps me honest. Seeing my friends hit their daily goals motivates me to clear my board too."</p>
+<div class="flex items-center gap-4">
+<img class="w-12 h-12 rounded-full border border-primary/20" data-alt="User avatar headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAT5BYhS_H0v984PydlvlisGW3-6xosMTAIH9eTebetlNQOY0iu2UnOnIUYAOzQnHFLNAtW55qRgu5-FhcOWQKx8wLhJHuZRge1DlvpIe8i5GhIuT3DIKUokGiK_G6DVn2MKrbVNrD4wYUKR_X-7v8bdp-5iLU4vxtiRyoRXztZYd7OLI5_8LrOQIj4B2V-9xhOTe_W9ZWS7BDt-aIujyqTeIYrtjUFlO7XgR8S2oMObJ0Qy22ANl_B0-e8JYI25QvuDIlK9hrG7GZh"/>
+<div>
+<h5 class="font-bold text-sm">Marcus Chen</h5>
+<p class="text-xs opacity-50">Software Engineer</p>
+</div>
+</div>
+</div>
+<!-- Testimonial 3 -->
+<div class="glass p-8 rounded-2xl flex flex-col h-full">
+<div class="flex gap-1 text-orange-400 mb-6">
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star_half</span>
+</div>
+<p class="text-lg italic mb-8 grow leading-relaxed">"I've tried every productivity app. SmartTask is the first one that actually understands the rhythm of my life."</p>
+<div class="flex items-center gap-4">
+<img class="w-12 h-12 rounded-full border border-primary/20" data-alt="User avatar headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOUh303AqlAdHVHyjHCdqSYVhlnIYEih0at2ikVtgY_B1_0V_HsYptAC-2F6hlQEyuTcmGUnffrhPq5XO0JDbT1HG4hQ7WszQ0e5b8nnLzzsbBUPWSqzT0i-m8iXKxtfuVYF_xoInrZPqu9S7JtwN-KCTlI6BhneuYDtaYHYVkrVwsVIStXzNP5i_4wPXToDyGAxhbs1uJwDayR91eZLH9oecQjlUYbAkNahOIeCNyqXuxlgjJNGfLK6LipPvzvZFn7EugAavM3fBp"/>
+<div>
+<h5 class="font-bold text-sm">Elena Rodriguez</h5>
+<p class="text-xs opacity-50">Content Creator</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-24 px-6 relative overflow-hidden">
+<div class="max-w-5xl mx-auto relative bg-indigo-gradient rounded-3xl p-12 md:p-20 text-center text-white overflow-hidden shadow-2xl shadow-primary/40">
+<div class="absolute top-0 right-0 p-8 opacity-20 hidden md:block">
+<span class="material-symbols-outlined text-9xl">emoji_events</span>
+</div>
+<div class="relative z-10">
+<h2 class="text-3xl md:text-5xl font-black mb-6">Ready to Transform Your Productivity?</h2>
+<p class="text-primary-100/80 mb-10 text-lg max-w-xl mx-auto opacity-90">Join 50,000+ others who are achieving more every single day. No credit card required.</p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto">
+<input class="w-full px-6 py-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all" placeholder="Enter your email" type="email"/>
+<button class="w-full sm:w-auto px-8 py-4 bg-white text-primary font-bold rounded-xl whitespace-nowrap hover:bg-slate-50 transition-colors">
+                        Get Started Free
+                    </button>
+</div>
+<div class="mt-8 flex justify-center gap-6 opacity-60 text-sm font-medium">
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">verified</span> Trusted Security</div>
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">sync</span> Cloud Sync</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="pt-24 pb-12 px-6 border-t border-white/5">
+<div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-12 mb-16">
+<div class="col-span-2 md:col-span-1">
+<div class="flex items-center gap-2 mb-6">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-xl">bolt</span>
+</div>
+<span class="text-xl font-bold tracking-tight">SmartTask</span>
+</div>
+<p class="text-slate-500 text-sm leading-relaxed mb-6">Building the future of personal and social productivity with the power of artificial intelligence.</p>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-primary/10 transition-colors" href="#">
+<img class="opacity-60" data-alt="Twitter social icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmuslp6o_XHN2kwGgWPGdOeiUkMR9k2S6ZJJjCIhKjFvkKwwRk9UAtUQpffC8Iqe6glQ1DW6FS1VEC1DmeTDWF91KPfY0QxfYP8j-h3c-8T6FyXflJ4l_rrkcMczA_3WkApaxXyWi3VDUI6eF7jeDS95fvpE3vGgAQ3l2xUtuwe6nV78zbxicWCBE9-vID_9YR9M7-h0mRa82yBoZRYeuTS6hNtYQvNaPgQDjo_HgIQwLSw23V7EgaPBXKki84BHDO3rAs6IZFhJ9e"/>
+</a>
+<a class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-primary/10 transition-colors" href="#">
+<img class="opacity-60" data-alt="LinkedIn social icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2pj4KrwQfiGHcqimI7fblA6l-nM4Xn_m03Be1k5VCWiQoKJSwnQ3HamLfuvZZWK-aHbWANKl-ol0FpU60tw0KEbVNMbH-hpjN4kaMwzrQYI4YydLrI13jKJWRUEGeQwhJuRyRbkT3IIHHd9-tw1-FLyQX3J5-C1Ea8e0Q1COCI4wyOJ2edg9RmP_4_jCmkaxsPLR4mGQnBCgB4Tu5vhv8m0Dw44H1cT0iNvqDCKezw2ebpBTVyAWuIFDkD8TdT-FNTVoS9FMtqT-M"/>
+</a>
+<a class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-primary/10 transition-colors" href="#">
+<img class="opacity-60" data-alt="Instagram social icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgxO0Qh_uUKAePO4PPaucU1CLI4HmgKYbqNnPR-Gmt_6EUcG4QIO0MGeH16RFt8bKSBzNaNyS5LmoxopWwyd9F563ifeYxppln_QTBolUMHNJalXRgQ7nCfxRlGcogcL-MFxcBJI4h0Jq3bt-OURSTMV-w9V6GRyj-VGyeveCB-GtWYpegLXKg3W3rEc7wOfyJvsv0TCMWGpgOfHZBnv5SeiLJPIoLGH40PgoWLEchiDD_LZmno8cxbanO1UPgRmBlmUHEBO353jLe"/>
+</a>
+</div>
+</div>
+<div>
+<h6 class="font-bold mb-6 uppercase text-xs tracking-widest text-slate-400">Product</h6>
+<ul class="space-y-4 text-sm text-slate-500">
+<li><a class="hover:text-primary transition-colors" href="#">AI Engine</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Social Features</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Pricing</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Integrations</a></li>
+</ul>
+</div>
+<div>
+<h6 class="font-bold mb-6 uppercase text-xs tracking-widest text-slate-400">Company</h6>
+<ul class="space-y-4 text-sm text-slate-500">
+<li><a class="hover:text-primary transition-colors" href="#">About Us</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Careers</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Terms</a></li>
+</ul>
+</div>
+<div>
+<h6 class="font-bold mb-6 uppercase text-xs tracking-widest text-slate-400">Resources</h6>
+<ul class="space-y-4 text-sm text-slate-500">
+<li><a class="hover:text-primary transition-colors" href="#">Blog</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Documentation</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Support Center</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Community</a></li>
+</ul>
+</div>
+</div>
+<div class="max-w-7xl mx-auto pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
+<p>© 2024 SmartTask AI Inc. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="hover:text-primary" href="#">Status</a>
+<a class="hover:text-primary" href="#">Security</a>
+<a class="hover:text-primary" href="#">Cookies</a>
+</div>
+</div>
+</footer>
+</body></html>

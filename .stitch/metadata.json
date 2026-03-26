@@ -1,0 +1,111 @@
+{
+  "name": "projects/17722362334374491181",
+  "projectId": "17722362334374491181",
+  "title": "SmartTask",
+  "visibility": "PRIVATE",
+  "createTime": "2026-03-19T11:49:23.969189Z",
+  "updateTime": "2026-03-19T11:49:23.969189Z",
+  "projectType": "PROJECT_DESIGN",
+  "origin": "STITCH",
+  "deviceType": "DESKTOP",
+  "designTheme": {
+    "colorMode": "DARK",
+    "font": "INTER",
+    "roundness": "ROUND_EIGHT",
+    "customColor": "#6b5be6",
+    "saturation": 2
+  },
+  "screens": {
+    "index": {
+      "id": "073b19ae3cd14e63977ab3206d4b1257",
+      "sourceScreen": "projects/17722362334374491181/screens/073b19ae3cd14e63977ab3206d4b1257",
+      "x": 0,
+      "y": 0,
+      "width": 2560,
+      "height": 9238
+    },
+    "dashboard": {
+      "id": "beac673767644c82a712ccd4d8384698",
+      "sourceScreen": "projects/17722362334374491181/screens/beac673767644c82a712ccd4d8384698",
+      "x": 2700,
+      "y": 0,
+      "width": 2560,
+      "height": 3616
+    },
+    "tasks": {
+      "id": "dd51a9b29abd454a94264a4e139ae19a",
+      "sourceScreen": "projects/17722362334374491181/screens/dd51a9b29abd454a94264a4e139ae19a",
+      "x": 5400,
+      "y": 0,
+      "width": 2560,
+      "height": 2048
+    },
+    "social": {
+      "id": "da6993cd99cc4083b399f91edb98bf70",
+      "sourceScreen": "projects/17722362334374491181/screens/da6993cd99cc4083b399f91edb98bf70",
+      "x": 8100,
+      "y": 0,
+      "width": 2560,
+      "height": 2888
+    },
+    "ai-assistant": {
+      "id": "8be37498e0ab4fd9bb3549f92b8421bb",
+      "sourceScreen": "projects/17722362334374491181/screens/8be37498e0ab4fd9bb3549f92b8421bb",
+      "x": 10800,
+      "y": 0,
+      "width": 2816,
+      "height": 3148
+    },
+    "profile": {
+      "id": "4d36aa633c594b91b2a75cedfb55a3ed",
+      "sourceScreen": "projects/17722362334374491181/screens/4d36aa633c594b91b2a75cedfb55a3ed",
+      "x": 13756,
+      "y": 0,
+      "width": 2560,
+      "height": 4894
+    },
+    "onboarding": {
+      "id": "737e59bb47e14fef8a13cdd5abcc90db",
+      "sourceScreen": "projects/17722362334374491181/screens/737e59bb47e14fef8a13cdd5abcc90db",
+      "x": 16456,
+      "y": 0,
+      "width": 2816,
+      "height": 7692
+    },
+    "focus-mode": {
+      "id": "ae6cff4bcc934eab879a948858998cf6",
+      "sourceScreen": "projects/17722362334374491181/screens/ae6cff4bcc934eab879a948858998cf6",
+      "x": 19412,
+      "y": 0,
+      "width": 2560,
+      "height": 2998
+    },
+    "weekly-review": {
+      "id": "7ff688c64ad54175b99ecb49ac7e2cb9",
+      "sourceScreen": "projects/17722362334374491181/screens/7ff688c64ad54175b99ecb49ac7e2cb9",
+      "x": 22112,
+      "y": 0,
+      "width": 2560,
+      "height": 5312
+    },
+    "challenges": {
+      "id": "24a0dc2f7537454da5c603cd9c4c26ff",
+      "sourceScreen": "projects/17722362334374491181/screens/24a0dc2f7537454da5c603cd9c4c26ff",
+      "x": 24812,
+      "y": 0,
+      "width": 2560,
+      "height": 4066
+    },
+    "templates": {
+      "id": "0decc162b6d9484eaf7c4bcb0e34d2d4",
+      "sourceScreen": "projects/17722362334374491181/screens/0decc162b6d9484eaf7c4bcb0e34d2d4",
+      "x": 27512,
+      "y": 0,
+      "width": 2560,
+      "height": 3894
+    }
+  },
+  "metadata": {
+    "userRole": "OWNER"
+  }
+}

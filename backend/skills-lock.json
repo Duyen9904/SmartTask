@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "hexagonal-architecture-layers-java": {
+      "source": "gentleman-programming/gentleman-skills",
+      "sourceType": "github",
+      "computedHash": "557cfb0354236012434516f83cab5f61543837cebcb7b59060ca950ff536d74f"
+    }
+  }
+}

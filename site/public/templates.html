@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SmartTask | Template Marketplace</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#6b5be6",
+                        "accent-coral": "#FF6B6B",
+                        "accent-mint": "#00D2D3",
+                        "accent-emerald": "#00B894",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0A0A1A",
+                        "card-dark": "#141432",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass {
+            background: rgba(20, 20, 50, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .gradient-border {
+            border: 1px solid transparent;
+            background: linear-gradient(#141432, #141432) padding-box,
+                        linear-gradient(to right, #6b5be6, #FF6B6B) border-box;
+        }
+        ::-webkit-scrollbar {
+            height: 4px;
+            width: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #6b5be6;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<!-- Sticky Navigation -->
+<nav class="sticky top-0 z-50 glass border-b border-slate-200 dark:border-white/10 px-6 py-3">
+<div class="max-w-[1280px] mx-auto flex items-center justify-between">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-3xl font-bold">task_alt</span>
+<h2 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">SmartTask</h2>
+</div>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Tasks</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Social</a>
+<a class="text-sm font-medium text-primary" href="#">AI Assistant</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-lg hover:bg-white/5 transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-accent-coral rounded-full"></span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border-2 border-primary/30">
+<img class="w-full h-full object-cover" data-alt="User avatar profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxwp358k_toj-JgHDLLIqq7OSs3pofq3LGbTtDnnp983XpgTELY4cZIAQkIyC-EzKFkMV8ykFmI_vRoZe8rPuaJEH4GWhc7xNy3IXoreUOQL87dqiMxS8Xz53M6Hoo7-kATB1fnvAy2Z-2dxCoLW2iwNUJfdHZyn-qpGFOmsGEMI6sVrMIqk6E3mCYmcWzIbGlQtxXAnGbEO1ur9QaVVub4AG8-C1Fl1nTnspMJHQv-UNZwTFf8qIJVK-nrh7FQC4vSG-4nT0Pyomz"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="max-w-[1280px] mx-auto px-6 py-8">
+<!-- Hero Header -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+<div class="space-y-2">
+<h1 class="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">📋 Template Marketplace</h1>
+<p class="text-slate-500 dark:text-slate-400 text-lg">Discover and share productivity templates with the community</p>
+</div>
+<button class="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary to-[#8e82f5] text-white rounded-xl font-bold hover:shadow-lg hover:shadow-primary/20 transition-all">
+<span class="material-symbols-outlined">add</span>
+                Create Template
+            </button>
+</div>
+<!-- Search Bar -->
+<div class="relative mb-8">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full bg-slate-100 dark:bg-card-dark border-none rounded-xl py-4 pl-12 pr-4 focus:ring-2 focus:ring-primary text-slate-900 dark:text-white placeholder:text-slate-500" placeholder="Search for productivity, fitness, or work templates..." type="text"/>
+</div>
+<!-- Category Filters -->
+<div class="flex gap-3 overflow-x-auto pb-4 no-scrollbar mb-12">
+<button class="whitespace-nowrap px-4 py-2 rounded-full bg-primary text-white font-medium text-sm flex items-center gap-2">🔥 Trending</button>
+<button class="whitespace-nowrap px-4 py-2 rounded-full bg-slate-200 dark:bg-white/5 hover:bg-white/10 transition-colors font-medium text-sm flex items-center gap-2">⭐ Top Rated</button>
+<button class="whitespace-nowrap px-4 py-2 rounded-full bg-slate-200 dark:bg-white/5 hover:bg-white/10 transition-colors font-medium text-sm flex items-center gap-2">🆕 New</button>
+<button class="whitespace-nowrap px-4 py-2 rounded-full bg-slate-200 dark:bg-white/5 hover:bg-white/10 transition-colors font-medium text-sm flex items-center gap-2">📚 Study</button>
+<button class="whitespace-nowrap px-4 py-2 rounded-full bg-slate-200 dark:bg-white/5 hover:bg-white/10 transition-colors font-medium text-sm flex items-center gap-2">💼 Work</button>
+<button class="whitespace-nowrap px-4 py-2 rounded-full bg-slate-200 dark:bg-white/5 hover:bg-white/10 transition-colors font-medium text-sm flex items-center gap-2">🏃 Fitness</button>
+<button class="whitespace-nowrap px-4 py-2 rounded-full bg-slate-200 dark:bg-white/5 hover:bg-white/10 transition-colors font-medium text-sm flex items-center gap-2">🧘 Wellness</button>
+<button class="whitespace-nowrap px-4 py-2 rounded-full bg-slate-200 dark:bg-white/5 hover:bg-white/10 transition-colors font-medium text-sm flex items-center gap-2">🎨 Creative</button>
+</div>
+<!-- Featured Templates -->
+<section class="mb-16">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary">auto_awesome</span>
+<h2 class="text-2xl font-bold">Featured Templates</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="glass p-6 rounded-2xl flex flex-col h-full relative overflow-hidden group">
+<div class="absolute -top-12 -right-12 w-32 h-32 bg-primary/20 blur-3xl rounded-full group-hover:bg-primary/30 transition-all"></div>
+<div class="flex items-center gap-3 mb-4">
+<img class="w-10 h-10 rounded-full border-2 border-primary/20" data-alt="Sarah Chen portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXFy-DDW-1wLPaF-rBfERZ4uEol5cQgQT65ltDGAyGaFZj-_XNjG6HYKLc09D8uvF1jyXs91qg-3DH64yJ4lis9waP-vlVlTNTsVQwghIDP3cHClZLaxvhqcQTtygkr70qtHyB574gqPS9XrWBfRzEHQvFW2rjDjt7zMdZDn_3V3Age3PsPnmQjwYqO1JSS7McM9YsbCerrp0cbAUsbuj-zN1bYdSLMzWDCxaGufAwyK0OSUo0KaCAA9pp8X6CDp8VvGlPnfqKwnKX"/>
+<div>
+<p class="text-xs text-slate-400">by Sarah Chen</p>
+<h3 class="font-bold text-lg">🌅 Ultimate Morning Routine</h3>
+</div>
+</div>
+<div class="flex items-center gap-4 text-sm text-slate-400 mb-6">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-yellow-500 fill-current">star</span> 4.9</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">download</span> 1.2k</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">checklist</span> 7 tasks</span>
+</div>
+<div class="mt-auto flex gap-3">
+<button class="flex-1 py-2 rounded-lg bg-gradient-to-r from-primary to-[#8e82f5] text-white text-sm font-bold">Use Template</button>
+<button class="flex-1 py-2 rounded-lg border border-white/10 text-sm font-bold hover:bg-white/5">Preview</button>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="glass p-6 rounded-2xl flex flex-col h-full relative overflow-hidden group">
+<div class="absolute -top-12 -right-12 w-32 h-32 bg-accent-coral/10 blur-3xl rounded-full group-hover:bg-accent-coral/20 transition-all"></div>
+<div class="flex items-center gap-3 mb-4">
+<img class="w-10 h-10 rounded-full border-2 border-primary/20" data-alt="Mike Rodriguez portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEVE5Pr9t_yFJo9C5kBKE_s45RT9yUY-Mca4PR2b5KxZv6w_ohGfSWIn54UL_d3GUtvy2stP0H5h1-Eyv5C6yRl3ynszZms98aTz2oHHT3vRN0qdUrpszn2pp-rZoCiw7SmBu_CkXFRB_Wksqp-gA0_Qp9TM0-gx-vqUmfXZjaeniZWCWaDDl2qm8rfuhf3Gy1H1l8lrr-U6lg8DOqU9aQQU-ggpsL6a8Fvjni3GQTgi5XQ7G8MnS7xBy84MPEjAb2hgT4GRihG2VP"/>
+<div>
+<p class="text-xs text-slate-400">by Mike Rodriguez</p>
+<h3 class="font-bold text-lg">📚 Deep Work Study Block</h3>
+</div>
+</div>
+<div class="flex items-center gap-4 text-sm text-slate-400 mb-6">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-yellow-500 fill-current">star</span> 4.8</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">download</span> 876</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">checklist</span> 4 tasks</span>
+</div>
+<div class="mt-auto flex gap-3">
+<button class="flex-1 py-2 rounded-lg bg-gradient-to-r from-primary to-[#8e82f5] text-white text-sm font-bold">Use Template</button>
+<button class="flex-1 py-2 rounded-lg border border-white/10 text-sm font-bold hover:bg-white/5">Preview</button>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="glass p-6 rounded-2xl flex flex-col h-full relative overflow-hidden group">
+<div class="absolute -top-12 -right-12 w-32 h-32 bg-accent-mint/10 blur-3xl rounded-full group-hover:bg-accent-mint/20 transition-all"></div>
+<div class="flex items-center gap-3 mb-4">
+<img class="w-10 h-10 rounded-full border-2 border-primary/20" data-alt="Emma Wilson portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxPeTe3Jfwoy6C7kt98Q90fTXDyct94QfLxtxNrYiFGwdbaXnIi-TlotA_jFbGZjnr_mIx5RqAI9pX2b2osbk_T5FXzCn2mb-EvquK5Uu_LteX99oztHtzBWRN6_JTAu9M8xgLMqkrzxj6FJZZSu83IevbQBGVu9c1AqvJt_iU3Sv5RpD5Etr-3lgDX6iFBF3ILlIhzJn1R-KmmWqQhjAq5Kon0qoAbqCjnXmqob60mwlxiQCke8Ml2LQ_oz81-pfo_Fa5fvsA5gIy"/>
+<div>
+<p class="text-xs text-slate-400">by Emma Wilson</p>
+<h3 class="font-bold text-lg">💪 Full Body Workout</h3>
+</div>
+</div>
+<div class="flex items-center gap-4 text-sm text-slate-400 mb-6">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-yellow-500 fill-current">star</span> 4.9</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">download</span> 1k+</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">checklist</span> 12 tasks</span>
+</div>
+<div class="mt-auto flex gap-3">
+<button class="flex-1 py-2 rounded-lg bg-gradient-to-r from-primary to-[#8e82f5] text-white text-sm font-bold">Use Template</button>
+<button class="flex-1 py-2 rounded-lg border border-white/10 text-sm font-bold hover:bg-white/5">Preview</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Template Grid -->
+<section class="mb-16">
+<h2 class="text-2xl font-bold mb-6">Explore Templates</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Generic Cards -->
+<div class="bg-slate-100 dark:bg-card-dark border border-slate-200 dark:border-white/5 p-5 rounded-xl hover:translate-y-[-4px] transition-transform">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">calendar_today</span>
+</div>
+<button class="text-slate-400 hover:text-accent-coral transition-colors">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+<h3 class="font-bold mb-2">Weekly Goal Planning</h3>
+<div class="flex items-center gap-3 text-xs text-slate-500 mb-4">
+<span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-xs fill-current text-yellow-500">star</span> 4.7</span>
+<span>• 432 downloads</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-xs font-medium text-slate-400 uppercase tracking-wider">8 Subtasks</span>
+<button class="text-primary font-bold text-sm hover:underline">Use</button>
+</div>
+</div>
+<div class="bg-slate-100 dark:bg-card-dark border border-slate-200 dark:border-white/5 p-5 rounded-xl hover:translate-y-[-4px] transition-transform">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-lg bg-accent-coral/20 flex items-center justify-center text-accent-coral">
+<span class="material-symbols-outlined">bedtime</span>
+</div>
+<button class="text-slate-400 hover:text-accent-coral transition-colors">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+<h3 class="font-bold mb-2">Evening Wind-Down</h3>
+<div class="flex items-center gap-3 text-xs text-slate-500 mb-4">
+<span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-xs fill-current text-yellow-500">star</span> 4.9</span>
+<span>• 2.1k downloads</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-xs font-medium text-slate-400 uppercase tracking-wider">5 Subtasks</span>
+<button class="text-primary font-bold text-sm hover:underline">Use</button>
+</div>
+</div>
+<div class="bg-slate-100 dark:bg-card-dark border border-slate-200 dark:border-white/5 p-5 rounded-xl hover:translate-y-[-4px] transition-transform">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-lg bg-accent-mint/20 flex items-center justify-center text-accent-mint">
+<span class="material-symbols-outlined">code</span>
+</div>
+<button class="text-slate-400 hover:text-accent-coral transition-colors">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+<h3 class="font-bold mb-2">Code Review Checklist</h3>
+<div class="flex items-center gap-3 text-xs text-slate-500 mb-4">
+<span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-xs fill-current text-yellow-500">star</span> 4.6</span>
+<span>• 567 downloads</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-xs font-medium text-slate-400 uppercase tracking-wider">10 Subtasks</span>
+<button class="text-primary font-bold text-sm hover:underline">Use</button>
+</div>
+</div>
+<div class="bg-slate-100 dark:bg-card-dark border border-slate-200 dark:border-white/5 p-5 rounded-xl hover:translate-y-[-4px] transition-transform">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-lg bg-accent-emerald/20 flex items-center justify-center text-accent-emerald">
+<span class="material-symbols-outlined">book</span>
+</div>
+<button class="text-slate-400 hover:text-accent-coral transition-colors">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+<h3 class="font-bold mb-2">Book Reading Tracker</h3>
+<div class="flex items-center gap-3 text-xs text-slate-500 mb-4">
+<span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-xs fill-current text-yellow-500">star</span> 4.8</span>
+<span>• 890 downloads</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-xs font-medium text-slate-400 uppercase tracking-wider">3 Subtasks</span>
+<button class="text-primary font-bold text-sm hover:underline">Use</button>
+</div>
+</div>
+<div class="bg-slate-100 dark:bg-card-dark border border-slate-200 dark:border-white/5 p-5 rounded-xl hover:translate-y-[-4px] transition-transform">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-lg bg-orange-500/20 flex items-center justify-center text-orange-500">
+<span class="material-symbols-outlined">directions_run</span>
+</div>
+<button class="text-slate-400 hover:text-accent-coral transition-colors">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+<h3 class="font-bold mb-2">Couch to 5K</h3>
+<div class="flex items-center gap-3 text-xs text-slate-500 mb-4">
+<span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-xs fill-current text-yellow-500">star</span> 5.0</span>
+<span>• 3.4k downloads</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-xs font-medium text-slate-400 uppercase tracking-wider">24 Subtasks</span>
+<button class="text-primary font-bold text-sm hover:underline">Use</button>
+</div>
+</div>
+<div class="bg-slate-100 dark:bg-card-dark border border-slate-200 dark:border-white/5 p-5 rounded-xl hover:translate-y-[-4px] transition-transform">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-500">
+<span class="material-symbols-outlined">school</span>
+</div>
+<button class="text-slate-400 hover:text-accent-coral transition-colors">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+<h3 class="font-bold mb-2">Exam Prep Protocol</h3>
+<div class="flex items-center gap-3 text-xs text-slate-500 mb-4">
+<span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-xs fill-current text-yellow-500">star</span> 4.7</span>
+<span>• 1.1k downloads</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-xs font-medium text-slate-400 uppercase tracking-wider">15 Subtasks</span>
+<button class="text-primary font-bold text-sm hover:underline">Use</button>
+</div>
+</div>
+</div>
+<div class="mt-12 text-center">
+<button class="px-8 py-3 bg-slate-200 dark:bg-white/5 hover:bg-white/10 rounded-xl font-bold transition-all">
+                    Show More Templates <span class="text-slate-500 ml-2 font-normal">(Showing 9 of 247)</span>
+</button>
+</div>
+</section>
+<!-- My Templates -->
+<section class="mb-16">
+<h2 class="text-2xl font-bold mb-6">My Templates</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="glass p-5 rounded-xl border-l-4 border-l-primary">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-bold">Daily Standup Prep</h3>
+<span class="text-xs text-accent-emerald bg-accent-emerald/10 px-2 py-0.5 rounded">Active</span>
+</div>
+<div class="h-10 w-full mb-4">
+<div class="w-full h-full flex items-end gap-1">
+<div class="bg-primary/40 w-full h-1/2 rounded-t-sm"></div>
+<div class="bg-primary/40 w-full h-3/4 rounded-t-sm"></div>
+<div class="bg-primary/40 w-full h-1/2 rounded-t-sm"></div>
+<div class="bg-primary w-full h-full rounded-t-sm"></div>
+<div class="bg-primary/40 w-full h-2/3 rounded-t-sm"></div>
+</div>
+</div>
+<p class="text-xs text-slate-500">Used 12 times this week</p>
+</div>
+<div class="glass p-5 rounded-xl border-l-4 border-l-accent-coral">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-bold">Sprint Planning</h3>
+<span class="text-xs text-accent-emerald bg-accent-emerald/10 px-2 py-0.5 rounded">Active</span>
+</div>
+<div class="h-10 w-full mb-4">
+<div class="w-full h-full flex items-end gap-1">
+<div class="bg-accent-coral/40 w-full h-1/4 rounded-t-sm"></div>
+<div class="bg-accent-coral/40 w-full h-1/3 rounded-t-sm"></div>
+<div class="bg-accent-coral w-full h-3/4 rounded-t-sm"></div>
+<div class="bg-accent-coral/40 w-full h-1/2 rounded-t-sm"></div>
+<div class="bg-accent-coral/40 w-full h-1/4 rounded-t-sm"></div>
+</div>
+</div>
+<p class="text-xs text-slate-500">Used once last Monday</p>
+</div>
+<div class="glass p-5 rounded-xl border-l-4 border-l-accent-mint">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-bold">My Morning Ritual</h3>
+<span class="text-xs text-slate-500 bg-white/5 px-2 py-0.5 rounded">Draft</span>
+</div>
+<div class="h-10 w-full mb-4">
+<div class="w-full h-full flex items-end gap-1">
+<div class="bg-accent-mint/40 w-full h-full rounded-t-sm"></div>
+<div class="bg-accent-mint/40 w-full h-full rounded-t-sm"></div>
+<div class="bg-accent-mint/40 w-full h-full rounded-t-sm"></div>
+<div class="bg-accent-mint/40 w-full h-full rounded-t-sm"></div>
+<div class="bg-accent-mint/40 w-full h-full rounded-t-sm"></div>
+</div>
+</div>
+<p class="text-xs text-slate-500">Never published</p>
+</div>
+</div>
+</section>
+<!-- Recently Used -->
+<section class="mb-16">
+<h2 class="text-xl font-bold mb-6 text-slate-500">Recently Used</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-white/5 p-4 rounded-xl flex flex-col justify-between">
+<span class="text-sm font-bold block mb-4">Product Pitch Deck</span>
+<button class="text-xs font-bold text-primary flex items-center gap-1 hover:gap-2 transition-all">
+                        Apply Again <span class="material-symbols-outlined text-xs">arrow_forward</span>
+</button>
+</div>
+<div class="bg-white/5 p-4 rounded-xl flex flex-col justify-between">
+<span class="text-sm font-bold block mb-4">HR Onboarding</span>
+<button class="text-xs font-bold text-primary flex items-center gap-1 hover:gap-2 transition-all">
+                        Apply Again <span class="material-symbols-outlined text-xs">arrow_forward</span>
+</button>
+</div>
+<div class="bg-white/5 p-4 rounded-xl flex flex-col justify-between">
+<span class="text-sm font-bold block mb-4">Weekly Retro</span>
+<button class="text-xs font-bold text-primary flex items-center gap-1 hover:gap-2 transition-all">
+                        Apply Again <span class="material-symbols-outlined text-xs">arrow_forward</span>
+</button>
+</div>
+<div class="bg-white/5 p-4 rounded-xl flex flex-col justify-between">
+<span class="text-sm font-bold block mb-4">Bug Report Flow</span>
+<button class="text-xs font-bold text-primary flex items-center gap-1 hover:gap-2 transition-all">
+                        Apply Again <span class="material-symbols-outlined text-xs">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Space -->
+<footer class="py-12 border-t border-white/5 text-center text-slate-500 text-sm">
+<p>© 2024 SmartTask. The smarter way to stay productive.</p>
+</footer>
+</body></html>

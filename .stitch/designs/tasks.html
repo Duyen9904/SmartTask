@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SmartTask | Task Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#6c5ce7",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0A0A1A",
+                        "card-dark": "#141432",
+                        "urgency": "#FF6B6B",
+                        "success": "#00D2D3",
+                        "completion": "#00B894",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(20, 20, 50, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .gradient-primary {
+            background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(108, 92, 231, 0.2);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen selection:bg-primary/30">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Sticky Navigation Bar -->
+<header class="sticky top-0 z-50 w-full glass-card border-b border-white/5 px-6 lg:px-12 py-3">
+<div class="max-w-[1280px] mx-auto flex items-center justify-between">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2.5">
+<div class="size-9 gradient-primary rounded-lg flex items-center justify-center shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-white text-2xl">auto_awesome</span>
+</div>
+<h1 class="text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">SmartTask</h1>
+</div>
+<nav class="hidden md:flex items-center gap-1">
+<a class="px-4 py-2 text-sm font-medium text-slate-400 hover:text-white transition-colors" href="#">Dashboard</a>
+<a class="px-4 py-2 text-sm font-semibold text-primary bg-primary/10 rounded-lg" href="#">Tasks</a>
+<a class="px-4 py-2 text-sm font-medium text-slate-400 hover:text-white transition-colors" href="#">Social</a>
+<a class="px-4 py-2 text-sm font-medium text-slate-400 hover:text-white transition-colors flex items-center gap-1.5" href="#">
+                            AI Assistant
+                            <span class="flex h-1.5 w-1.5 rounded-full bg-success animate-pulse"></span>
+</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-400 hover:text-white hover:bg-white/5 rounded-full transition-all relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-urgency rounded-full border-2 border-background-dark"></span>
+</button>
+<div class="h-8 w-[1px] bg-white/10 mx-1"></div>
+<div class="flex items-center gap-3 pl-1">
+<div class="text-right hidden sm:block">
+<p class="text-xs font-bold text-white">Alex Rivera</p>
+<p class="text-[10px] text-slate-500">Pro Member</p>
+</div>
+<div class="size-10 rounded-full border-2 border-primary/40 p-0.5">
+<img alt="" class="rounded-full w-full h-full object-cover" data-alt="User avatar of a young professional" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXiZ3yjALHPyj-CB256PxUIIEhMVYnjq8q3chfRL9cUQRbvSvouZl_hyoNt9ga3VkbAFHmhFylcVhzm09643kH0dDgULBL-Bpow4v3eKawZwNjQpaxPUVQCtifZDJTeanEI1Vna2xZXVTro10VJgWrLTFGKau8O_hn3pLEZ4JTCWJxvJt32MqVvc0UXbrhP6nWi7xpFWZc6Yk_xOLLfSblBLHtUNSoVGsVwYJ19qT_W_131I0-bb8DPU5DsJfEC6-3oNxrQXG7Q-V-"/>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-[1280px] mx-auto w-full px-6 lg:px-12 py-8 flex gap-8 flex-col lg:flex-row">
+<!-- Left Column: Tasks -->
+<div class="flex-1 flex flex-col gap-6 min-w-0">
+<!-- Page Header -->
+<div class="flex flex-wrap items-end justify-between gap-4">
+<div>
+<div class="flex items-center gap-3 mb-1">
+<h2 class="text-3xl font-black text-white tracking-tight">My Tasks</h2>
+<span class="px-2.5 py-0.5 bg-primary/20 text-primary text-xs font-bold rounded-full border border-primary/20">24 tasks</span>
+</div>
+<p class="text-slate-400 text-sm">Organize your flow with AI assistance</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex bg-white/5 p-1 rounded-xl border border-white/5">
+<button class="p-2 bg-primary rounded-lg text-white shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-sm">format_list_bulleted</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">grid_view</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">calendar_month</span>
+</button>
+</div>
+<button class="flex items-center gap-2 px-5 py-2.5 gradient-primary text-white text-sm font-bold rounded-xl shadow-lg shadow-primary/30 hover:opacity-90 transition-all">
+<span class="material-symbols-outlined text-lg">add</span>
+                            New Task
+                        </button>
+</div>
+</div>
+<!-- Filters & Search -->
+<div class="flex flex-col gap-4">
+<div class="flex flex-wrap items-center gap-3">
+<div class="relative flex-1 min-w-[280px]">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full bg-white/5 border border-white/10 rounded-2xl py-3 pl-12 pr-4 text-sm focus:ring-primary focus:border-primary text-white placeholder:text-slate-500" placeholder="Search tasks, tags, or members..." type="text"/>
+</div>
+<button class="px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-slate-300 hover:text-white hover:bg-white/10 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">filter_list</span>
+<span class="text-sm font-medium">Filters</span>
+</button>
+<button class="px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-slate-300 hover:text-white hover:bg-white/10 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">sort</span>
+<span class="text-sm font-medium">Sort by due date</span>
+</button>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex gap-2 overflow-x-auto custom-scrollbar pb-2 no-scrollbar">
+<button class="px-4 py-1.5 bg-primary text-white rounded-full text-xs font-bold whitespace-nowrap">All Tasks</button>
+<button class="px-4 py-1.5 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white rounded-full text-xs font-medium border border-white/5 transition-all whitespace-nowrap">Today</button>
+<button class="px-4 py-1.5 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white rounded-full text-xs font-medium border border-white/5 transition-all whitespace-nowrap">This Week</button>
+<button class="px-4 py-1.5 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white rounded-full text-xs font-medium border border-white/5 transition-all whitespace-nowrap flex items-center gap-1.5">
+<span class="size-1.5 bg-urgency rounded-full"></span> High Priority
+                            </button>
+<button class="px-4 py-1.5 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white rounded-full text-xs font-medium border border-white/5 transition-all whitespace-nowrap">Shared</button>
+</div>
+<button class="text-xs font-semibold text-slate-500 hover:text-primary transition-colors pl-4">Clear completed</button>
+</div>
+</div>
+<!-- Categories Tabs -->
+<div class="flex border-b border-white/5">
+<button class="px-6 py-3 text-sm font-bold text-primary border-b-2 border-primary">All Tasks</button>
+<button class="px-6 py-3 text-sm font-medium text-slate-500 hover:text-slate-300">Personal</button>
+<button class="px-6 py-3 text-sm font-medium text-slate-500 hover:text-slate-300">Work</button>
+<button class="px-6 py-3 text-sm font-medium text-slate-500 hover:text-slate-300">Study</button>
+<button class="px-6 py-3 text-sm font-medium text-slate-500 hover:text-slate-300">Shared</button>
+</div>
+<!-- Task List -->
+<div class="flex flex-col gap-3">
+<!-- Task Item 1: Completed -->
+<div class="glass-card rounded-2xl p-4 flex items-center gap-4 group hover:border-primary/30 transition-all border-l-4 border-l-completion">
+<div class="flex items-center justify-center size-6 rounded-md bg-completion/20 text-completion cursor-pointer">
+<span class="material-symbols-outlined text-lg">check</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-0.5">
+<h3 class="text-sm font-bold text-slate-400 line-through">Complete Math Assignment</h3>
+<span class="px-2 py-0.5 bg-urgency/10 text-urgency text-[10px] font-bold rounded uppercase tracking-wider">High</span>
+</div>
+<div class="flex items-center gap-4 text-[11px] text-slate-500">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">calendar_today</span> Mar 20</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">school</span> Study</span>
+<div class="flex -space-x-2 ml-auto items-center">
+<img alt="" class="size-5 rounded-full border-2 border-card-dark" data-alt="Avatar of Sarah" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8A19cnDw4IjnyWRIVUCPbcOgtmzT2QX3JUAZxPAF9sT0PbHe8KCrKImoB2JW_-0C2utGT4LVc2UnJl6rR8WSXp8tijZtYIn1wGHpDGxGCreoXmlsWkTujsnCQL37uJ1oTLRc36Vw-ZnehA11wD4-2AKmltYM-5TIF3jixHEkqAr61cLfxXA1L5Z_PRrZAi-zxSUm-tc0XuV8gtV0hTzg9VB8MXvViltzh2306wLoJErsxEDYNM3ipDuzqLAjOcpeH9XWZZzwbFmPD"/>
+<span class="text-[10px] ml-3 text-slate-400">Shared with Sarah</span>
+</div>
+</div>
+</div>
+<button class="p-1.5 opacity-0 group-hover:opacity-100 transition-opacity text-slate-500 hover:text-white">
+<span class="material-symbols-outlined text-xl">more_vert</span>
+</button>
+</div>
+<!-- Task Item 2: Pending High Priority -->
+<div class="glass-card rounded-2xl p-4 flex items-center gap-4 group hover:border-primary/30 transition-all border-l-4 border-l-urgency shadow-xl shadow-urgency/5">
+<div class="size-6 rounded-md border-2 border-white/20 hover:border-primary transition-colors cursor-pointer"></div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-0.5">
+<h3 class="text-sm font-bold text-white">Prepare Team Presentation</h3>
+<span class="px-2 py-0.5 bg-urgency/20 text-urgency text-[10px] font-bold rounded uppercase tracking-wider">High</span>
+<span class="flex h-1.5 w-1.5 rounded-full bg-urgency animate-pulse"></span>
+</div>
+<p class="text-[11px] text-slate-400 mb-1 max-w-md truncate">Finalize Q1 projections and visual assets for the executive board review.</p>
+<div class="flex items-center gap-4 text-[11px] text-slate-500">
+<span class="flex items-center gap-1 text-urgency font-semibold"><span class="material-symbols-outlined text-xs">event</span> Tomorrow, Mar 21</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">work</span> Work</span>
+</div>
+</div>
+<button class="p-1.5 text-slate-500 hover:text-white">
+<span class="material-symbols-outlined text-xl">more_vert</span>
+</button>
+</div>
+<!-- Task Item 3: Template Low Priority -->
+<div class="glass-card rounded-2xl p-4 flex items-center gap-4 group hover:border-primary/30 transition-all border-l-4 border-l-primary/40">
+<div class="size-6 rounded-md border-2 border-white/20 hover:border-primary transition-colors cursor-pointer"></div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-0.5">
+<h3 class="text-sm font-bold text-white">Morning Yoga Routine</h3>
+<span class="px-2 py-0.5 bg-white/10 text-slate-400 text-[10px] font-bold rounded uppercase tracking-wider">Low</span>
+<span class="flex items-center gap-1 px-1.5 py-0.5 bg-primary/10 text-primary text-[9px] font-black rounded border border-primary/20">
+<span class="material-symbols-outlined text-[10px]">content_copy</span> TEMPLATE
+                                </span>
+</div>
+<div class="flex items-center gap-4 text-[11px] text-slate-500">
+<span class="flex items-center gap-1 text-completion font-semibold"><span class="material-symbols-outlined text-xs">schedule</span> Today, 07:00 AM</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">person</span> Personal</span>
+</div>
+</div>
+<button class="p-1.5 text-slate-500 hover:text-white">
+<span class="material-symbols-outlined text-xl">more_vert</span>
+</button>
+</div>
+<!-- Task Item 4: Work Medium -->
+<div class="glass-card rounded-2xl p-4 flex items-center gap-4 group hover:border-primary/30 transition-all border-l-4 border-l-amber-500">
+<div class="size-6 rounded-md border-2 border-white/20 hover:border-primary transition-colors cursor-pointer"></div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-0.5">
+<h3 class="text-sm font-bold text-white">Review Code Pull Requests</h3>
+<span class="px-2 py-0.5 bg-amber-500/20 text-amber-500 text-[10px] font-bold rounded uppercase tracking-wider">Medium</span>
+</div>
+<div class="flex items-center gap-4 text-[11px] text-slate-500">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">calendar_today</span> Mar 22</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">work</span> Work</span>
+</div>
+</div>
+<button class="p-1.5 text-slate-500 hover:text-white">
+<span class="material-symbols-outlined text-xl">more_vert</span>
+</button>
+</div>
+<!-- Task Item 5: Completed Study -->
+<div class="glass-card rounded-2xl p-4 flex items-center gap-4 group hover:border-primary/30 transition-all border-l-4 border-l-completion opacity-60">
+<div class="flex items-center justify-center size-6 rounded-md bg-completion/20 text-completion cursor-pointer">
+<span class="material-symbols-outlined text-lg">check</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-0.5">
+<h3 class="text-sm font-bold text-slate-400 line-through">Read Chapter 5 - Design Patterns</h3>
+<span class="px-2 py-0.5 bg-amber-500/10 text-amber-500/60 text-[10px] font-bold rounded uppercase tracking-wider">Medium</span>
+</div>
+<div class="flex items-center gap-4 text-[11px] text-slate-500">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">calendar_today</span> Mar 19</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">school</span> Study</span>
+</div>
+</div>
+<button class="p-1.5 text-slate-500">
+<span class="material-symbols-outlined text-xl">more_vert</span>
+</button>
+</div>
+<!-- Task Item 6: Study High Team -->
+<div class="glass-card rounded-2xl p-4 flex items-center gap-4 group hover:border-primary/30 transition-all border-l-4 border-l-urgency">
+<div class="size-6 rounded-md border-2 border-white/20 hover:border-primary transition-colors cursor-pointer"></div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-0.5">
+<h3 class="text-sm font-bold text-white">Study Group Prep: Algorithms</h3>
+<span class="px-2 py-0.5 bg-urgency/20 text-urgency text-[10px] font-bold rounded uppercase tracking-wider">High</span>
+</div>
+<p class="text-[11px] text-slate-400 mb-1">Focus on Big O notation and sorting algorithms for the upcoming mock exam.</p>
+<div class="flex items-center gap-4 text-[11px] text-slate-500">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">calendar_today</span> Mar 21</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">school</span> Study</span>
+<div class="flex -space-x-2 ml-auto items-center">
+<img alt="" class="size-5 rounded-full border-2 border-card-dark" data-alt="Team member 1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMlyQj5aTyaloCn-dwop6_gQ7ZNyIHIKJZRsqykr0Me-91S_NAG38bxBJ8SW2Fqlr0feBmK7LVftuM9cNTci9R7UBUOmBwdw5OHJ8Dyws2urRp4SPNC2uyAw_EP33vwHMR6MRmXZQTqz_yz6GxxqZO-bFFAsR9nus4lkyvzsYVW79uWAYPuuXidG6OW2f_TapUaAaVBzCkmzTUEBtR5baQ-9eT-eEqgQomX3QkUYkD4gOj7uACarq6jCvd4-hFuRCRinVlm_8zPIVq"/>
+<img alt="" class="size-5 rounded-full border-2 border-card-dark" data-alt="Team member 2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAeBG62U9FV1yETcB5FOMJ6uBB4dTYGcQG2BCRLk70f3yOTyHulfPYu1XW0bLXAvPOWfuVtbmziF3w0iGgMnRRg2Wlx-xDsAwV9O11OVh5LtWd0sWkhYjTKWyrFSSGowIMfNVwX2IajcLeP_7sWUARe4qJwhbGVLSzAXRHJLVHJPv_BoFBdDvTrrih2kPc5DWQ4pU6zLiFOmnQTk5wWcylwP8FzzBpAPx6brbPAKlQ3oZh63a81Add2nFFukPGvvca6a2T3Hg0-NYp"/>
+<div class="size-5 rounded-full border-2 border-card-dark bg-white/5 flex items-center justify-center text-[8px] font-bold">+3</div>
+</div>
+</div>
+</div>
+<button class="p-1.5 text-slate-500 hover:text-white">
+<span class="material-symbols-outlined text-xl">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Right Column: Sidebar -->
+<aside class="w-full lg:w-80 flex flex-col gap-6">
+<!-- AI Summary Mini Card -->
+<div class="p-5 rounded-2xl bg-gradient-to-br from-primary/20 to-success/10 border border-primary/20 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-6xl">psychology</span>
+</div>
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-success">bolt</span>
+<span class="text-xs font-black text-white uppercase tracking-widest">AI Flow Analysis</span>
+</div>
+<p class="text-sm text-slate-200 leading-relaxed mb-4">
+                            You've completed <span class="text-success font-bold">12% more</span> tasks today. Focus on <span class="text-primary font-bold">Work</span> tasks next to stay ahead.
+                        </p>
+<div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+<div class="bg-success h-full" style="width: 68%;"></div>
+</div>
+<div class="flex justify-between mt-1.5">
+<span class="text-[10px] text-slate-400">Daily Goal Progress</span>
+<span class="text-[10px] font-bold text-success">68%</span>
+</div>
+</div>
+</div>
+<!-- Templates Sidebar -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">content_copy</span>
+<h3 class="text-sm font-bold text-white tracking-wide">Task Templates</h3>
+</div>
+<span class="text-[10px] font-bold text-slate-500">24 AVAILABLE</span>
+</div>
+<div class="grid grid-cols-1 gap-3">
+<!-- Template 1 -->
+<div class="glass-card p-3.5 rounded-2xl hover:bg-white/10 transition-all cursor-pointer group">
+<div class="flex justify-between items-start mb-2">
+<h4 class="text-sm font-bold text-white group-hover:text-primary transition-colors">Deep Work Block</h4>
+<div class="flex items-center gap-1 text-[10px] text-amber-400">
+<span class="material-symbols-outlined text-xs fill-1">star</span> 4.9
+                                </div>
+</div>
+<div class="flex items-center gap-3 text-[10px] text-slate-500 mb-3">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">list_alt</span> 6 subtasks</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">group</span> 1.2k uses</span>
+</div>
+<button class="w-full py-2 bg-white/5 hover:bg-primary text-white text-[11px] font-bold rounded-xl transition-all border border-white/5">Use Template</button>
+</div>
+<!-- Template 2 -->
+<div class="glass-card p-3.5 rounded-2xl hover:bg-white/10 transition-all cursor-pointer group">
+<div class="flex justify-between items-start mb-2">
+<h4 class="text-sm font-bold text-white group-hover:text-primary transition-colors">Study Session</h4>
+<div class="flex items-center gap-1 text-[10px] text-amber-400">
+<span class="material-symbols-outlined text-xs fill-1">star</span> 4.8
+                                </div>
+</div>
+<div class="flex items-center gap-3 text-[10px] text-slate-500 mb-3">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">list_alt</span> 4 subtasks</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">group</span> 850 uses</span>
+</div>
+<button class="w-full py-2 bg-white/5 hover:bg-primary text-white text-[11px] font-bold rounded-xl transition-all border border-white/5">Use Template</button>
+</div>
+<!-- Template 3 -->
+<div class="glass-card p-3.5 rounded-2xl hover:bg-white/10 transition-all cursor-pointer group">
+<div class="flex justify-between items-start mb-2">
+<h4 class="text-sm font-bold text-white group-hover:text-primary transition-colors">Workout Plan</h4>
+<div class="flex items-center gap-1 text-[10px] text-amber-400">
+<span class="material-symbols-outlined text-xs fill-1">star</span> 5.0
+                                </div>
+</div>
+<div class="flex items-center gap-3 text-[10px] text-slate-500 mb-3">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">list_alt</span> 8 subtasks</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">group</span> 3k uses</span>
+</div>
+<button class="w-full py-2 bg-white/5 hover:bg-primary text-white text-[11px] font-bold rounded-xl transition-all border border-white/5">Use Template</button>
+</div>
+</div>
+<a class="text-center py-2 text-xs font-bold text-slate-500 hover:text-primary transition-colors flex items-center justify-center gap-1 group" href="#">
+                        Browse Community Templates 
+                        <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+<!-- Trending Topics / Social Energy -->
+<div class="glass-card rounded-2xl p-5 border-dashed border-white/10">
+<h3 class="text-xs font-black text-slate-500 uppercase tracking-widest mb-4">Trending in Social</h3>
+<div class="flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<span class="text-xs font-medium text-slate-300">#NoProcrastinationChallenge</span>
+<span class="text-[10px] text-primary font-bold">LIVE</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-xs font-medium text-slate-300">UX Design Group Study</span>
+<span class="text-[10px] text-slate-500">42 active</span>
+</div>
+</div>
+</div>
+</aside>
+</main>
+<!-- Floating Action Button -->
+<button class="fixed bottom-8 right-8 size-16 gradient-primary rounded-full shadow-2xl shadow-primary/50 flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</div>
+</body></html>

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SmartTask | Profile - Alex Thompson</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#6c5ce7",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0a0a1a",
+                        "card-dark": "#141432",
+                        "urgency": "#ff6b6b",
+                        "success-ai": "#00d2d3",
+                        "completion": "#00b894",
+                        "muted-lavender": "#b8b8d4"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "sans": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "3xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass {
+            background: rgba(20, 20, 50, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(108, 92, 231, 0.1);
+        }
+        .gradient-border {
+            background: linear-gradient(#0a0a1a, #0a0a1a) padding-box,
+                        linear-gradient(135deg, #6c5ce7, #00d2d3) border-box;
+            border: 3px solid transparent;
+        }
+        .cta-gradient {
+            background: linear-gradient(135deg, #6c5ce7 0%, #4834d4 100%);
+        }
+        .heatmap-cell {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- Sticky Nav -->
+<nav class="sticky top-0 z-50 w-full border-b border-primary/10 glass">
+<div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-white text-2xl">bolt</span>
+</div>
+<h1 class="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">SmartTask</h1>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Tasks</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Social</a>
+<a class="text-sm font-semibold text-success-ai transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-sm">auto_awesome</span> AI Assistant
+                </a>
+</div>
+<div class="flex items-center gap-5">
+<button class="relative p-2 rounded-xl bg-primary/10 text-primary hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-urgency rounded-full border-2 border-background-dark"></span>
+</button>
+<div class="w-10 h-10 rounded-full gradient-border p-0.5 overflow-hidden">
+<img class="w-full h-full rounded-full object-cover" data-alt="User avatar of Alex Thompson" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVoUBaNetVh8TWCd5c8UlEGKrNHRkky9lWR-YUg4hTFmrAazmPkvEmq7n3jLf2vGRck2Jg5mcukRRj3LTsVlIZH3S5hdiLaivxTnie59ErOuFdSgxxxg7UEda2OrGZa8WOjPs5VxrRTuigVwPHuNqiJdZVtVZIHPWfasdcbxZ4Z7INFTShiwx7oDUFut8AWk7tlsLsGD76QcWsoGMbeb9uSqrTDFWFvwayTyXaDWgXhm1KYhKc7nZhB7fzdWbc8XGI_ZmEIF7VOFaD"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="max-w-7xl mx-auto px-6 py-12 space-y-12">
+<!-- Profile Hero -->
+<section class="flex flex-col md:flex-row items-center md:items-start gap-10">
+<div class="relative">
+<div class="w-32 h-32 md:w-40 md:h-40 rounded-full gradient-border p-1">
+<img class="w-full h-full rounded-full object-cover" data-alt="Large profile picture of Alex Thompson" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATCqMboCHyqGx3Hndqp-z-X3edQjj9UOOOGhS5B0U054aF59zVHDUNCLfnpwNkDPdblzH7gIzdTa_1MzGRfCsm501rL3RY_zFYrQ-0s4fcI3saYFONu3_ugve6iKzuOxbdDZuxJBNKEv6cLlHQRuOc7EQPome5Yq-1q2nbrKL7iZ32RFb4_AfDT9iJMZ9AmUchPb-XyavYzpRdF1Bsr3UvO2s5lOgoEVVC0m7Wl-aGX_V8Z8toLHAfmF4TSRDeoNjvKYHEFRXJ6oqJ"/>
+</div>
+<div class="absolute bottom-4 right-4 w-6 h-6 bg-completion border-4 border-background-dark rounded-full"></div>
+</div>
+<div class="flex-1 text-center md:text-left space-y-6">
+<div>
+<h2 class="text-4xl md:text-5xl font-extrabold text-white">Alex Thompson</h2>
+<p class="text-primary font-medium text-lg mt-1">@alexthompson</p>
+</div>
+<p class="text-muted-lavender text-lg max-w-2xl leading-relaxed">
+                    Computer Science student | Productivity enthusiast | Building better habits one task at a time 🚀
+                </p>
+<div class="flex flex-wrap justify-center md:justify-start gap-8 py-2">
+<div class="text-center md:text-left">
+<span class="block text-2xl font-bold text-white">342</span>
+<span class="text-muted-lavender text-sm uppercase tracking-wider font-semibold">Tasks</span>
+</div>
+<div class="text-center md:text-left">
+<span class="block text-2xl font-bold text-white">14 <span class="text-orange-500">🔥</span></span>
+<span class="text-muted-lavender text-sm uppercase tracking-wider font-semibold">Day Streak</span>
+</div>
+<div class="text-center md:text-left">
+<span class="block text-2xl font-bold text-white">12</span>
+<span class="text-muted-lavender text-sm uppercase tracking-wider font-semibold">Friends</span>
+</div>
+<div class="text-center md:text-left">
+<span class="block text-2xl font-bold text-white">3</span>
+<span class="text-muted-lavender text-sm uppercase tracking-wider font-semibold">Groups</span>
+</div>
+</div>
+<div class="flex flex-wrap justify-center md:justify-start gap-4 pt-2">
+<button class="px-8 py-3 bg-white/5 border border-white/10 hover:bg-white/10 transition-all text-white font-bold rounded-xl text-sm uppercase tracking-widest">
+                        Edit Profile
+                    </button>
+<button class="px-8 py-3 cta-gradient text-white font-bold rounded-xl text-sm shadow-xl shadow-primary/25 uppercase tracking-widest">
+                        Share Profile
+                    </button>
+</div>
+</div>
+</section>
+<!-- Achievements -->
+<section class="space-y-6">
+<div class="flex items-center justify-between">
+<h3 class="text-3xl font-bold text-white flex items-center gap-3">
+<span class="material-symbols-outlined text-yellow-500 text-3xl">emoji_events</span> Achievements
+                    <span class="text-base font-normal text-muted-lavender ml-2">(12/24)</span>
+</h3>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+<!-- Earned Badges -->
+<div class="glass p-5 rounded-2xl flex flex-col items-center gap-3 group hover:border-primary/40 transition-all border-b-4 border-b-primary shadow-lg shadow-primary/5">
+<div class="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-4xl">wb_twilight</span>
+</div>
+<p class="text-sm font-bold text-center text-white">Early Bird</p>
+</div>
+<div class="glass p-5 rounded-2xl flex flex-col items-center gap-3 group hover:border-orange-500/40 transition-all border-b-4 border-b-orange-500">
+<div class="w-16 h-16 rounded-full bg-orange-500/20 flex items-center justify-center text-orange-500">
+<span class="material-symbols-outlined text-4xl">local_fire_department</span>
+</div>
+<p class="text-sm font-bold text-center text-white">Streak Master</p>
+</div>
+<div class="glass p-5 rounded-2xl flex flex-col items-center gap-3 group hover:border-pink-500/40 transition-all border-b-4 border-b-pink-500">
+<div class="w-16 h-16 rounded-full bg-pink-500/20 flex items-center justify-center text-pink-500">
+<span class="material-symbols-outlined text-4xl">diversity_3</span>
+</div>
+<p class="text-sm font-bold text-center text-white">Social Butterfly</p>
+</div>
+<div class="glass p-5 rounded-2xl flex flex-col items-center gap-3 group hover:border-completion/40 transition-all border-b-4 border-b-completion">
+<div class="w-16 h-16 rounded-full bg-completion/20 flex items-center justify-center text-completion">
+<span class="material-symbols-outlined text-4xl">architecture</span>
+</div>
+<p class="text-sm font-bold text-center text-white">Template Creator</p>
+</div>
+<div class="glass p-5 rounded-2xl flex flex-col items-center gap-3 group hover:border-success-ai/40 transition-all border-b-4 border-b-success-ai">
+<div class="w-16 h-16 rounded-full bg-success-ai/20 flex items-center justify-center text-success-ai">
+<span class="material-symbols-outlined text-4xl">neurology</span>
+</div>
+<p class="text-sm font-bold text-center text-white">AI Explorer</p>
+</div>
+<div class="glass p-5 rounded-2xl flex flex-col items-center gap-3 group hover:border-primary/40 transition-all border-b-4 border-b-primary">
+<div class="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-4xl">calendar_month</span>
+</div>
+<p class="text-sm font-bold text-center text-white">Week Warrior</p>
+</div>
+<!-- Locked Badges -->
+<div class="glass p-5 rounded-2xl flex flex-col items-center gap-3 opacity-40 grayscale group hover:grayscale-0 hover:opacity-100 transition-all">
+<div class="w-16 h-16 rounded-full bg-slate-700/40 flex items-center justify-center text-slate-400">
+<span class="material-symbols-outlined text-4xl">military_tech</span>
+</div>
+<div class="w-full text-center">
+<p class="text-xs font-bold text-white mb-1">Centurion</p>
+<div class="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[45%]"></div>
+</div>
+</div>
+</div>
+<div class="glass p-5 rounded-2xl flex flex-col items-center gap-3 opacity-40 grayscale group hover:grayscale-0 hover:opacity-100 transition-all">
+<div class="w-16 h-16 rounded-full bg-slate-700/40 flex items-center justify-center text-slate-400">
+<span class="material-symbols-outlined text-4xl">timer</span>
+</div>
+<div class="w-full text-center">
+<p class="text-xs font-bold text-white mb-1">Marathon Streak</p>
+<div class="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[80%]"></div>
+</div>
+</div>
+</div>
+<div class="glass p-5 rounded-2xl flex flex-col items-center gap-3 opacity-40 grayscale group hover:grayscale-0 hover:opacity-100 transition-all">
+<div class="w-16 h-16 rounded-full bg-slate-700/40 flex items-center justify-center text-slate-400">
+<span class="material-symbols-outlined text-4xl">groups_2</span>
+</div>
+<div class="w-full text-center">
+<p class="text-xs font-bold text-white mb-1">Team Leader</p>
+<div class="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[20%]"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Productivity Stats -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<div class="glass p-8 rounded-3xl space-y-8">
+<h4 class="text-xl font-bold text-white">Weekly Overview</h4>
+<div class="flex items-end justify-between h-48 gap-2">
+<div class="flex flex-col items-center gap-2 flex-1">
+<div class="w-full bg-primary/20 rounded-t-lg h-[40%]"></div>
+<span class="text-[10px] text-muted-lavender font-bold">MON</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1">
+<div class="w-full bg-primary/40 rounded-t-lg h-[65%]"></div>
+<span class="text-[10px] text-muted-lavender font-bold">TUE</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1">
+<div class="w-full bg-primary/60 rounded-t-lg h-[50%]"></div>
+<span class="text-[10px] text-muted-lavender font-bold">WED</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1">
+<div class="w-full bg-primary/80 rounded-t-lg h-[85%]"></div>
+<span class="text-[10px] text-muted-lavender font-bold">THU</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1">
+<div class="w-full bg-primary rounded-t-lg h-[95%]"></div>
+<span class="text-[10px] text-white font-extrabold">FRI</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1">
+<div class="w-full bg-primary/30 rounded-t-lg h-[25%]"></div>
+<span class="text-[10px] text-muted-lavender font-bold">SAT</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1">
+<div class="w-full bg-primary/20 rounded-t-lg h-[15%]"></div>
+<span class="text-[10px] text-muted-lavender font-bold">SUN</span>
+</div>
+</div>
+</div>
+<div class="glass p-8 rounded-3xl space-y-8">
+<h4 class="text-xl font-bold text-white">Category Breakdown</h4>
+<div class="flex items-center gap-12">
+<div class="relative w-32 h-32">
+<svg class="w-full h-full rotate-[-90deg]" viewbox="0 0 36 36">
+<circle class="stroke-slate-800" cx="18" cy="18" fill="none" r="16" stroke-width="4"></circle>
+<circle class="stroke-primary" cx="18" cy="18" fill="none" r="16" stroke-dasharray="35, 100" stroke-dashoffset="0" stroke-width="4"></circle>
+<circle class="stroke-success-ai" cx="18" cy="18" fill="none" r="16" stroke-dasharray="30, 100" stroke-dashoffset="-35" stroke-width="4"></circle>
+<circle class="stroke-completion" cx="18" cy="18" fill="none" r="16" stroke-dasharray="25, 100" stroke-dashoffset="-65" stroke-width="4"></circle>
+<circle class="stroke-urgency" cx="18" cy="18" fill="none" r="16" stroke-dasharray="10, 100" stroke-dashoffset="-90" stroke-width="4"></circle>
+</svg>
+</div>
+<div class="flex-1 grid grid-cols-2 gap-x-6 gap-y-4">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<span class="text-xs font-bold text-white">Study 35%</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-success-ai"></div>
+<span class="text-xs font-bold text-white">Work 30%</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-completion"></div>
+<span class="text-xs font-bold text-white">Personal 25%</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-urgency"></div>
+<span class="text-xs font-bold text-white">Health 10%</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Activity Heatmap -->
+<section class="glass p-8 rounded-3xl space-y-6">
+<h4 class="text-xl font-bold text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">calendar_view_month</span> Activity Heatmap
+            </h4>
+<div class="flex flex-col gap-1 overflow-x-auto pb-4">
+<div class="flex gap-1">
+<!-- Week indicators -->
+<div class="flex flex-wrap gap-1 min-w-max">
+<!-- Simplified Heatmap representation (grid of cells) -->
+<div class="grid grid-flow-col grid-rows-7 gap-1">
+<!-- Column 1 -->
+<div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-primary/20"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-primary/10"></div><div class="heatmap-cell bg-slate-800"></div>
+<!-- Column 2 -->
+<div class="heatmap-cell bg-primary/40"></div><div class="heatmap-cell bg-primary/80 shadow-[0_0_8px_rgba(108,92,231,0.5)]"></div><div class="heatmap-cell bg-primary/60"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-primary/20"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-slate-800"></div>
+<!-- Repeat logic visually for 12 columns -->
+<div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-primary/10"></div><div class="heatmap-cell bg-primary/20"></div><div class="heatmap-cell bg-primary/40"></div><div class="heatmap-cell bg-primary/10"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-slate-800"></div>
+<div class="heatmap-cell bg-primary/10"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-primary/60"></div><div class="heatmap-cell bg-primary/100 shadow-[0_0_10px_rgba(108,92,231,0.8)]"></div><div class="heatmap-cell bg-primary/60"></div><div class="heatmap-cell bg-primary/20"></div><div class="heatmap-cell bg-slate-800"></div>
+<div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-primary/20"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-primary/10"></div><div class="heatmap-cell bg-slate-800"></div>
+<div class="heatmap-cell bg-primary/40"></div><div class="heatmap-cell bg-primary/80"></div><div class="heatmap-cell bg-primary/60"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-primary/20"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-slate-800"></div>
+<div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-primary/10"></div><div class="heatmap-cell bg-primary/20"></div><div class="heatmap-cell bg-primary/40"></div><div class="heatmap-cell bg-primary/10"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-slate-800"></div>
+<div class="heatmap-cell bg-primary/10"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-primary/60"></div><div class="heatmap-cell bg-primary/80"></div><div class="heatmap-cell bg-primary/60"></div><div class="heatmap-cell bg-primary/20"></div><div class="heatmap-cell bg-slate-800"></div>
+<div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-primary/20"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-primary/10"></div><div class="heatmap-cell bg-slate-800"></div>
+<div class="heatmap-cell bg-primary/40"></div><div class="heatmap-cell bg-primary/80"></div><div class="heatmap-cell bg-primary/60"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-primary/20"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-slate-800"></div>
+<div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-primary/10"></div><div class="heatmap-cell bg-primary/20"></div><div class="heatmap-cell bg-primary/40"></div><div class="heatmap-cell bg-primary/10"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-slate-800"></div>
+<div class="heatmap-cell bg-primary/10"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-primary/60"></div><div class="heatmap-cell bg-primary/80"></div><div class="heatmap-cell bg-primary/60"></div><div class="heatmap-cell bg-primary/20"></div><div class="heatmap-cell bg-slate-800"></div>
+<div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-primary/20"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-primary/10"></div><div class="heatmap-cell bg-slate-800"></div>
+<div class="heatmap-cell bg-primary/40"></div><div class="heatmap-cell bg-primary/80 shadow-[0_0_8px_rgba(108,92,231,0.5)]"></div><div class="heatmap-cell bg-primary/60"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-primary/20"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-slate-800"></div>
+<div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-primary/10"></div><div class="heatmap-cell bg-primary/20"></div><div class="heatmap-cell bg-primary/40"></div><div class="heatmap-cell bg-primary/10"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-slate-800"></div>
+<div class="heatmap-cell bg-primary/10"></div><div class="heatmap-cell bg-slate-800"></div><div class="heatmap-cell bg-primary/60"></div><div class="heatmap-cell bg-primary/100 shadow-[0_0_10px_rgba(108,92,231,0.8)]"></div><div class="heatmap-cell bg-primary/60"></div><div class="heatmap-cell bg-primary/20"></div><div class="heatmap-cell bg-slate-800"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-end gap-2 text-xs font-bold text-muted-lavender uppercase tracking-widest">
+<span>Less</span>
+<div class="heatmap-cell bg-slate-800"></div>
+<div class="heatmap-cell bg-primary/20"></div>
+<div class="heatmap-cell bg-primary/60"></div>
+<div class="heatmap-cell bg-primary"></div>
+<span>More</span>
+</div>
+</section>
+<!-- Recent Activity -->
+<section class="glass p-8 rounded-3xl space-y-8">
+<h4 class="text-xl font-bold text-white">Recent Activity</h4>
+<div class="space-y-6 relative before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-white/5">
+<div class="flex gap-6 relative">
+<div class="w-6 h-6 rounded-full bg-completion flex items-center justify-center z-10 shadow-[0_0_10px_rgba(0,184,148,0.4)]">
+<span class="material-symbols-outlined text-white text-[14px]">check</span>
+</div>
+<div class="flex-1">
+<p class="text-white font-bold">Completed Algorithms Homework</p>
+<p class="text-muted-lavender text-sm mt-1">2 hours ago • <span class="text-primary">Study</span></p>
+</div>
+</div>
+<div class="flex gap-6 relative">
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center z-10 shadow-[0_0_10px_rgba(108,92,231,0.4)]">
+<span class="material-symbols-outlined text-white text-[14px]">emoji_events</span>
+</div>
+<div class="flex-1">
+<p class="text-white font-bold">Earned "Week Warrior" Achievement</p>
+<p class="text-muted-lavender text-sm mt-1">Yesterday • <span class="text-primary">Achievement</span></p>
+</div>
+</div>
+<div class="flex gap-6 relative">
+<div class="w-6 h-6 rounded-full bg-success-ai flex items-center justify-center z-10 shadow-[0_0_10px_rgba(0,210,211,0.4)]">
+<span class="material-symbols-outlined text-white text-[14px]">auto_awesome</span>
+</div>
+<div class="flex-1">
+<p class="text-white font-bold">Generated AI Study Plan for Finals</p>
+<p class="text-muted-lavender text-sm mt-1">2 days ago • <span class="text-success-ai">AI Assistant</span></p>
+</div>
+</div>
+<div class="flex gap-6 relative">
+<div class="w-6 h-6 rounded-full bg-completion flex items-center justify-center z-10 shadow-[0_0_10px_rgba(0,184,148,0.4)]">
+<span class="material-symbols-outlined text-white text-[14px]">check</span>
+</div>
+<div class="flex-1">
+<p class="text-white font-bold">Completed Gym Session</p>
+<p class="text-muted-lavender text-sm mt-1">3 days ago • <span class="text-urgency">Health</span></p>
+</div>
+</div>
+<div class="flex gap-6 relative">
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center z-10 shadow-[0_0_10px_rgba(108,92,231,0.4)]">
+<span class="material-symbols-outlined text-white text-[14px]">person_add</span>
+</div>
+<div class="flex-1">
+<p class="text-white font-bold">Joined "Web Dev 2024" Study Group</p>
+<p class="text-muted-lavender text-sm mt-1">4 days ago • <span class="text-pink-500">Social</span></p>
+</div>
+</div>
+</div>
+</section>
+<!-- Settings Quick Access -->
+<section class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="glass p-6 rounded-2xl flex flex-col justify-between gap-4 group hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl">notifications</span>
+<div>
+<h5 class="text-white font-bold">Notifications</h5>
+<a class="text-xs font-bold text-primary uppercase tracking-widest mt-2 block hover:underline" href="#">Configure</a>
+</div>
+</div>
+<div class="glass p-6 rounded-2xl flex flex-col justify-between gap-4 group hover:bg-success-ai/10 transition-colors">
+<span class="material-symbols-outlined text-success-ai text-3xl">palette</span>
+<div>
+<h5 class="text-white font-bold">Appearance</h5>
+<a class="text-xs font-bold text-success-ai uppercase tracking-widest mt-2 block hover:underline" href="#">Configure</a>
+</div>
+</div>
+<div class="glass p-6 rounded-2xl flex flex-col justify-between gap-4 group hover:bg-urgency/10 transition-colors">
+<span class="material-symbols-outlined text-urgency text-3xl">lock</span>
+<div>
+<h5 class="text-white font-bold">Privacy</h5>
+<a class="text-xs font-bold text-urgency uppercase tracking-widest mt-2 block hover:underline" href="#">Configure</a>
+</div>
+</div>
+<div class="glass p-6 rounded-2xl flex flex-col justify-between gap-4 group hover:bg-completion/10 transition-colors">
+<span class="material-symbols-outlined text-completion text-3xl">extension</span>
+<div>
+<h5 class="text-white font-bold">Integrations</h5>
+<a class="text-xs font-bold text-completion uppercase tracking-widest mt-2 block hover:underline" href="#">Configure</a>
+</div>
+</div>
+</section>
+</main>
+<footer class="max-w-7xl mx-auto px-6 py-12 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
+<div class="flex items-center gap-2 opacity-50">
+<div class="w-6 h-6 bg-slate-500 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[14px]">bolt</span>
+</div>
+<p class="text-sm font-bold text-slate-500">SMARTTASK © 2024</p>
+</div>
+<div class="flex gap-8">
+<a class="text-sm font-bold text-slate-500 hover:text-white transition-colors" href="#">Terms</a>
+<a class="text-sm font-bold text-slate-500 hover:text-white transition-colors" href="#">Privacy</a>
+<a class="text-sm font-bold text-slate-500 hover:text-white transition-colors" href="#">Support</a>
+</div>
+</footer>
+</body></html>

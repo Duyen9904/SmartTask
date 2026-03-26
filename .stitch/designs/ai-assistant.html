@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SmartTask AI Assistant</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#6c5ce7",
+                        "accent-coral": "#ff6b6b",
+                        "accent-mint": "#00d2d3",
+                        "accent-emerald": "#00b894",
+                        "background-dark": "#0a0a1a",
+                        "card-dark": "#141432",
+                        "text-secondary": "#b8b8d4"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass {
+            background: rgba(20, 20, 50, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-mint {
+            background: rgba(0, 210, 211, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 210, 211, 0.2);
+        }
+        .gradient-text-ai {
+            background: linear-gradient(90deg, #6c5ce7, #00d2d3, #00b894);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .mint-glow {
+            box-shadow: 0 0 15px rgba(0, 210, 211, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-background-dark font-display text-slate-100 min-h-screen">
+<!-- Sticky Navigation -->
+<nav class="sticky top-0 z-50 glass border-b border-white/10 px-6 py-3">
+<div class="max-w-[1280px] mx-auto flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="size-10 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-2xl">bolt</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight">SmartTask</h1>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-text-secondary hover:text-white transition-colors text-sm font-medium" href="#">Dashboard</a>
+<a class="text-text-secondary hover:text-white transition-colors text-sm font-medium" href="#">Tasks</a>
+<a class="text-text-secondary hover:text-white transition-colors text-sm font-medium" href="#">Social</a>
+<a class="text-accent-mint font-bold text-sm flex items-center gap-1 mint-glow bg-accent-mint/10 px-3 py-1.5 rounded-full" href="#">
+<span class="material-symbols-outlined text-sm">auto_awesome</span> AI Assistant
+                </a>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-text-secondary hover:text-white relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-accent-coral rounded-full"></span>
+</button>
+<div class="size-10 rounded-full border-2 border-primary/50 p-0.5 overflow-hidden">
+<img alt="User Avatar" class="w-full h-full rounded-full object-cover" data-alt="Portrait of a young male professional" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfG5S3g3rLjVjh8FyVAyYxzUZJmIE6sIDtE2fc5720aLoIrZicdDRM6lF2a_QhtXj_fU5ivQ6zxnwHbiDs02E6SrPncOxMNOXCDBEvPwXw6k-FPuny-bDJXqfBgJyfPYeNtVFLLLlQT9JIj356ITOg491RWzgaUAszPidqkGp1MdHGO7I_VtJwbJSEW45Byqgg8jDicAGZgAdUjmIXwEzuh1dWvtlRFwtKzw3VDMXk-VhaI9Siuu1ggp_CMAIrOYid-XHUMnz0DlR_"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="max-w-[1280px] mx-auto px-6 py-12">
+<!-- Header -->
+<header class="mb-12">
+<div class="flex items-center gap-3 mb-2">
+<h2 class="text-5xl md:text-6xl font-extrabold tracking-tighter">
+<span class="gradient-text-ai">AI</span> Assistant <span class="text-accent-mint inline-block">✨</span>
+</h2>
+</div>
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<p class="text-xl text-text-secondary">Your personal productivity companion</p>
+<div class="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-full border border-white/10">
+<span class="flex items-center gap-1.5 text-accent-emerald text-sm font-bold">
+<span class="size-2 bg-accent-emerald rounded-full"></span> Online
+                    </span>
+<span class="w-px h-4 bg-white/20"></span>
+<span class="text-xs font-mono text-text-secondary uppercase tracking-widest">GPT-4 Powered</span>
+</div>
+</div>
+</header>
+<!-- Two-Panel Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-8 items-start">
+<!-- Left: Chat Interface -->
+<section class="glass-mint rounded-2xl flex flex-col min-h-[750px] overflow-hidden shadow-2xl">
+<div class="flex-1 p-6 space-y-6 overflow-y-auto">
+<!-- AI Message -->
+<div class="flex gap-4">
+<div class="size-10 rounded-xl bg-accent-mint/20 border border-accent-mint/30 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-accent-mint">auto_awesome</span>
+</div>
+<div class="space-y-4 max-w-[85%]">
+<div class="bg-card-dark border border-white/10 p-4 rounded-xl rounded-tl-none">
+<p class="text-slate-200 leading-relaxed">Good evening, Alex! 👋 Based on your patterns, I've drafted a high-performance schedule for tomorrow. Would you like to see it?</p>
+</div>
+</div>
+</div>
+<!-- User Message -->
+<div class="flex gap-4 justify-end">
+<div class="space-y-4 max-w-[85%]">
+<div class="bg-primary text-white p-4 rounded-xl rounded-tr-none shadow-lg">
+<p class="leading-relaxed">Yes, show me tomorrow's plan.</p>
+</div>
+</div>
+<div class="size-10 rounded-xl bg-primary/20 border border-primary/30 flex items-center justify-center shrink-0">
+<img alt="Alex avatar" class="size-8 rounded-lg" data-alt="Small cartoon avatar of a person" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbPD2vC_CHpjQ-NWAzKMu8e0CE0WMBcClNJR0Vq2dp7EHzPMFSmwrgxYIg9FjaGJUM3gl-VYlOfdn-YQLR5NsA93nmQ6VEEe7zzb50io56cqOjVluIKMXXB54votpR_oc7TefvTVKUZwCMktB2YpSNwk4ab6R_Vf_f4UvThWck2hGBE7VoSM4CDBqRCFVZQ1MueGp5OB-UIqaucxs5FdJM5T3y7WlEXRcjryLZ-KDkN0-lqKOgFs6jqe7o8iudu5X95dWJWjd-athE"/>
+</div>
+</div>
+<!-- AI Schedule Card -->
+<div class="flex gap-4">
+<div class="size-10 rounded-xl bg-accent-mint/20 border border-accent-mint/30 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-accent-mint">auto_awesome</span>
+</div>
+<div class="space-y-4 w-full max-w-[85%]">
+<div class="bg-card-dark border border-white/10 p-5 rounded-xl rounded-tl-none shadow-xl">
+<h4 class="text-sm font-bold text-accent-mint mb-4 uppercase tracking-wider flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">calendar_today</span> Tomorrow's Optimized Schedule
+                                </h4>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-2 rounded bg-white/5 border border-white/5 hover:border-accent-mint/30 transition-all">
+<div class="flex items-center gap-3">
+<span class="text-xs font-mono text-text-secondary w-12">09:00</span>
+<span class="font-medium">📐 Advanced Math</span>
+</div>
+<span class="text-[10px] px-2 py-0.5 bg-primary/20 text-primary rounded border border-primary/30">Priority</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded bg-white/5">
+<div class="flex items-center gap-3">
+<span class="text-xs font-mono text-text-secondary w-12">10:30</span>
+<span class="font-medium text-text-secondary">☕ Short Break</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-2 rounded bg-white/5">
+<div class="flex items-center gap-3">
+<span class="text-xs font-mono text-text-secondary w-12">11:00</span>
+<span class="font-medium">👥 Team Standup</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-2 rounded bg-white/5">
+<div class="flex items-center gap-3">
+<span class="text-xs font-mono text-text-secondary w-12">13:00</span>
+<span class="font-medium text-accent-emerald">📖 Study Group w/ Sarah</span>
+</div>
+<span class="material-symbols-outlined text-accent-emerald text-sm">groups</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded bg-white/5">
+<div class="flex items-center gap-3">
+<span class="text-xs font-mono text-text-secondary w-12">16:00</span>
+<span class="font-medium">💪 Daily Workout</span>
+</div>
+<span class="material-symbols-outlined text-accent-coral text-sm">fitness_center</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- AI Mood Insight -->
+<div class="flex gap-4">
+<div class="size-10 rounded-xl bg-accent-mint/20 border border-accent-mint/30 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-accent-mint">auto_awesome</span>
+</div>
+<div class="space-y-4 max-w-[85%]">
+<div class="bg-card-dark border border-white/10 p-4 rounded-xl rounded-tl-none">
+<p class="text-slate-200 leading-relaxed">I've also noticed your mood tends to dip around 3 PM on Tuesdays. I've scheduled your workout then to boost your dopamine levels. Does this look good?</p>
+</div>
+</div>
+</div>
+<!-- User Confirmation -->
+<div class="flex gap-4 justify-end">
+<div class="space-y-4 max-w-[85%]">
+<div class="bg-primary text-white p-4 rounded-xl rounded-tr-none shadow-lg">
+<p class="leading-relaxed">That looks great! Apply it.</p>
+</div>
+</div>
+<div class="size-10 rounded-xl bg-primary/20 border border-primary/30 flex items-center justify-center shrink-0">
+<img alt="Alex avatar" class="size-8 rounded-lg" data-alt="Small cartoon avatar of a person" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjyT-Mh5NVvEJku_aIkfLKSrOKWALp0bDak1namJ7CiDCy9LKhF_-jiL0eh-Y_3GHnh30Qnlmr7NDLhd1kvy2rgeyriIURo5xWEIOYujmkhMCJpOfK0SbRmff3RmMhCCyWjA2xhmysnLzAcuYgEBugBaVPGZJ7q8F1P8dG5b8yrYj8Xa7_8f8AuzSZ4-W_v9-X7xjnTOd6qf49d8iWv9bbR0om8BFVrFthMv_-nikvH12LLKsS1bh8EFxfkw2nxfbUIpNB2S1V3Fdi"/>
+</div>
+</div>
+<!-- AI Final -->
+<div class="flex gap-4">
+<div class="size-10 rounded-xl bg-accent-mint/20 border border-accent-mint/30 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-accent-mint">auto_awesome</span>
+</div>
+<div class="space-y-4 max-w-[85%]">
+<div class="bg-card-dark border border-accent-emerald/30 border p-4 rounded-xl rounded-tl-none">
+<p class="text-slate-200 leading-relaxed">✅ Schedule applied! Your focus mode will automatically trigger at 09:00 AM. Good luck, Alex!</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Chat Input -->
+<div class="p-6 border-t border-white/10 bg-card-dark/50">
+<div class="relative flex items-center">
+<div class="absolute left-4 flex items-center gap-2 text-text-secondary">
+<button class="hover:text-accent-mint transition-colors"><span class="material-symbols-outlined text-xl">attach_file</span></button>
+<button class="hover:text-accent-mint transition-colors"><span class="material-symbols-outlined text-xl">mic</span></button>
+</div>
+<input class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-24 pr-16 focus:outline-none focus:ring-2 focus:ring-accent-mint/30 focus:border-accent-mint/50 transition-all text-sm" placeholder="Ask me anything..." type="text"/>
+<button class="absolute right-2 size-10 bg-gradient-to-tr from-primary to-accent-mint rounded-xl flex items-center justify-center text-white shadow-lg hover:brightness-110 transition-all">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Right: Tools & Insights -->
+<section class="space-y-8">
+<!-- Quick Actions Grid -->
+<div class="grid grid-cols-2 gap-4">
+<div class="glass p-5 rounded-2xl hover:border-accent-mint/40 transition-all group">
+<span class="material-symbols-outlined text-accent-mint mb-3 group-hover:scale-110 transition-transform">schedule_send</span>
+<h4 class="font-bold mb-1">Generate Schedule</h4>
+<p class="text-xs text-text-secondary mb-4">Auto-plan your next 24 hours.</p>
+<button class="w-full py-2 bg-white/5 hover:bg-white/10 rounded-lg text-xs font-bold uppercase tracking-widest transition-colors">Start</button>
+</div>
+<div class="glass p-5 rounded-2xl hover:border-primary/40 transition-all group">
+<span class="material-symbols-outlined text-primary mb-3 group-hover:scale-110 transition-transform">monitoring</span>
+<h4 class="font-bold mb-1">Analyze Habits</h4>
+<p class="text-xs text-text-secondary mb-4">Deep dive into focus patterns.</p>
+<button class="w-full py-2 bg-white/5 hover:bg-white/10 rounded-lg text-xs font-bold uppercase tracking-widest transition-colors">Start</button>
+</div>
+<div class="glass p-5 rounded-2xl hover:border-accent-emerald/40 transition-all group">
+<span class="material-symbols-outlined text-accent-emerald mb-3 group-hover:scale-110 transition-transform">lightbulb</span>
+<h4 class="font-bold mb-1">Suggest Tasks</h4>
+<p class="text-xs text-text-secondary mb-4">AI-curated backlog tasks.</p>
+<button class="w-full py-2 bg-white/5 hover:bg-white/10 rounded-lg text-xs font-bold uppercase tracking-widest transition-colors">Start</button>
+</div>
+<div class="glass p-5 rounded-2xl hover:border-accent-coral/40 transition-all group">
+<span class="material-symbols-outlined text-accent-coral mb-3 group-hover:scale-110 transition-transform">timer</span>
+<h4 class="font-bold mb-1">Focus Mode</h4>
+<p class="text-xs text-text-secondary mb-4">Lock distractions immediately.</p>
+<button class="w-full py-2 bg-white/5 hover:bg-white/10 rounded-lg text-xs font-bold uppercase tracking-widest transition-colors">Start</button>
+</div>
+</div>
+<!-- AI Insights Card -->
+<div class="glass p-6 rounded-2xl">
+<div class="flex items-center gap-3 mb-6">
+<span class="text-2xl">🧠</span>
+<h3 class="text-xl font-bold">Your Insights This Week</h3>
+</div>
+<ul class="space-y-4">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-accent-mint mt-0.5">trending_up</span>
+<p class="text-sm text-slate-300">Peak productivity reached between <span class="text-white font-bold">9:00 AM - 11:30 AM</span>.</p>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-0.5">check_circle</span>
+<p class="text-sm text-slate-300">Completed <span class="text-white font-bold">15 tasks</span> in the 'Study' category (+20% vs last week).</p>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-accent-coral mt-0.5">sentiment_dissatisfied</span>
+<p class="text-sm text-slate-300">Mood correlation: Late night work sessions lead to 40% lower efficiency the next day.</p>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-accent-emerald mt-0.5">tips_and_updates</span>
+<p class="text-sm text-slate-300">Recommendation: Morning workout increased your focus by 2.5 hours on Wednesday.</p>
+</li>
+</ul>
+</div>
+<!-- Behavior Patterns / Mini Stats -->
+<div class="glass p-6 rounded-2xl relative overflow-hidden">
+<h4 class="text-sm font-bold uppercase tracking-widest text-text-secondary mb-6">Productivity Flow</h4>
+<div class="flex items-end justify-between h-32 gap-2 px-2">
+<!-- Simple visual bar chart representing activity -->
+<div class="w-full bg-white/10 rounded-t-sm h-[30%]"></div>
+<div class="w-full bg-primary/40 rounded-t-sm h-[60%]"></div>
+<div class="w-full bg-primary/80 rounded-t-sm h-[90%]"></div>
+<div class="w-full bg-accent-mint rounded-t-sm h-[100%]"></div>
+<div class="w-full bg-primary/60 rounded-t-sm h-[75%]"></div>
+<div class="w-full bg-white/10 rounded-t-sm h-[40%]"></div>
+<div class="w-full bg-white/5 rounded-t-sm h-[20%]"></div>
+<div class="w-full bg-primary/30 rounded-t-sm h-[55%]"></div>
+<div class="w-full bg-primary/70 rounded-t-sm h-[85%]"></div>
+<div class="w-full bg-accent-coral/40 rounded-t-sm h-[45%]"></div>
+</div>
+<div class="grid grid-cols-2 mt-6 pt-6 border-t border-white/5 gap-4">
+<div>
+<p class="text-[10px] text-text-secondary uppercase">Best Day</p>
+<p class="text-lg font-bold text-accent-mint">Tuesday</p>
+</div>
+<div>
+<p class="text-[10px] text-text-secondary uppercase">Avg Tasks/Day</p>
+<p class="text-lg font-bold">8.5</p>
+</div>
+</div>
+</div>
+<!-- Suggested Templates -->
+<div class="space-y-4">
+<h4 class="text-sm font-bold uppercase tracking-widest text-text-secondary px-2">Suggested Templates</h4>
+<div class="glass p-4 rounded-xl flex items-center justify-between group hover:bg-white/5 transition-colors">
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-lg bg-primary/20 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+<span class="material-symbols-outlined">work_history</span>
+</div>
+<div>
+<h5 class="font-bold text-sm">Deep Work Morning Block</h5>
+<p class="text-xs text-text-secondary">08:00 - 11:00 AM • High Focus</p>
+</div>
+</div>
+<button class="text-xs font-bold text-primary hover:text-white transition-colors">Apply Template</button>
+</div>
+<div class="glass p-4 rounded-xl flex items-center justify-between group hover:bg-white/5 transition-colors">
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-lg bg-accent-coral/20 flex items-center justify-center text-accent-coral group-hover:bg-accent-coral group-hover:text-white transition-all">
+<span class="material-symbols-outlined">bolt</span>
+</div>
+<div>
+<h5 class="font-bold text-sm">Afternoon Energy Boost</h5>
+<p class="text-xs text-text-secondary">03:00 - 04:30 PM • Movement</p>
+</div>
+</div>
+<button class="text-xs font-bold text-accent-coral hover:text-white transition-colors">Apply Template</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Background Decorative Elements -->
+<div class="fixed top-[-10%] right-[-10%] w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] pointer-events-none -z-10"></div>
+<div class="fixed bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-accent-mint/10 rounded-full blur-[120px] pointer-events-none -z-10"></div>
+</body></html>
