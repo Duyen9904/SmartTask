@@ -4,7 +4,7 @@
   "title": "SmartTask",
   "visibility": "PRIVATE",
   "createTime": "2026-03-19T11:49:23.969189Z",
-  "updateTime": "2026-03-19T11:49:23.969189Z",
+  "updateTime": "2026-03-28T10:17:57.621682Z",
   "projectType": "PROJECT_DESIGN",
   "origin": "STITCH",
   "deviceType": "DESKTOP",
@@ -19,90 +19,268 @@
     "index": {
       "id": "073b19ae3cd14e63977ab3206d4b1257",
       "sourceScreen": "projects/17722362334374491181/screens/073b19ae3cd14e63977ab3206d4b1257",
+      "title": "SmartTask Landing Page",
       "x": 0,
       "y": 0,
-      "width": 2560,
-      "height": 9238
+      "width": 1280,
+      "height": 4619
     },
-    "dashboard": {
-      "id": "beac673767644c82a712ccd4d8384698",
-      "sourceScreen": "projects/17722362334374491181/screens/beac673767644c82a712ccd4d8384698",
-      "x": 2700,
-      "y": 0,
-      "width": 2560,
-      "height": 3616
+    "enhanced-dashboard": {
+      "id": "f8ba0ac5e3d448a5ab4dcffc0452db99",
+      "sourceScreen": "projects/17722362334374491181/screens/f8ba0ac5e3d448a5ab4dcffc0452db99",
+      "title": "Enhanced SmartTask Dashboard with Calendar & Proofs",
+      "x": 28,
+      "y": 4814,
+      "width": 1280,
+      "height": 1999
     },
     "tasks": {
       "id": "dd51a9b29abd454a94264a4e139ae19a",
       "sourceScreen": "projects/17722362334374491181/screens/dd51a9b29abd454a94264a4e139ae19a",
-      "x": 5400,
-      "y": 0,
-      "width": 2560,
-      "height": 2048
+      "title": "Task Management",
+      "x": 0,
+      "y": 6939,
+      "width": 1280,
+      "height": 1024
     },
     "social": {
       "id": "da6993cd99cc4083b399f91edb98bf70",
       "sourceScreen": "projects/17722362334374491181/screens/da6993cd99cc4083b399f91edb98bf70",
-      "x": 8100,
-      "y": 0,
-      "width": 2560,
-      "height": 2888
+      "title": "Social Feed",
+      "x": 0,
+      "y": 8219,
+      "width": 1280,
+      "height": 1444
     },
     "ai-assistant": {
       "id": "8be37498e0ab4fd9bb3549f92b8421bb",
       "sourceScreen": "projects/17722362334374491181/screens/8be37498e0ab4fd9bb3549f92b8421bb",
-      "x": 10800,
-      "y": 0,
-      "width": 2816,
-      "height": 3148
+      "title": "AI Assistant",
+      "x": 0,
+      "y": 9919,
+      "width": 1280,
+      "height": 1430
     },
     "profile": {
       "id": "4d36aa633c594b91b2a75cedfb55a3ed",
       "sourceScreen": "projects/17722362334374491181/screens/4d36aa633c594b91b2a75cedfb55a3ed",
-      "x": 13756,
-      "y": 0,
-      "width": 2560,
-      "height": 4894
+      "title": "User Profile",
+      "x": 0,
+      "y": 11605,
+      "width": 1280,
+      "height": 2447
     },
     "onboarding": {
       "id": "737e59bb47e14fef8a13cdd5abcc90db",
       "sourceScreen": "projects/17722362334374491181/screens/737e59bb47e14fef8a13cdd5abcc90db",
-      "x": 16456,
-      "y": 0,
-      "width": 2816,
-      "height": 7692
+      "title": "Onboarding Flow",
+      "x": 519,
+      "y": 14189,
+      "width": 1280,
+      "height": 3496
     },
     "focus-mode": {
       "id": "ae6cff4bcc934eab879a948858998cf6",
       "sourceScreen": "projects/17722362334374491181/screens/ae6cff4bcc934eab879a948858998cf6",
-      "x": 19412,
-      "y": 0,
-      "width": 2560,
-      "height": 2998
+      "title": "Focus Mode",
+      "x": 0,
+      "y": 18061,
+      "width": 1280,
+      "height": 1499
     },
     "weekly-review": {
       "id": "7ff688c64ad54175b99ecb49ac7e2cb9",
       "sourceScreen": "projects/17722362334374491181/screens/7ff688c64ad54175b99ecb49ac7e2cb9",
-      "x": 22112,
-      "y": 0,
-      "width": 2560,
-      "height": 5312
-    },
-    "challenges": {
-      "id": "24a0dc2f7537454da5c603cd9c4c26ff",
-      "sourceScreen": "projects/17722362334374491181/screens/24a0dc2f7537454da5c603cd9c4c26ff",
-      "x": 24812,
-      "y": 0,
-      "width": 2560,
-      "height": 4066
+      "title": "Weekly Review",
+      "x": 0,
+      "y": 19816,
+      "width": 1280,
+      "height": 2656
     },
     "templates": {
       "id": "0decc162b6d9484eaf7c4bcb0e34d2d4",
       "sourceScreen": "projects/17722362334374491181/screens/0decc162b6d9484eaf7c4bcb0e34d2d4",
-      "x": 27512,
+      "title": "Task Templates",
+      "x": 0,
+      "y": 25017,
+      "width": 1280,
+      "height": 1947
+    },
+    "task-calendar": {
+      "id": "ddca45469e99464797bb7823edaff70c",
+      "sourceScreen": "projects/17722362334374491181/screens/ddca45469e99464797bb7823edaff70c",
+      "title": "Task Calendar",
+      "x": 1024,
+      "y": 27220,
+      "width": 1280,
+      "height": 1057
+    },
+    "refined-gantt": {
+      "id": "2cf87ee7a95947a2a192f5b091041e12",
+      "sourceScreen": "projects/17722362334374491181/screens/2cf87ee7a95947a2a192f5b091041e12",
+      "title": "Refined Gantt Chart",
+      "x": 5376,
       "y": 0,
-      "width": 2560,
-      "height": 3894
+      "width": 1280,
+      "height": 1158
+    },
+    "refined-kanban": {
+      "id": "8eb7704b006e426aa06175b24ea15938",
+      "sourceScreen": "projects/17722362334374491181/screens/8eb7704b006e426aa06175b24ea15938",
+      "title": "Refined Kanban Board",
+      "x": 1344,
+      "y": 0,
+      "width": 1280,
+      "height": 1024
+    },
+    "refined-calendar": {
+      "id": "38591130d1e648dd86d39b61f9c6c26f",
+      "sourceScreen": "projects/17722362334374491181/screens/38591130d1e648dd86d39b61f9c6c26f",
+      "title": "Refined Task Calendar",
+      "x": 8064,
+      "y": 0,
+      "width": 1280,
+      "height": 1024
+    },
+    "find-friends": {
+      "id": "a359fba71bb84e4f935c36aa431148db",
+      "sourceScreen": "projects/17722362334374491181/screens/a359fba71bb84e4f935c36aa431148db",
+      "title": "SmartTask Find Friends",
+      "x": 1344,
+      "y": 8219,
+      "width": 1280,
+      "height": 1334
+    },
+    "enhanced-task-collab": {
+      "id": "4692668c953348e099e2622c1e635c09",
+      "sourceScreen": "projects/17722362334374491181/screens/4692668c953348e099e2622c1e635c09",
+      "title": "Enhanced Task Management with Collaboration Requests",
+      "x": 5376,
+      "y": 6939,
+      "width": 1280,
+      "height": 1024
+    },
+    "create-task-modal": {
+      "id": "5958dd31407444e58d81d2413d62a7fb",
+      "sourceScreen": "projects/17722362334374491181/screens/5958dd31407444e58d81d2413d62a7fb",
+      "title": "SmartTask Create Task Modal",
+      "x": 6720,
+      "y": 6939,
+      "width": 1280,
+      "height": 1024
+    },
+    "task-chat-video": {
+      "id": "a480b01359214de79caf3c027fe639d5",
+      "sourceScreen": "projects/17722362334374491181/screens/a480b01359214de79caf3c027fe639d5",
+      "title": "Task-Specific Chat & Video Call Hub",
+      "x": 2688,
+      "y": 6939,
+      "width": 1280,
+      "height": 1024
+    },
+    "task-creation-calendar": {
+      "id": "ab387e832e004530beec086078ba88b0",
+      "sourceScreen": "projects/17722362334374491181/screens/ab387e832e004530beec086078ba88b0",
+      "title": "Task Creation from Calendar View",
+      "x": 8064,
+      "y": 6939,
+      "width": 1280,
+      "height": 1025
+    },
+    "task-mgmt-create-ui": {
+      "id": "33d543b28c504639bbffef00170782d9",
+      "sourceScreen": "projects/17722362334374491181/screens/33d543b28c504639bbffef00170782d9",
+      "title": "SmartTask Task Management (with Create UI)",
+      "x": 10752,
+      "y": 6939,
+      "width": 1280,
+      "height": 1044
+    },
+    "task-photo-proofs": {
+      "id": "b245235660f7468fa8d415bc387a4faa",
+      "sourceScreen": "projects/17722362334374491181/screens/b245235660f7468fa8d415bc387a4faa",
+      "title": "Enhanced Task Management with Photo Proofs",
+      "x": 14784,
+      "y": 6939,
+      "width": 1280,
+      "height": 1344
+    },
+    "create-task-social": {
+      "id": "e07d6bc6d9a2436ab9be1e79867f229f",
+      "sourceScreen": "projects/17722362334374491181/screens/e07d6bc6d9a2436ab9be1e79867f229f",
+      "title": "Updated Create Task Modal with Social & Voice",
+      "x": 9408,
+      "y": 6939,
+      "width": 1280,
+      "height": 1024
+    },
+    "task-proofs-views": {
+      "id": "e6f3d2705ff5498ba29926b94b788542",
+      "sourceScreen": "projects/17722362334374491181/screens/e6f3d2705ff5498ba29926b94b788542",
+      "title": "Enhanced Task Management with Photo Proofs & Views",
+      "x": 12103,
+      "y": 7010,
+      "width": 1280,
+      "height": 1068
+    },
+    "collaborative-task-room-workspace": {
+      "id": "d56115e4951f4a859147c87a17dae2fb",
+      "sourceScreen": "projects/17722362334374491181/screens/d56115e4951f4a859147c87a17dae2fb",
+      "title": "Collaborative Task Room Workspace",
+      "x": 1344,
+      "y": 6939,
+      "width": 1280,
+      "height": 1024
+    },
+    "task-gantt": {
+      "id": "55bfb6c40caa4d188acbe13f0e570a19",
+      "sourceScreen": "projects/17722362334374491181/screens/55bfb6c40caa4d188acbe13f0e570a19",
+      "title": "Gantt Chart (original)",
+      "x": 2735,
+      "y": 8408,
+      "width": 1280,
+      "height": 1088
+    },
+    "task-board": {
+      "id": "1459162ad91e45b1a02f1e06d280bac8",
+      "sourceScreen": "projects/17722362334374491181/screens/1459162ad91e45b1a02f1e06d280bac8",
+      "title": "Kanban Board (original)",
+      "x": 4155,
+      "y": 8527,
+      "width": 1280,
+      "height": 853
+    }
+  },
+  "hiddenScreens": {
+    "dashboard-old": {
+      "id": "beac673767644c82a712ccd4d8384698",
+      "sourceScreen": "projects/17722362334374491181/screens/beac673767644c82a712ccd4d8384698",
+      "title": "Dashboard (old, hidden)",
+      "hidden": true
+    },
+    "challenges": {
+      "id": "24a0dc2f7537454da5c603cd9c4c26ff",
+      "sourceScreen": "projects/17722362334374491181/screens/24a0dc2f7537454da5c603cd9c4c26ff",
+      "title": "Challenges (hidden)",
+      "hidden": true
+    },
+    "dashboard-variant": {
+      "id": "34a3fbdf45054ea891946f919bad4293",
+      "sourceScreen": "projects/17722362334374491181/screens/34a3fbdf45054ea891946f919bad4293",
+      "title": "Dashboard variant (hidden)",
+      "hidden": true
+    },
+    "d0ae0450": {
+      "id": "d0ae0450a1cc4487874f56f7b016d47a",
+      "sourceScreen": "projects/17722362334374491181/screens/d0ae0450a1cc4487874f56f7b016d47a",
+      "title": "Unknown (hidden)",
+      "hidden": true
+    },
+    "6f3a3633": {
+      "id": "6f3a3633d1184a1fbd0c2c5b290c97fa",
+      "sourceScreen": "projects/17722362334374491181/screens/6f3a3633d1184a1fbd0c2c5b290c97fa",
+      "title": "Unknown (hidden)",
+      "hidden": true
     }
   },
   "metadata": {
