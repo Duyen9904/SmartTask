@@ -1,6 +1,7 @@
 package com.dev.smarttask.common.adapter.in.web.security;
 
 import com.dev.smarttask.auth.application.port.out.TokenProviderPort;
+import com.dev.smarttask.auth.domain.model.Jwt;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,7 +17,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @Component
@@ -30,16 +30,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         try {
-            String jwt = extractTokenFromHeader(request);
+            String token = extractTokenFromHeader(request);
 
-            if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
-                UUID userId = tokenProvider.getUserIdFromToken(jwt);
+            if (StringUtils.hasText(token) && tokenProvider.validateToken(token)) {
+                Jwt jwt = tokenProvider.parseJwt(token);
 
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(
-                                userId.toString(),
+                                jwt.getUserId().toString(),
                                 null,
-                                List.of(new SimpleGrantedAuthority("ROLE_USER"))
+                                List.of(new SimpleGrantedAuthority("ROLE_" + jwt.getRole().name()))
                         );
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);

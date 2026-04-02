@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/smarttask_dev
+    url: jdbc:postgresql://localhost:5433/smarttask_dev
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
@@ -31,6 +31,9 @@ app:
     secret: dev-secret-key-this-should-be-at-least-64-characters-long-for-hmac-sha512-algorithm
     access-token-expiration-ms: 900000      # 15 minutes
     refresh-token-expiration-ms: 604800000  # 7 days
+  gcp:
+    storage:
+      bucket: smarttask-dev-uploads
 
 logging:
   level:

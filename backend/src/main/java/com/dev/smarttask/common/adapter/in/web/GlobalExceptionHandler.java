@@ -3,6 +3,8 @@ package com.dev.smarttask.common.adapter.in.web;
 import com.dev.smarttask.auth.domain.exception.EmailAlreadyExistsException;
 import com.dev.smarttask.auth.domain.exception.InvalidCredentialsException;
 import com.dev.smarttask.auth.domain.exception.UserNotFoundException;
+import com.dev.smarttask.task.domain.exception.SubtaskNotFoundException;
+import com.dev.smarttask.task.domain.exception.TaskNotFoundException;
 import com.dev.smarttask.common.adapter.in.web.dto.ApiResponse;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +50,18 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ApiResponse<Void>> handleUserNotFound(UserNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ApiResponse.error(ex.getMessage()));
+    }
+
+    @ExceptionHandler(TaskNotFoundException.class)
+    public ResponseEntity<ApiResponse<Void>> handleTaskNotFound(TaskNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ApiResponse.error(ex.getMessage()));
+    }
+
+    @ExceptionHandler(SubtaskNotFoundException.class)
+    public ResponseEntity<ApiResponse<Void>> handleSubtaskNotFound(SubtaskNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ApiResponse.error(ex.getMessage()));
     }

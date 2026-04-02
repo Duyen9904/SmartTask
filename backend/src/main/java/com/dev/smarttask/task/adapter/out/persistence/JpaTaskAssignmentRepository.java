@@ -13,4 +13,6 @@ public interface JpaTaskAssignmentRepository extends JpaRepository<TaskAssignmen
     List<TaskAssignmentJpaEntity> findAllByUserId(UUID userId);
 
     boolean existsByTaskIdAndUserId(UUID taskId, UUID userId);
+
+    void deleteByTaskIdAndUserId(UUID taskId, UUID userId);
 }

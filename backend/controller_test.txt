@@ -1,0 +1,70 @@
+﻿> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+
+> Task :compileTestJava
+.\gradlew.bat : C:\Duyen_needs\Projects\Sm
+artTask\backend\src\test\java\com\dev\smar
+ttask\task\adapter\in\web\TaskControllerTe
+st.java:19: error: package org.springframe
+work.boot.autoconfigure.security.servlet 
+does not exist
+At line:1 char:1
++ .\gradlew.bat test --tests 
+"com.dev.smarttask.task.adapter.in.web.*" 
+ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecifie 
+   d: (C:\Duyen_needs\... does not exist  
+  :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeComma 
+   ndError
+ 
+import org.springframework.boot.autoconfig
+ure.security.servlet.SecurityAutoConfigura
+tion;
+                                          
+                    ^
+C:\Duyen_needs\Projects\SmartTask\backend\
+src\test\java\com\dev\smarttask\task\adapt
+er\in\web\TaskControllerTest.java:42: 
+error: cannot find symbol
+        excludeAutoConfiguration = 
+SecurityAutoConfiguration.class,
+                                   ^
+  symbol: class SecurityAutoConfiguration
+2 errors
+
+> Task :compileTestJava FAILED
+
+[Incubating] Problems report is available at: file:///C:/Duyen_needs/Projects/SmartTask/backend/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task 
+':compileTestJava'.
+> Compilation failed; see the compiler 
+output below.
+  C:\Duyen_needs\Projects\SmartTask\backen
+d\src\test\java\com\dev\smarttask\task\ada
+pter\in\web\TaskControllerTest.java:19: 
+error: package org.springframework.boot.au
+toconfigure.security.servlet does not 
+exist
+  import org.springframework.boot.autoconf
+igure.security.servlet.SecurityAutoConfigu
+ration;
+                                          
+                      ^
+  2 errors
+
+* Try:
+> Check your code and dependencies to fix 
+the compilation error(s)
+> Run with --scan to get full insights 
+from a Build Scan (powered by Develocity).
+
+3 actionable tasks: 1 executed, 2 up-to-date
+BUILD FAILED in 6s

@@ -1,0 +1,12 @@
+﻿deleteById(): tests=1 failures=0 errors=0
+findAllByUserId(): tests=1 failures=0 errors=0
+findById(): tests=2 failures=0 errors=0
+save(): tests=1 failures=0 errors=0
+create(): tests=3 failures=0 errors=0
+softDelete(): tests=3 failures=0 errors=0
+getAllByUser(): tests=1 failures=0 errors=0
+getById(): tests=3 failures=0 errors=0
+getByUserAndStatus(): tests=1 failures=0 errors=0
+Subtask operations: tests=6 failures=0 errors=0
+update(): tests=3 failures=0 errors=0
+Task Domain Model: tests=5 failures=0 errors=0

@@ -1,0 +1,36 @@
+# Build artifacts
+build/
+.gradle/
+bin/
+out/
+
+# IDE files
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Version control
+.git/
+.gitignore
+.gitattributes
+
+# Documentation (not needed in image)
+*.md
+*.txt
+LICENSE
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Agent files
+.agents/
+skills-lock.json

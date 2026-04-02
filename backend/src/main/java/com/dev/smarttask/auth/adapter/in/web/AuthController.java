@@ -7,6 +7,7 @@ import com.dev.smarttask.auth.adapter.in.web.dto.UserResponse;
 import com.dev.smarttask.auth.application.dto.AuthResponse;
 import com.dev.smarttask.auth.application.port.in.GetCurrentUserUseCase;
 import com.dev.smarttask.auth.application.port.in.LoginUseCase;
+import com.dev.smarttask.auth.application.port.in.LogoutUseCase;
 import com.dev.smarttask.auth.application.port.in.RefreshTokenUseCase;
 import com.dev.smarttask.auth.application.port.in.RegisterUseCase;
 import com.dev.smarttask.auth.application.port.in.command.LoginCommand;
@@ -39,6 +40,7 @@ public class AuthController {
     private final LoginUseCase loginUseCase;
     private final RefreshTokenUseCase refreshTokenUseCase;
     private final GetCurrentUserUseCase getCurrentUserUseCase;
+    private final LogoutUseCase logoutUseCase;
 
     @PostMapping("/register")
     @Operation(summary = "Register a new user")
@@ -76,6 +78,16 @@ public class AuthController {
         AuthResponse response = refreshTokenUseCase.refresh(command);
 
         return ResponseEntity.ok(ApiResponse.success(response, "Token refreshed"));
+    }
+
+    @PostMapping("/logout")
+    @Operation(summary = "Logout and revoke all refresh tokens")
+    public ResponseEntity<ApiResponse<Void>> logout(
+            @CurrentUser UUID userId) {
+
+        logoutUseCase.logout(userId);
+
+        return ResponseEntity.ok(ApiResponse.success(null, "Logged out successfully"));
     }
 
     @GetMapping("/me")

@@ -1,7 +1,8 @@
 package com.dev.smarttask.auth.adapter.out.security;
 
 import com.dev.smarttask.auth.application.port.out.TokenProviderPort;
-import com.dev.smarttask.auth.domain.model.User;
+import com.dev.smarttask.auth.domain.model.Jwt;
+import com.dev.smarttask.auth.domain.model.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.time.Instant;
 import java.util.Date;
 import java.util.UUID;
 
@@ -34,34 +36,57 @@ public class JwtTokenAdapter implements TokenProviderPort {
     }
 
     @Override
-    public String generateAccessToken(User user) {
-        Date now = new Date();
-        Date expiry = new Date(now.getTime() + accessTokenExpirationMs);
+    public Jwt generateJwt(UUID userId, String email, Role role) {
+        Instant now = Instant.now();
+        Instant expiry = now.plusMillis(accessTokenExpirationMs);
 
-        return Jwts.builder()
-                .subject(user.getId().toString())
-                .claim("email", user.getEmail())
-                .claim("role", user.getRole().name())
+        String token = buildToken(userId, email, role, now, expiry);
+
+        return Jwt.builder()
+                .token(token)
+                .userId(userId)
+                .email(email)
+                .role(role)
                 .issuedAt(now)
-                .expiration(expiry)
-                .signWith(key)
-                .compact();
+                .expiresAt(expiry)
+                .build();
     }
 
     @Override
-    public String generateRefreshToken(User user) {
+    public String generateToken(UUID userId, String email, Role role) {
+        return generateJwt(userId, email, role).getToken();
+    }
+
+    @Override
+    public String createTokenFromRefreshToken(UUID userId, String email, Role role) {
+        // Same logic as generateToken — generates a fresh access token
+        return generateToken(userId, email, role);
+    }
+
+    @Override
+    public String generateRefreshToken() {
         return UUID.randomUUID().toString();
     }
 
     @Override
-    public UUID getUserIdFromToken(String token) {
+    public Jwt parseJwt(String token) {
         Claims claims = Jwts.parser()
                 .verifyWith(key)
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
 
-        return UUID.fromString(claims.getSubject());
+        String roleStr = claims.get("role", String.class);
+        Role role = roleStr != null ? Role.valueOf(roleStr) : Role.USER;
+
+        return Jwt.builder()
+                .token(token)
+                .userId(UUID.fromString(claims.getSubject()))
+                .email(claims.get("email", String.class))
+                .role(role)
+                .issuedAt(claims.getIssuedAt().toInstant())
+                .expiresAt(claims.getExpiration().toInstant())
+                .build();
     }
 
     @Override
@@ -81,5 +106,18 @@ public class JwtTokenAdapter implements TokenProviderPort {
     @Override
     public long getAccessTokenExpirationMs() {
         return accessTokenExpirationMs;
+    }
+
+    // ── Private helpers ──
+
+    private String buildToken(UUID userId, String email, Role role, Instant now, Instant expiry) {
+        return Jwts.builder()
+                .subject(userId.toString())
+                .claim("email", email)
+                .claim("role", role.name())
+                .issuedAt(Date.from(now))
+                .expiration(Date.from(expiry))
+                .signWith(key)
+                .compact();
     }
 }

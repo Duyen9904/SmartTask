@@ -17,29 +17,25 @@ It targets students, professionals, and productivity enthusiasts who want a smar
 | Feature | Description |
 |---|---|
 | 🤖 **AI-Powered Scheduling** | Generates personalized daily schedules based on priorities, behavior patterns, and mood check-ins (Gemini / OpenAI) |
-| 👥 **Social Accountability** | Share tasks with friends or groups for encouragement, collaboration, and accountability feeds |
-| 🏆 **Gamification** | Streaks, productivity scores, badges, leaderboards, and group challenges |
-| 📋 **Task Templates** | Community-driven marketplace of reusable templates for routines (morning, study, workout) |
+| 👥 **Social Accountability** | Share tasks with friends or groups for encouragement, collaboration, and activity feeds |
+| 🏆 **Badges & Achievements** | Earn badges for productivity milestones with structured unlock criteria |
+| 📋 **Task Templates** | Community-driven reusable templates for routines (morning, study, workout) |
 | 🧘 **Focus Mode** | Pomodoro timer with ambient sounds, AI task suggestions, and focus statistics |
 | 😊 **Mood Check-ins** | Quick mood tracking that influences AI scheduling recommendations |
+| 🏠 **Collaborative Rooms** | Real-time shared workspaces with checklists, photo proofs, chat, and huddles |
 | 📊 **Weekly Review** | AI-generated weekly productivity report with charts, insights, and goal tracking |
-| 🎯 **Challenges** | Group challenges with leaderboards, team progress, rewards, and achievements |
 
 ### Pages / Modules
 
 | Page | Description |
 |---|---|
-| `Landing` | Hero, features showcase, social proof, CTA |
-| `Dashboard` | Task overview, AI schedule, streaks, mood widget |
+| `Dashboard` | Task overview, AI schedule, mood widget |
 | `Tasks` | Task CRUD, templates, filters, priority management |
-| `Social` | Friends, groups, shared tasks, accountability feed |
+| `Social` | Friends, groups, activity feed with cheers & comments |
 | `AI Assistant` | Chat interface, schedule generator, productivity insights |
-| `Profile` | User stats, badges, streaks, settings |
-| `Onboarding` | Multi-step flow: welcome → productivity quiz → goals → schedule |
+| `Profile` | User stats, badges, settings |
 | `Focus Mode` | Pomodoro timer, ambient sounds, AI task suggestions |
-| `Weekly Review` | AI-generated report with charts and insights |
-| `Challenges` | Group challenges, leaderboards, team progress |
-| `Templates` | Marketplace with community templates, ratings, downloads |
+| `Collaborative Room` | Real-time shared workspace with checklists & huddles |
 
 ---
 
@@ -50,9 +46,11 @@ It targets students, professionals, and productivity enthusiasts who want a smar
 | **Framework** | Spring Boot | 4.0.4 |
 | **Language** | Java | 17 |
 | **Architecture** | Hexagonal (Ports & Adapters) | — |
-| **Database** | PostgreSQL | Latest |
+| **Relational DB** | PostgreSQL | Latest |
+| **Document DB** | MongoDB | Latest |
 | **ORM** | Hibernate / Spring Data JPA | — |
-| **Migrations** | Flyway | — |
+| **ODM** | Spring Data MongoDB | — |
+| **Migrations** | Flyway (PostgreSQL) | — |
 | **Auth** | Spring Security + JJWT + OAuth2 | 0.12.6 |
 | **Caching** | Redis | — |
 | **Real-time** | Spring WebSocket + STOMP | — |
@@ -75,22 +73,20 @@ It targets students, professionals, and productivity enthusiasts who want a smar
                     │      (framework-agnostic, pure Java) │
    ┌────────┐       │                                     │       ┌────────────┐
    │REST API│──────▶│  ┌─────────────┐  ┌──────────────┐ │◀──────│ PostgreSQL │
-   │ (Input │       │  │  USE CASES  │  │   DOMAIN     │ │       │  (Output   │
-   │  Port) │       │  │  (Services) │  │ (Entities,   │ │       │   Port)    │
+   │ (Input │       │  │  USE CASES  │  │   DOMAIN     │ │       │ (Relational│
+   │  Port) │       │  │  (Services) │  │ (Entities,   │ │       │  Output)   │
    └────────┘       │  │             │  │  ValueObjs)  │ │       └────────────┘
-                    │  └─────────────┘  └──────────────┘ │
-   ┌────────┐       │                                     │       ┌────────────┐
-   │WebSocket│─────▶│  Domain has ZERO deps on Spring,   │◀──────│ Gemini API │
-   │ (Input │       │  JPA, or any framework.             │       │  (Output   │
-   │  Port) │       │  Pure business logic.               │       │   Port)    │
-   └────────┘       └─────────────────────────────────────┘       └────────────┘
-                                     ▲
-                                     │
-                              ┌──────┴──────┐
-                              │    Redis     │
+                    │  └─────────────┘  └──────────────┘ │       ┌────────────┐
+   ┌────────┐       │                                     │◀──────│  MongoDB   │
+   │WebSocket│─────▶│  Domain has ZERO deps on Spring,   │       │ (Document  │
+   │ (Input │       │  JPA, Mongo, or any framework.      │       │  Output)   │
+   │  Port) │       │  Pure business logic.               │       └────────────┘
+   └────────┘       └─────────────────────────────────────┘       ┌────────────┐
+                                     ▲                            │ Gemini API │
+                                     │                            │  (Output   │
+                              ┌──────┴──────┐                     │   Port)    │
+                              │    Redis     │                     └────────────┘
                               │   GCP GCS   │
-                              │  (Output    │
-                              │   Ports)    │
                               └─────────────┘
 ```
 
@@ -101,6 +97,53 @@ It targets students, professionals, and productivity enthusiasts who want a smar
 3. **Adapters** — Framework-dependent implementations. Controllers (input), Repositories/API clients (output).
 
 > **Key benefit**: Domain logic is testable with plain JUnit — no Spring context needed.
+
+---
+
+## Domain Model — 23 Entities · Polyglot Storage
+
+### Storage Split
+
+```
+ PostgreSQL (relational, ACID)            MongoDB (high-write, flexible)
+ ─────────────────────────────            ─────────────────────────────
+ User, Task, TaskAssignment, Subtask      ActivityLog, ActivityReaction,
+ TaskTemplate, TemplateSubtask              ActivityComment
+ Friendship, Group, GroupMember           ChatMessage
+ Room, RoomMember, ChecklistItem,         RoomEvent (TTL 30d)
+   ChecklistProof, Huddle, HuddlePartic.  Conversation, AiMessage
+ MoodEntry, FocusSession                  Notification (TTL 90d)
+ UserPreference, Attachment
+ ─────────────────────────────            ─────────────────────────────
+ 16 tables                                7 collections
+```
+
+### Module Breakdown
+
+| Module | Storage | Entities |
+|--------|---------|----------|
+| **auth** (existing) | PostgreSQL | User, Role, RefreshToken |
+| **task** | PostgreSQL | Task, TaskAssignment, Subtask |
+| **template** | PostgreSQL | TaskTemplate, TemplateSubtask |
+| **social** | PostgreSQL + MongoDB | Friendship, Group, GroupMember (PG) · ActivityLog, ActivityReaction, ActivityComment (Mongo) |
+| **room** | PostgreSQL + MongoDB | Room, RoomMember, ChecklistItem, ChecklistProof, Huddle, HuddleParticipant (PG) · RoomEvent, ChatMessage (Mongo) |
+| **ai** | MongoDB + PostgreSQL | Conversation, AiMessage (Mongo) · FocusSession (PG) |
+| **notification** | MongoDB + PostgreSQL | Notification (Mongo) · UserPreference, Attachment (PG) |
+| **mood** | PostgreSQL | MoodEntry |
+
+### Key Design Decisions
+
+| Decision | Rationale |
+|----------|-----------|
+| **UUIDv7 PKs** | Insert-order B-tree locality, distributed-safe |
+| **Soft-delete** (`deletedAt`) | On Task, Room, Post — preserves referential integrity |
+| **Canonical Friendship** | `userIdA = LEAST`, `userIdB = GREATEST` — one row per pair |
+| **ActivityLog verb-object** | Event-sourced social feed, no duplicate data |
+| **`lastSeenAt` over `isOnline`** | Compute presence from timestamp, avoid stale booleans |
+| **`referenceType` discriminator** | Typed polymorphic FK on RoomEvent |
+| **No derived fields** | `memberCount`, `rating` derived at query time |
+| **Polyglot persistence** | PostgreSQL for relational/ACID, MongoDB for high-write append-only data |
+| **MongoDB TTL indexes** | Auto-expire Notifications (90d), RoomEvents (30d) |
 
 ---
 
@@ -117,99 +160,98 @@ com.dev.smarttask/
 │       ├── in/web/                  # ApiResponse, GlobalExceptionHandler
 │       └── out/event/               # Spring ApplicationEventPublisher adapter
 │
-├── auth/                            # ── Authentication Bounded Context ──
-│   ├── domain/
-│   │   └── model/                   # User, RefreshToken, Role
+├── auth/                            # ── Authentication ──
+│   ├── domain/model/                # User, RefreshToken, Role
 │   ├── application/
-│   │   ├── port/
-│   │   │   ├── in/                  # LoginUseCase, RegisterUseCase
-│   │   │   └── out/                 # UserRepositoryPort, TokenProviderPort
-│   │   └── service/                 # AuthService (implements input ports)
+│   │   ├── port/in/                 # LoginUseCase, RegisterUseCase
+│   │   ├── port/out/                # UserRepositoryPort, TokenProviderPort
+│   │   └── service/                 # AuthService
 │   └── adapter/
 │       ├── in/web/                  # AuthController
 │       └── out/
 │           ├── persistence/         # UserJpaEntity, JpaUserRepository
 │           └── security/            # JwtTokenProvider, OAuth2Handler
 │
-├── task/                            # ── Task Management Bounded Context ──
-│   ├── domain/
-│   │   ├── model/                   # Task, Priority (ValueObj), TaskStatus
-│   │   └── event/                   # TaskCompletedEvent, TaskCreatedEvent
+├── task/                            # ── Task Management ──
+│   ├── domain/model/                # Task, TaskAssignment, Subtask
 │   ├── application/
-│   │   ├── port/
-│   │   │   ├── in/                  # CreateTaskUseCase, UpdateTaskUseCase
-│   │   │   └── out/                 # TaskRepositoryPort
+│   │   ├── port/in/                 # CreateTaskUseCase, UpdateTaskUseCase
+│   │   ├── port/out/                # TaskRepositoryPort
 │   │   └── service/                 # TaskService
 │   └── adapter/
 │       ├── in/web/                  # TaskController
 │       └── out/persistence/         # TaskJpaEntity, JpaTaskRepository
 │
-├── schedule/                        # ── AI Schedule Generation ──
-│   ├── domain/
-│   │   └── model/                   # Schedule, TimeBlock
-│   ├── application/
-│   │   ├── port/
-│   │   │   ├── in/                  # GenerateScheduleUseCase
-│   │   │   └── out/                 # AiProviderPort, ScheduleRepositoryPort
-│   │   └── service/                 # ScheduleService
-│   └── adapter/
-│       ├── in/web/                  # ScheduleController
-│       └── out/
-│           ├── persistence/         # JpaScheduleRepository
-│           └── ai/                  # GeminiAdapter, OpenAiAdapter
-│
-├── social/                          # ── Social Feed & Accountability ──
-│   ├── domain/
+├── template/                        # ── Task Templates ──
+│   ├── domain/model/                # TaskTemplate, TemplateSubtask
 │   ├── application/
 │   └── adapter/
 │
-├── gamification/                    # ── Streaks, Badges, Leaderboard ──
-│   ├── domain/
-│   │   ├── model/                   # Streak, Badge, LeaderboardEntry
-│   │   └── event/                   # BadgeEarnedEvent
+├── social/                          # ── Social & Activity Feed ──
+│   ├── domain/model/                # Friendship, Group, GroupMember,
+│   │                                # ActivityLog, ActivityReaction, ActivityComment
 │   ├── application/
-│   │   ├── port/
-│   │   │   ├── in/                  # UpdateStreakUseCase, CheckBadgeUseCase
-│   │   │   └── out/                 # StreakRepositoryPort, CachePort
+│   │   ├── port/in/                 # SendFriendRequestUseCase, CreateGroupUseCase
+│   │   ├── port/out/                # FriendshipRepositoryPort, ActivityLogPort
+│   │   └── service/                 # SocialService, ActivityFeedService
+│   └── adapter/
+│       ├── in/web/                  # SocialController, ActivityFeedController
+│       └── out/persistence/
+│
+├── gamification/                    # ── Badges & Mood ──
+│   ├── domain/model/                # Badge, UserBadge, MoodEntry
+│   ├── application/
+│   │   ├── port/in/                 # CheckBadgeUseCase, LogMoodUseCase
+│   │   ├── port/out/                # BadgeRepositoryPort
 │   │   └── service/                 # GamificationService
 │   └── adapter/
 │       ├── in/event/                # Listens to TaskCompletedEvent
-│       └── out/
-│           ├── persistence/         # JpaStreakRepository
-│           └── cache/               # RedisLeaderboardAdapter
+│       └── out/persistence/
 │
-├── focus/                           # ── Focus Timer / Pomodoro ──
-│   ├── domain/
+├── room/                            # ── Collaborative Rooms ──
+│   ├── domain/model/                # Room, RoomMember, ChecklistItem,
+│   │                                # ChecklistProof, RoomEvent, ChatMessage,
+│   │                                # Huddle, HuddleParticipant
 │   ├── application/
+│   │   ├── port/in/                 # CreateRoomUseCase, AddChecklistItemUseCase
+│   │   ├── port/out/                # RoomRepositoryPort, ChatMessagePort
+│   │   └── service/                 # RoomService
 │   └── adapter/
+│       ├── in/
+│       │   ├── web/                 # RoomController
+│       │   └── websocket/           # RoomChatHandler
+│       └── out/persistence/
+│
+├── ai/                              # ── AI Assistant & Focus ──
+│   ├── domain/model/                # Conversation, AiMessage, FocusSession
+│   ├── application/
+│   │   ├── port/in/                 # ChatWithAiUseCase, StartFocusUseCase
+│   │   ├── port/out/                # AiProviderPort, ConversationRepositoryPort
+│   │   └── service/                 # AiChatService, FocusService
+│   └── adapter/
+│       ├── in/web/                  # AiController, FocusController
+│       └── out/
+│           ├── persistence/
+│           └── ai/                  # GeminiAdapter, OpenAiAdapter
+│
+├── notification/                    # ── Notifications & Preferences ──
+│   ├── domain/model/                # Notification, UserPreference, Attachment
+│   ├── application/
+│   │   ├── port/in/                 # SendNotificationUseCase
+│   │   ├── port/out/                # NotificationRepositoryPort
+│   │   └── service/                 # NotificationService
+│   └── adapter/
+│       ├── in/web/                  # NotificationController
+│       └── out/persistence/
 │
 └── storage/                         # ── File Storage (GCP) ──
     ├── application/
-    │   ├── port/
-    │   │   ├── in/                  # GenerateUploadUrlUseCase
-    │   │   └── out/                 # CloudStoragePort
+    │   ├── port/in/                 # GenerateUploadUrlUseCase
+    │   ├── port/out/                # CloudStoragePort
     │   └── service/                 # StorageService
     └── adapter/
         ├── in/web/                  # StorageController
         └── out/gcp/                 # GcpStorageAdapter (presigned URLs)
-```
-
-```
-src/main/resources/
-├── application.yml
-├── application-dev.yml
-├── application-prod.yml
-└── db/migration/                    # Flyway
-    ├── V1__create_users_table.sql
-    ├── V2__create_tasks_table.sql
-    └── ...
-
-src/test/
-├── java/com/dev/smarttask/
-│   ├── task/domain/                 # Pure unit tests (no Spring)
-│   ├── task/application/            # Use case tests with mocked ports
-│   └── task/adapter/                # Integration tests with Testcontainers
-└── resources/
 ```
 
 ---
@@ -224,18 +266,19 @@ spring-boot-starter-security        // Auth framework
 spring-boot-starter-validation      // Input validation
 
 // ═══ DATABASE ═══
-postgresql                          // Driver
-flyway-core                         // Schema migrations
+postgresql                          // Relational driver
+spring-boot-starter-data-mongodb    // MongoDB ODM
+flyway-core                         // PostgreSQL schema migrations
 
 // ═══ AUTH ═══
 jjwt-api + jjwt-impl + jjwt-jackson // JWT tokens
 spring-boot-starter-oauth2-client   // Google/GitHub login
 
 // ═══ CACHING ═══
-spring-boot-starter-data-redis      // Leaderboards, AI cache
+spring-boot-starter-data-redis      // Presence, rate-limit buckets
 
 // ═══ REAL-TIME ═══
-spring-boot-starter-websocket       // Social feed, focus sync
+spring-boot-starter-websocket       // Room chat, focus sync
 
 // ═══ AI INTEGRATION ═══
 spring-boot-starter-webflux         // WebClient for Gemini/OpenAI
@@ -266,23 +309,66 @@ testcontainers + postgresql         // Integration tests with real DB
 ### Prerequisites
 
 - Java 17+
-- PostgreSQL
-- Redis
-- Gradle
+- Docker & Docker Compose
+- Gradle (or use the included wrapper)
 
-### Setup
+### Option A: Docker (Recommended)
 
 ```bash
-# 1. Navigate
+# 1. Navigate to project root
+cd SmartTask
+
+# 2. Copy environment template
+cp .env.example .env
+
+# 3. Start infrastructure (PostgreSQL, MongoDB, Redis)
+docker compose up -d
+
+# 4. Run backend locally against Docker services
+cd backend
+./gradlew bootRun --args='--spring.profiles.active=docker'
+
+# 5. API Docs → http://localhost:8080/swagger-ui.html
+```
+
+### Option B: Full Stack via Docker
+
+```bash
+# Start everything (infra + backend + frontend)
+docker compose --profile app up -d
+
+# Backend  → http://localhost:8080
+# Frontend → http://localhost:3000
+# Swagger  → http://localhost:3000/swagger-ui/
+```
+
+### Docker Management
+
+```bash
+# View running services
+docker compose ps
+
+# View backend logs
+docker compose --profile app logs -f backend
+
+# Rebuild after code changes
+docker compose --profile app build backend
+docker compose --profile app up -d backend
+
+# Stop everything
+docker compose --profile app down
+
+# Stop and destroy all data
+docker compose --profile app down -v
+```
+
+### Option C: Manual Setup (No Docker)
+
+```bash
+# Requires locally installed PostgreSQL, MongoDB, Redis
 cd SmartTask/backend
-
-# 2. Configure
-# Edit src/main/resources/application-dev.yml
-
-# 3. Run
+# Edit src/main/resources/application-dev.yml with your local connection details
 ./gradlew bootRun --args='--spring.profiles.active=dev'
-
-# 4. API Docs → http://localhost:8080/swagger-ui.html
 ```
 
 ### Testing
@@ -314,6 +400,12 @@ cd SmartTask/backend
   "errors": null
 }
 ```
+
+---
+
+## ERD
+
+Full entity relationship diagram: [`.stitch/designs/erd.mmd`](../.stitch/designs/erd.mmd) — render with [mermaid.live](https://mermaid.live)
 
 ---
 

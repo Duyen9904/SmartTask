@@ -3,6 +3,7 @@ package com.dev.smarttask.auth.application.service;
 import com.dev.smarttask.auth.application.dto.AuthResponse;
 import com.dev.smarttask.auth.application.port.in.GetCurrentUserUseCase;
 import com.dev.smarttask.auth.application.port.in.LoginUseCase;
+import com.dev.smarttask.auth.application.port.in.LogoutUseCase;
 import com.dev.smarttask.auth.application.port.in.RefreshTokenUseCase;
 import com.dev.smarttask.auth.application.port.in.RegisterUseCase;
 import com.dev.smarttask.auth.application.port.in.command.LoginCommand;
@@ -15,13 +16,13 @@ import com.dev.smarttask.auth.application.port.out.UserRepositoryPort;
 import com.dev.smarttask.auth.domain.exception.EmailAlreadyExistsException;
 import com.dev.smarttask.auth.domain.exception.InvalidCredentialsException;
 import com.dev.smarttask.auth.domain.exception.UserNotFoundException;
+import com.dev.smarttask.auth.domain.model.Jwt;
 import com.dev.smarttask.auth.domain.model.RefreshToken;
 import com.dev.smarttask.auth.domain.model.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -30,7 +31,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class AuthService implements RegisterUseCase, LoginUseCase, RefreshTokenUseCase, GetCurrentUserUseCase {
+public class AuthService implements RegisterUseCase, LoginUseCase, RefreshTokenUseCase, GetCurrentUserUseCase, LogoutUseCase {
 
     private final UserRepositoryPort userRepository;
     private final RefreshTokenRepositoryPort refreshTokenRepository;
@@ -94,6 +95,12 @@ public class AuthService implements RegisterUseCase, LoginUseCase, RefreshTokenU
     }
 
     @Override
+    public void logout(UUID userId) {
+        refreshTokenRepository.revokeAllByUserId(userId);
+        log.info("User logged out, all refresh tokens revoked: userId={}", userId);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public User getCurrentUser(UUID userId) {
         return userRepository.findById(userId)
@@ -103,8 +110,8 @@ public class AuthService implements RegisterUseCase, LoginUseCase, RefreshTokenU
     // ── Private helpers ──
 
     private AuthResponse generateAuthResponse(User user) {
-        String accessToken = tokenProvider.generateAccessToken(user);
-        String refreshTokenStr = tokenProvider.generateRefreshToken(user);
+        Jwt jwt = tokenProvider.generateJwt(user.getId(), user.getEmail(), user.getRole());
+        String refreshTokenStr = tokenProvider.generateRefreshToken();
 
         // Save refresh token
         RefreshToken refreshToken = RefreshToken.builder()
@@ -115,7 +122,7 @@ public class AuthService implements RegisterUseCase, LoginUseCase, RefreshTokenU
         refreshTokenRepository.save(refreshToken);
 
         return AuthResponse.builder()
-                .accessToken(accessToken)
+                .accessToken(jwt.getToken())
                 .refreshToken(refreshTokenStr)
                 .expiresIn(tokenProvider.getAccessTokenExpirationMs())
                 .user(AuthResponse.UserDTO.builder()

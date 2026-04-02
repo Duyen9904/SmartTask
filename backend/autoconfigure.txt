@@ -1,0 +1,18 @@
+﻿
+|    |    +--- org.springframework.boot:sp
+ring-boot-autoconfigure:4.0.4
+|    |    +--- com.google.cloud:spring-clo
+ud-gcp-autoconfigure:6.3.0
+|    |    |    +--- org.springframework.bo
+ot:spring-boot-autoconfigure:3.4.7 -> 
+4.0.4 (*)
+|    |    |    +--- io.opentelemetry:opent
+elemetry-sdk-extension-autoconfigure-spi:1
+.47.0 -> 1.55.0
+|    |    |    +--- org.springframework.bo
+ot:spring-boot-autoconfigure:4.0.3 -> 
+4.0.4 (*)
+|    +--- org.springframework.boot:spring-
+boot-test-autoconfigure:4.0.4
+
+
