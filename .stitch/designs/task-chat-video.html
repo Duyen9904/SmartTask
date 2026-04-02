@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NebulaTask | Communication Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "inverse-surface": "#fcf8ff",
+              "surface-tint": "#aca3ff",
+              "on-primary-fixed-variant": "#250094",
+              "on-tertiary-fixed": "#004748",
+              "on-error-container": "#ffb2b9",
+              "on-primary-fixed": "#000000",
+              "surface-container-high": "#1d1d33",
+              "surface-container": "#18182b",
+              "outline": "#757388",
+              "on-primary": "#27009a",
+              "on-tertiary": "#006565",
+              "primary-container": "#9e93ff",
+              "surface-container-low": "#121223",
+              "surface-container-lowest": "#000000",
+              "surface-bright": "#2a2a43",
+              "on-background": "#e6e3fb",
+              "tertiary-container": "#56f9f9",
+              "surface-container-highest": "#24233b",
+              "on-secondary-fixed-variant": "#9a2128",
+              "primary-fixed": "#9e93ff",
+              "on-error": "#490013",
+              "secondary-dim": "#ff706f",
+              "primary-dim": "#6f5fea",
+              "error": "#ff6e84",
+              "tertiary": "#adffff",
+              "error-container": "#a70138",
+              "surface": "#0c0c1d",
+              "on-secondary": "#490008",
+              "on-primary-container": "#1d007a",
+              "on-secondary-fixed": "#6f0011",
+              "on-secondary-container": "#ffc1be",
+              "on-surface": "#e6e3fb",
+              "on-surface-variant": "#aba9bf",
+              "tertiary-fixed-dim": "#41eaeb",
+              "background": "#0c0c1d",
+              "tertiary-dim": "#37e4e5",
+              "on-tertiary-fixed-variant": "#006667",
+              "surface-variant": "#24233b",
+              "inverse-on-surface": "#545366",
+              "primary": "#aca3ff",
+              "tertiary-fixed": "#56f9f9",
+              "error-dim": "#d73357",
+              "outline-variant": "#474659",
+              "inverse-primary": "#5948d3",
+              "secondary-fixed-dim": "#ffafac",
+              "on-tertiary-container": "#005c5c",
+              "secondary-container": "#8c1520",
+              "primary-fixed-dim": "#8f83ff",
+              "secondary-fixed": "#ffc3c0",
+              "secondary": "#ff706f",
+              "surface-dim": "#0c0c1d"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .nebula-gradient {
+            background: radial-gradient(circle at 50% -20%, #250094 0%, #0c0c1d 60%);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #474659; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background text-on-surface nebula-gradient min-h-screen selection:bg-primary selection:text-on-primary-container">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-[#0c0c1d]/70 backdrop-blur-xl border-b border-[#aba9bf]/15 shadow-[0_0_40px_rgba(172,163,255,0.08)] flex justify-between items-center px-8 h-16">
+<div class="flex items-center gap-6">
+<span class="text-2xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-[#6f5fea] to-[#aca3ff]">NebulaTask</span>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-[#aba9bf] hover:text-[#e6e3fb] transition-colors font-['Inter'] font-bold tracking-tight" href="#">Workspaces</a>
+<a class="text-[#aca3ff] font-bold border-b-2 border-[#aca3ff] pb-1 font-['Inter'] tracking-tight" href="#">Insights</a>
+<a class="text-[#aba9bf] hover:text-[#e6e3fb] transition-colors font-['Inter'] font-bold tracking-tight" href="#">Archive</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-[#aba9bf] hover:text-primary transition-all active:scale-95">videocam</button>
+<button class="material-symbols-outlined text-[#aba9bf] hover:text-primary transition-all active:scale-95">notifications</button>
+<button class="bg-gradient-to-br from-[#6f5fea] to-[#aca3ff] text-on-primary-container font-bold px-4 py-2 rounded-xl active:scale-95 transition-all">New Room</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest border border-outline-variant overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close-up portrait of a professional user with soft studio lighting and a clean tech aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChn86qJicxiky74FiALE27pVfos8rl0Ctj_q4zMqYLy47nIoGLO9delNM8hc6-MXEnxoLC-lZz7oHXB5EjmCE6gQIJXKzwIG0LUmotYUvv4LRkY2i0D_wQkhxYkQSiS2X11ioj-wrm-kAE1p-451dZO4tt8pOtSjxEaboxqEOuGpBz2_ssXVOxl1OEwBwclvvyguI573oWujbTH_6gqKIboFrq9LMN7UoDfi2OWhEtnpmJs6ReZgyqklO2d3h3mpH_2_FjYUiIkstQ"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar (Hidden on Mobile) -->
+<aside class="hidden md:flex h-screen w-64 fixed left-0 top-0 z-40 bg-[#0c0c1d]/60 backdrop-blur-2xl border-r border-[#aba9bf]/10 shadow-2xl flex-col py-6 px-4 space-y-8 pt-24">
+<div class="px-2">
+<div class="flex items-center gap-3 mb-1">
+<div class="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-[#aca3ff]" style="font-variation-settings: 'FILL' 1;">hub</span>
+</div>
+<div>
+<p class="text-[#aca3ff] font-extrabold text-sm leading-tight">Task Engine</p>
+<p class="text-[#aba9bf] text-[10px] uppercase tracking-widest">AI-Powered Workspace</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 py-3 px-4 rounded-xl text-[#aba9bf] opacity-80 hover:bg-[#18182b] hover:opacity-100 transition-all hover:scale-105" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-['Inter'] text-sm font-medium">My Tasks</span>
+</a>
+<a class="flex items-center gap-3 py-3 px-4 rounded-xl bg-gradient-to-r from-[#6f5fea]/20 to-transparent text-[#aca3ff] border-r-4 border-[#aca3ff] transition-all hover:scale-105" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-['Inter'] text-sm font-medium">Shared Rooms</span>
+</a>
+<a class="flex items-center gap-3 py-3 px-4 rounded-xl text-[#aba9bf] opacity-80 hover:bg-[#18182b] hover:opacity-100 transition-all hover:scale-105" href="#">
+<span class="material-symbols-outlined">hub</span>
+<span class="font-['Inter'] text-sm font-medium">Collaboration</span>
+</a>
+<a class="flex items-center gap-3 py-3 px-4 rounded-xl text-[#aba9bf] opacity-80 hover:bg-[#18182b] hover:opacity-100 transition-all hover:scale-105" href="#">
+<span class="material-symbols-outlined">insert_chart</span>
+<span class="font-['Inter'] text-sm font-medium">Analytics</span>
+</a>
+<a class="flex items-center gap-3 py-3 px-4 rounded-xl text-[#aba9bf] opacity-80 hover:bg-[#18182b] hover:opacity-100 transition-all hover:scale-105" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-['Inter'] text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="pt-4 space-y-1 border-t border-outline-variant/10">
+<a class="flex items-center gap-3 py-2 px-4 text-[#aba9bf] text-sm hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-sm">help</span>
+                Support
+            </a>
+<a class="flex items-center gap-3 py-2 px-4 text-error-dim text-sm hover:text-error transition-colors" href="#">
+<span class="material-symbols-outlined text-sm">logout</span>
+                Sign Out
+            </a>
+</div>
+</aside>
+<!-- Main Content Hub -->
+<main class="md:ml-64 pt-16 h-screen flex flex-col relative">
+<!-- Communication Canvas -->
+<div class="flex-1 flex flex-col lg:flex-row overflow-hidden p-6 gap-6">
+<!-- Left/Center: Chat Thread -->
+<section class="flex-1 flex flex-col bg-surface-container/40 backdrop-blur-md rounded-3xl border border-outline-variant/10 shadow-xl overflow-hidden">
+<!-- Chat Header -->
+<div class="px-6 py-4 flex items-center justify-between border-b border-outline-variant/10 bg-surface-container/60">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">forum</span>
+</div>
+<div>
+<h2 class="text-on-surface font-bold text-lg leading-none">Task Sync: Cloud Infrastructure</h2>
+<p class="text-on-surface-variant text-xs mt-1 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
+                                3 Members Active
+                            </p>
+</div>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-bright text-primary font-bold text-sm hover:bg-primary hover:text-on-primary transition-all">
+<span class="material-symbols-outlined text-sm">open_in_new</span>
+                        Go to Task Workspace
+                    </button>
+</div>
+<!-- Messages Container -->
+<div class="flex-1 overflow-y-auto p-6 space-y-8">
+<!-- Received Message -->
+<div class="flex gap-4 items-start max-w-2xl">
+<img class="w-10 h-10 rounded-full object-cover mt-1" data-alt="Professional headshot of a woman with a friendly expression, soft lighting, tech office background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBm5OhY4P3CJrdqa49ylo7Br-_tE8HqVkrcTdxKexPB-IRCZkzfNuLCUWrpPDd218GRIjnN3DSDrM1NQsdxR9643TPw5IyJhQXXCk-fvkz4XW0CnFRjdL-Ny5Hqc_Hrxla_kv-ASe7U619jW60f5RACn45Haq1sGd7xfT62-yfPEJLaeXXOlbaJ39-Hi0-Wlaetgh6SFFyceMCq_p_8yVS1iJL_7x1G2nJaw8aqsKnPhAldK1YhGZ8f19r-S08DpWbZyzjfrC0-PUy4"/>
+<div class="space-y-2">
+<div class="bg-surface-container-highest px-4 py-3 rounded-2xl rounded-tl-none text-on-surface text-sm leading-relaxed">
+                                I've finished the initial load balancer configuration. Can someone check the terraform scripts in the shared folder?
+                            </div>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-widest px-1">Sarah Chen • 10:42 AM</span>
+</div>
+</div>
+<!-- Photo Proof Interaction -->
+<div class="flex gap-4 items-start max-w-2xl">
+<img class="w-10 h-10 rounded-full object-cover mt-1" data-alt="Portrait of a male developer with glasses, focused expression, cool blue lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRjyVGeXofvLY8N9BoJP0KSdyccfacVWd8DReINVTce6rY5jSWgvEgLuPqtVNjqIpl--YaMewdTlWSUvzo61oDHzlD1r59GenegPRFUj8cM9fmpr4GyUUd4q-dUpidf2LFBSy-TrznJs75sgV5NAgkjuO4WwAQTbdfOdgLlvlr2sUMuBFAU92TkdCghjy-AwJCTSXV_D3pSQQm2UEeGkpNX8XfQV7ZW1LEWcGvz8sJCB3Ve3cOdKSPgH0rSgt6KrfJb66s3MS7eXcb"/>
+<div class="space-y-3">
+<div class="bg-surface-container-highest px-4 py-3 rounded-2xl rounded-tl-none text-on-surface text-sm">
+                                Just verified the latency spikes. Here is the screenshot from the monitoring dashboard.
+                            </div>
+<div class="rounded-2xl overflow-hidden border border-outline-variant/20 shadow-lg max-w-md">
+<img class="w-full h-auto" data-alt="A detailed digital dashboard showing colorful line graphs and data analytics on a dark interface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdy0TMGEb3FwMgYiExpTcJuv8Kqk8OBOvP5k7HjP7T0N5IIjI3sH3IITRykBbc71YNZiSJGqzJdrunDKthYmfOADbQ9bQDth4j9xVd9ZRC6015pOGf3ze81tqsNPyEQHsOSdR_O1RMEYbqh4Lasmzl2bfqYgUoBGbeidVzeFz_PyL9FmMwNkAPCEWT4mXDa33l30qwNE3qkkE1JVaPseAObqjb4yk2Pr1SRxFysNfQu0ruvVv3t9k6pkTJ8QkmAjs2jZ4y6BN04K3P"/>
+</div>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-widest px-1">Marcus Miller • 10:45 AM</span>
+</div>
+</div>
+<!-- Link Card -->
+<div class="flex gap-4 items-start max-w-2xl">
+<img class="w-10 h-10 rounded-full object-cover mt-1" data-alt="Professional headshot of a woman with a friendly expression, soft lighting, tech office background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVeFLCC377Qm7Gd3If5QLKea43rp2cuc1asomp2-Mf3S4Zr1woK_xM1SIk5oZnKex7jqUj1uUr964CP-U48Y5e7c7pHrasx-mjqDHTaEfNlDtMo3g-AjNmy0uLlBL_wbUzIvBRgAPXS9-GLeWrF-kdHvz-dutd5vNY-5dB9O6f8kZdL_q53Riaqz-Knt31fFV-oknBz0QAwfvvP6KACN-sSuvPjYgUjYT5SbJ99hJCPZ3-4S99TWYZWxDtlE5eFN4jHDzpkX7n7uj7"/>
+<div class="space-y-2">
+<div class="bg-surface-container-highest p-1 rounded-2xl rounded-tl-none overflow-hidden border border-primary/20">
+<div class="bg-surface-container px-4 py-3 border-b border-outline-variant/10">
+<p class="text-primary font-bold text-sm">Project Documentation</p>
+<p class="text-on-surface-variant text-xs truncate">docs.nebulatask.io/infrastructure-v2-deployment-guide</p>
+</div>
+<div class="p-3 flex items-center justify-between hover:bg-surface-bright cursor-pointer transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary-dim">description</span>
+<span class="text-on-surface text-xs font-medium">Deployment_Guide.pdf</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">download</span>
+</div>
+</div>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-widest px-1">Sarah Chen • 10:48 AM</span>
+</div>
+</div>
+<!-- Sent Message -->
+<div class="flex gap-4 items-start justify-end">
+<div class="space-y-2 flex flex-col items-end">
+<div class="bg-gradient-to-br from-primary-dim to-primary px-4 py-3 rounded-2xl rounded-tr-none text-on-primary-container text-sm font-medium shadow-[0_4px_20px_rgba(107,95,234,0.3)]">
+                                Documentation looks solid. I'll start the staging deploy in 5 minutes.
+                            </div>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-widest px-1">You • 10:50 AM</span>
+</div>
+</div>
+</div>
+<!-- Chat Input -->
+<div class="p-6 bg-surface-container-low/80 backdrop-blur-xl border-t border-outline-variant/10">
+<div class="flex items-center gap-3 bg-surface-container-highest rounded-2xl px-4 py-2 border border-outline-variant/20 focus-within:border-primary/50 transition-all">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">add_circle</button>
+<input class="flex-1 bg-transparent border-none text-on-surface placeholder:text-on-surface-variant focus:ring-0 text-sm" placeholder="Type a message or share an insight..." type="text"/>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-tertiary transition-colors">mood</button>
+<button class="w-10 h-10 rounded-xl bg-primary text-on-primary flex items-center justify-center hover:scale-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Top-Right Overlay: PiP Video Call Window -->
+<div class="lg:w-80 flex flex-col gap-6">
+<!-- Video Call Card -->
+<div class="bg-surface-container-high/90 backdrop-blur-2xl rounded-[32px] p-4 border border-outline-variant/20 shadow-2xl relative overflow-hidden ring-1 ring-primary/20">
+<div class="flex items-center justify-between mb-4 px-2">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_#ff706f] animate-pulse"></div>
+<span class="text-xs font-bold text-on-surface tracking-wide">LIVE CALL</span>
+</div>
+<span class="text-xs text-on-surface-variant font-mono">12:45</span>
+</div>
+<!-- Grid of Participants -->
+<div class="grid grid-cols-1 gap-3">
+<!-- Main Participant -->
+<div class="relative rounded-2xl overflow-hidden aspect-video group">
+<img class="w-full h-full object-cover" data-alt="Close-up of a man in a professional setting with soft rim lighting, participating in a video call" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQZUNh4ngQhy91m88eJzU_acEhS-hOy3VK2OfmwAu0Rt8dl7RgopHK35uES3knsbFGBpulfYn8YZbp72p8IZqdzBu4XqPEH2UbumjQO_XdKDT3IiGhEvLBDkJfyUtAQR-jRk0uZz_x89IgUI2yZxeS2tyD2u_8fO5sh1SMo2pQ0PTdx_aWXIx59rCGTXNbdKeQGilal0gtuR2Hh63Ueninph2NPWKEdWLhYogS-drBf4sg0XsZ9iFggP1N4yCHYDdHbeIeSdSil9Xu"/>
+<div class="absolute bottom-2 left-2 bg-surface/80 backdrop-blur-md px-2 py-1 rounded-lg text-[10px] font-bold text-white border border-white/10">
+                                Alex Rivera
+                            </div>
+<div class="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</div>
+<!-- Secondary Participants -->
+<div class="grid grid-cols-2 gap-3">
+<div class="relative rounded-2xl overflow-hidden aspect-square">
+<img class="w-full h-full object-cover" data-alt="Female collaborator on a video call, focused expression, neutral room lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVctDTV4lqEHtad6NWTbISzYFqN_24CJcxbiu3Gl_0pRi34ELP-WjR3drqI1-jwni3dW9X8XUtSJYYyqbI9Gmnp8T-IX6NYXNXk6UsYzJ2psOWrcIoLIubA_g9E7zP6_w_ohKcBo4CUA2C2it__LRHWKkst_G8IiAJs2xeKF0ZO7gJHT0-szTOrZ2KRg1dLRFREUw-GGH9VG1H6IXsA9xYhRIECEtlhQRG_pxhwC89nvc5QBK0chePtGU-ihEI3l-c9jv0xBkPosQG"/>
+<div class="absolute bottom-2 left-2 bg-surface/80 backdrop-blur-md px-2 py-1 rounded-lg text-[8px] font-bold text-white">
+                                    Sarah C.
+                                </div>
+</div>
+<div class="relative rounded-2xl overflow-hidden aspect-square border-2 border-primary shadow-[0_0_15px_rgba(172,163,255,0.4)]">
+<img class="w-full h-full object-cover" data-alt="User POV portrait with natural lighting, creative workspace background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvELoCbmRzngsOLPr_iJMaihB6HRYt94gMkFvUKGAGEqWnFBzjxcf66tB3GTi4EOaRkKwf-bTzpzazz37qypn2W0r7423VYZH-0AggB6t7xfQnUV5_xX-4GLiunpdoTMioJx2OgDMl5er_AcZdY-XcFAp1SBitKaWVate-06ccenONIJaQXHGrrLgj8HBuMR4lHja_VxLx8d6JM-wAaImsJiPExbH36oLi4kiWuquzl3JqCnrgZVNUptvQaF8r511YpvVTzHr5fxFD"/>
+<div class="absolute bottom-2 left-2 bg-primary px-2 py-1 rounded-lg text-[8px] font-bold text-on-primary">
+                                    You
+                                </div>
+<div class="absolute top-2 right-2">
+<span class="material-symbols-outlined text-xs text-primary bg-surface/80 p-1 rounded-full">mic_off</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Call Controls -->
+<div class="mt-6 flex items-center justify-center gap-3">
+<button class="w-12 h-12 rounded-2xl bg-surface-bright flex items-center justify-center text-on-surface hover:text-primary transition-all hover:scale-110">
+<span class="material-symbols-outlined">mic</span>
+</button>
+<button class="w-12 h-12 rounded-2xl bg-surface-bright flex items-center justify-center text-on-surface hover:text-primary transition-all hover:scale-110">
+<span class="material-symbols-outlined">videocam</span>
+</button>
+<button class="w-12 h-12 rounded-2xl bg-surface-bright flex items-center justify-center text-on-surface hover:text-primary transition-all hover:scale-110">
+<span class="material-symbols-outlined">screen_share</span>
+</button>
+<button class="w-12 h-12 rounded-2xl bg-secondary text-on-secondary flex items-center justify-center hover:bg-secondary-dim transition-all hover:scale-110 shadow-lg shadow-secondary/20">
+<span class="material-symbols-outlined">call_end</span>
+</button>
+</div>
+</div>
+<!-- Quick AI Insight / Task Progress -->
+<div class="bg-surface-container/40 backdrop-blur-md rounded-3xl p-6 border border-tertiary/20">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<h3 class="font-bold text-sm text-on-surface">AI Summary</h3>
+</div>
+<p class="text-on-surface-variant text-xs leading-relaxed mb-4">
+                        Conversation focused on <span class="text-tertiary">Cloud Migration</span>. Sarah highlighted terraform scripts. Marcus confirmed latency fix. Next step: Staging deployment.
+                    </p>
+<div class="space-y-2">
+<div class="flex justify-between text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">
+<span>Migration Progress</span>
+<span>84%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-tertiary-dim to-tertiary rounded-full shadow-[0_0_8px_#adffff]" style="width: 84%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-6 pb-4 pt-2 bg-[#0c0c1d]/80 backdrop-blur-lg border-t border-[#aba9bf]/15 shadow-[0_-10px_30px_rgba(172,163,255,0.1)] rounded-t-[24px] z-50">
+<a class="flex flex-col items-center justify-center text-[#aba9bf] py-2" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="text-[10px] font-medium uppercase tracking-widest mt-1">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#aca3ff]/10 text-[#aca3ff] rounded-xl py-2 px-4" href="#">
+<span class="material-symbols-outlined">meeting_room</span>
+<span class="text-[10px] font-medium uppercase tracking-widest mt-1">Rooms</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#aba9bf] py-2" href="#">
+<span class="material-symbols-outlined">forum</span>
+<span class="text-[10px] font-medium uppercase tracking-widest mt-1">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#aba9bf] py-2" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="text-[10px] font-medium uppercase tracking-widest mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

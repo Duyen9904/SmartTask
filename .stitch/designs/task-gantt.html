@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SmartTask - Gantt Chart Timeline</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-primary-container": "#1d007a",
+                        "secondary-dim": "#ff706f",
+                        "error": "#ff6e84",
+                        "tertiary": "#adffff",
+                        "surface-dim": "#0c0c1d",
+                        "on-primary-fixed": "#000000",
+                        "on-secondary-container": "#ffc1be",
+                        "on-tertiary-fixed-variant": "#006667",
+                        "secondary": "#ff706f",
+                        "primary": "#aca3ff",
+                        "surface": "#0c0c1d",
+                        "surface-variant": "#24233b",
+                        "primary-fixed": "#9e93ff",
+                        "error-container": "#a70138",
+                        "tertiary-fixed": "#56f9f9",
+                        "primary-fixed-dim": "#8f83ff",
+                        "tertiary-container": "#56f9f9",
+                        "inverse-primary": "#5948d3",
+                        "error-dim": "#d73357",
+                        "on-background": "#e6e3fb",
+                        "on-primary-fixed-variant": "#250094",
+                        "outline-variant": "#474659",
+                        "on-primary": "#27009a",
+                        "on-tertiary": "#006565",
+                        "surface-container-highest": "#24233b",
+                        "surface-container-low": "#121223",
+                        "surface-bright": "#2a2a43",
+                        "on-error-container": "#ffb2b9",
+                        "primary-container": "#9e93ff",
+                        "surface-container-lowest": "#000000",
+                        "surface-tint": "#aca3ff",
+                        "background": "#0c0c1d",
+                        "secondary-container": "#8c1520",
+                        "on-tertiary-container": "#005c5c",
+                        "on-surface": "#e6e3fb",
+                        "secondary-fixed": "#ffc3c0",
+                        "on-surface-variant": "#aba9bf",
+                        "inverse-on-surface": "#545366",
+                        "secondary-fixed-dim": "#ffafac",
+                        "on-tertiary-fixed": "#004748",
+                        "tertiary-dim": "#37e4e5",
+                        "surface-container": "#18182b",
+                        "on-secondary-fixed": "#6f0011",
+                        "primary-dim": "#6f5fea",
+                        "outline": "#757388",
+                        "on-secondary": "#490008",
+                        "tertiary-fixed-dim": "#41eaeb",
+                        "on-secondary-fixed-variant": "#9a2128",
+                        "on-error": "#490013",
+                        "inverse-surface": "#fcf8ff",
+                        "surface-container-high": "#1d1d33"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { background-color: #0c0c1d; font-family: 'Inter', sans-serif; color: #e6e3fb; overflow-x: hidden; }
+        .glass-panel { backdrop-filter: blur(20px); border: 1px solid rgba(71, 70, 89, 0.2); }
+        .nebula-glow { background: radial-gradient(circle at 50% 50%, rgba(108, 92, 231, 0.05) 0%, transparent 70%); }
+        .gantt-grid { background-image: linear-gradient(to right, rgba(71, 70, 89, 0.1) 1px, transparent 1px); background-size: 80px 100%; }
+        .today-line { position: absolute; top: 0; bottom: 0; width: 2px; border-left: 2px dashed #6C5CE7; z-index: 10; pointer-events: none; }
+        .milestone { transform: rotate(45deg); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-background selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full h-16 flex items-center justify-between px-8 bg-[#121223]/80 backdrop-blur-xl z-50 shadow-[0_24px_40px_rgba(108,92,231,0.08)]">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-black text-[#e6e3fb] tracking-tighter">SmartTask</span>
+<nav class="hidden md:flex gap-6 font-['Inter'] font-bold tracking-tight">
+<a class="text-[#aba9bf] hover:text-[#e6e3fb] transition-colors duration-200" href="#">Dashboard</a>
+<a class="text-[#6C5CE7] border-b-2 border-[#6C5CE7] pb-1" href="#">Tasks</a>
+<a class="text-[#aba9bf] hover:text-[#e6e3fb] transition-colors duration-200" href="#">Social</a>
+<a class="text-[#aba9bf] hover:text-[#e6e3fb] transition-colors duration-200" href="#">AI Assistant</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined text-[#aba9bf]">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-secondary rounded-full"></span>
+</div>
+<img alt="User profile" class="w-8 h-8 rounded-full border border-outline-variant" data-alt="professional headshot of a young creative professional with a soft purple ambient backlight matching the UI theme" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1D5KXyGx-K854xVen3E_8fNyuirkEqxVsqyPzizCTZY7d87a8SHz5M3nJSt_XEZJqew1e22fTGNEqukMPTtX5ryeVSPzlvjCmoizWCOmvF8ZVQ3qKrxEwQf4TKSsjIcAuYMoYcNG0_95o1OU31O4wMXRj-ZdhuVFhVhDpy8N0UC8fyKsNSD7nFw-ApgIthKOVtAnHlrml0jWZu_Uy4XeUIMxggInShoJJZW-E3q0rlYSA3zU3gDQJS5NxVVWRxVi3YKlsZ4n0-AN7"/>
+</div>
+</header>
+<!-- SideNavBar (Used as Project/View Navigator) -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 flex flex-col p-6 bg-[#121223] z-40">
+<div class="flex items-center gap-3 mb-8">
+<img alt="SmartTask Logo" class="w-8 h-8 rounded-lg" data-alt="minimalist tech logo with geometric shapes and a vibrant indigo to violet gradient background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZqSORzhC-UV3uSGOkCFj9DuTCuFhyvMTZqPsEK53uSHYjrzdS95MY1HrI9-zjOLgnYQ7ajoC3vJ1lFL5pU9rPykP0xrHlzJkAkUm-jPPrcRLjzPmDJaiegXNq1Us-7PKAwf2ChItU9gr1UnFaSpp4akLMJ-xKAU4UcS4Z_efWsEbPOAhdsJTzZAiFUn8hHVqK-5KlE30_Pv8_85qZXVtu3mMZ4DPItdEabUdB0iNITS-xUNkYlWOjtwkZcJwRLs6uYR3jXtSFSnTw"/>
+<div>
+<h2 class="text-[#e6e3fb] text-lg font-bold leading-tight">Projects</h2>
+<p class="text-[#aba9bf] text-[10px] font-semibold uppercase tracking-widest">Management</p>
+</div>
+</div>
+<nav class="space-y-2 flex-1">
+<a class="flex items-center gap-3 px-4 py-3 text-[#aba9bf] hover:bg-[#1d1d33] hover:text-[#e6e3fb] transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="font-['Inter'] font-semibold label-md uppercase tracking-widest">Calendar</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-[#1d1d33] text-[#aca3ff] shadow-[0_0_15px_rgba(108,92,231,0.2)] rounded-lg" href="#">
+<span class="material-symbols-outlined">stacked_line_chart</span>
+<span class="font-['Inter'] font-semibold label-md uppercase tracking-widest">Gantt Chart</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#aba9bf] hover:bg-[#1d1d33] hover:text-[#e6e3fb] transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-['Inter'] font-semibold label-md uppercase tracking-widest">Board</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#aba9bf] hover:bg-[#1d1d33] hover:text-[#e6e3fb] transition-all rounded-lg mt-auto" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-['Inter'] font-semibold label-md uppercase tracking-widest">Settings</span>
+</a>
+</nav>
+<button class="mt-6 w-full py-3 rounded-xl bg-gradient-to-br from-primary to-primary-dim text-on-primary-container font-bold text-sm shadow-[0_4px_12px_rgba(172,163,255,0.3)] hover:scale-[1.02] transition-transform active:scale-95">
+            + New Task
+        </button>
+</aside>
+<main class="ml-64 mt-16 pb-12 min-h-screen relative nebula-glow">
+<!-- Page Header & Controls -->
+<div class="px-8 pt-8">
+<div class="flex items-center justify-between mb-6">
+<h1 class="text-4xl font-black text-on-background tracking-tight">📊 Gantt Chart</h1>
+<div class="flex items-center bg-surface-container-low p-1 rounded-xl">
+<button class="px-4 py-2 text-sm font-semibold text-on-surface-variant hover:text-on-surface">Calendar</button>
+<button class="px-6 py-2 text-sm font-bold text-on-surface bg-surface-container-high rounded-lg shadow-sm">Gantt</button>
+<button class="px-4 py-2 text-sm font-semibold text-on-surface-variant hover:text-on-surface">Board</button>
+</div>
+</div>
+<!-- ControlsBar -->
+<div class="flex items-center justify-between py-4 mb-4">
+<div class="flex items-center space-x-8">
+<div class="flex bg-surface-container-lowest rounded-lg p-1">
+<button class="px-3 py-1 text-xs font-medium text-on-surface-variant">Day</button>
+<button class="px-4 py-1 text-xs font-bold text-on-background bg-surface-container-high rounded-md">Week</button>
+<button class="px-3 py-1 text-xs font-medium text-on-surface-variant">Month</button>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+<span class="text-sm font-medium">Mar 1 - Mar 31, 2026</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-lg text-sm text-on-surface-variant border border-outline-variant/10">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+<span>All Projects</span>
+</div>
+<button class="bg-surface-container-high text-primary px-4 py-2 rounded-lg text-sm font-bold hover:bg-surface-bright transition-colors">
+                        + New Task
+                    </button>
+</div>
+</div>
+</div>
+<!-- Gantt Chart Area -->
+<div class="flex mx-8 bg-surface-container-low rounded-2xl overflow-hidden border border-outline-variant/10 h-[600px]">
+<!-- Task List Sidebar -->
+<div class="w-[250px] flex-shrink-0 border-r border-outline-variant/20 flex flex-col">
+<div class="h-12 border-b border-outline-variant/20 flex items-center px-4 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant bg-surface-container-low/50">
+                    Tasks &amp; Progress
+                </div>
+<div class="flex-1 overflow-y-auto">
+<!-- Work Group -->
+<div class="px-4 py-3 bg-surface-container/30 border-b border-outline-variant/10">
+<span class="text-[10px] font-black text-primary-dim uppercase tracking-widest">Work Project</span>
+</div>
+<div class="p-4 space-y-4">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_rgba(172,163,255,0.6)]"></span>
+<span class="text-sm font-semibold">Design Sprint</span>
+</div>
+<span class="text-[10px] text-on-surface-variant font-bold">75%</span>
+</div>
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="text-sm font-semibold">API Development</span>
+</div>
+<span class="text-[10px] text-on-surface-variant font-bold">20%</span>
+</div>
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+<span class="text-sm font-semibold">Code Review</span>
+</div>
+<span class="text-[10px] text-on-surface-variant font-bold">0%</span>
+</div>
+</div>
+<!-- Personal Group -->
+<div class="px-4 py-3 bg-surface-container/30 border-b border-outline-variant/10 mt-2">
+<span class="text-[10px] font-black text-secondary-dim uppercase tracking-widest">Personal</span>
+</div>
+<div class="p-4 space-y-4">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-sm font-semibold">Workout Plan</span>
+</div>
+<span class="text-[10px] text-on-surface-variant font-bold">100%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Timeline View -->
+<div class="flex-1 overflow-x-auto relative bg-[#0c0c1d]">
+<!-- Timeline Headers -->
+<div class="h-12 border-b border-outline-variant/20 flex sticky top-0 bg-surface-container-low/80 backdrop-blur-md z-20">
+<!-- Individual Days -->
+<div class="flex">
+<div class="w-20 border-r border-outline-variant/10 flex flex-col items-center justify-center">
+<span class="text-[9px] font-bold text-on-surface-variant uppercase">Mar 19</span>
+<span class="text-xs font-bold text-primary">THU</span>
+</div>
+<div class="w-20 border-r border-outline-variant/10 flex flex-col items-center justify-center">
+<span class="text-[9px] font-bold text-on-surface-variant uppercase">Mar 20</span>
+<span class="text-xs font-bold">FRI</span>
+</div>
+<div class="w-20 border-r border-outline-variant/10 flex flex-col items-center justify-center">
+<span class="text-[9px] font-bold text-on-surface-variant uppercase">Mar 21</span>
+<span class="text-xs font-bold">SAT</span>
+</div>
+<div class="w-20 border-r border-outline-variant/10 flex flex-col items-center justify-center">
+<span class="text-[9px] font-bold text-on-surface-variant uppercase">Mar 22</span>
+<span class="text-xs font-bold">SUN</span>
+</div>
+<div class="w-20 border-r border-outline-variant/10 flex flex-col items-center justify-center">
+<span class="text-[9px] font-bold text-on-surface-variant uppercase">Mar 23</span>
+<span class="text-xs font-bold">MON</span>
+</div>
+<div class="w-20 border-r border-outline-variant/10 flex flex-col items-center justify-center">
+<span class="text-[9px] font-bold text-on-surface-variant uppercase">Mar 24</span>
+<span class="text-xs font-bold">TUE</span>
+</div>
+<div class="w-20 border-r border-outline-variant/10 flex flex-col items-center justify-center">
+<span class="text-[9px] font-bold text-on-surface-variant uppercase">Mar 25</span>
+<span class="text-xs font-bold">WED</span>
+</div>
+<div class="w-20 border-r border-outline-variant/10 flex flex-col items-center justify-center">
+<span class="text-[9px] font-bold text-on-surface-variant uppercase">Mar 26</span>
+<span class="text-xs font-bold">THU</span>
+</div>
+</div>
+</div>
+<!-- Timeline Body -->
+<div class="relative min-h-full gantt-grid" style="width: 1000px;">
+<!-- Today Marker -->
+<div class="today-line left-10 h-full">
+<div class="absolute -top-1 -left-1 w-2 h-2 rounded-full bg-primary"></div>
+</div>
+<!-- Bars Layer -->
+<div class="pt-8 space-y-14 px-4">
+<!-- Design Sprint Bar (Indigo) -->
+<div class="relative group">
+<div class="h-8 rounded-lg bg-primary/20 overflow-hidden absolute left-[-20px] w-[320px] border border-primary/30">
+<div class="h-full bg-gradient-to-r from-primary to-primary-dim w-3/4 shadow-[0_0_15px_rgba(108,92,231,0.3)]"></div>
+</div>
+<!-- Floating Tooltip (Shown by default for demonstration) -->
+<div class="absolute top-10 left-0 w-64 p-4 glass-panel bg-surface-bright rounded-2xl z-30 shadow-2xl animate-in fade-in slide-in-from-top-2">
+<div class="flex items-center justify-between mb-2">
+<h4 class="font-bold text-on-surface">Design Sprint</h4>
+<span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-[8px] font-black uppercase">High Priority</span>
+</div>
+<p class="text-[10px] text-on-surface-variant mb-3">Mar 18 - Mar 23, 2026</p>
+<div class="flex items-center gap-2 mb-3">
+<img class="w-5 h-5 rounded-full" data-alt="avatar of a lead designer in a clean minimal style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbYJDXcOE_GS2L-C-ZkdUKpdeirqKfbURjDQFc_kzfyLrh_EmDhDtKP0h42kF0Z-lxe_6-_7mmTd7fXVRC4yb7LhEiNeMR3tlE423JSQ4y7oZQyra0MCy1lJd7-waKxSXiDfCX-TvBEGU1o83CN-ZuD699EZMNgBD4AGqVOUxYYKqHQgmmmrrnPLtfNs66O_JkSoIUo5Aga3ZbN10ZTisCmIWVY69mTRdsK5tox2SsULoBJnXnHoTk4X7spGhRNV-IPDt4tgogTCfI"/>
+<span class="text-[10px] font-semibold">Assigned to James S.</span>
+</div>
+<div class="flex gap-1">
+<div class="w-8 h-8 rounded bg-surface-container" data-alt="abstract architectural sketch with minimalist lines"></div>
+<div class="w-8 h-8 rounded bg-surface-container" data-alt="color palette moodboard with deep purples and electric blues"></div>
+</div>
+</div>
+</div>
+<!-- API Development Bar (Indigo) -->
+<div class="relative mt-[52px]">
+<!-- Dependency Arrow SVG -->
+<svg class="absolute -top-8 left-[300px] w-20 h-10 pointer-events-none" style="filter: drop-shadow(0 0 4px rgba(108,92,231,0.2));">
+<path d="M 0 0 L 0 30 L 40 30" fill="none" marker-end="url(#arrowhead)" stroke="#6C5CE7" stroke-width="2"></path>
+<defs>
+<marker id="arrowhead" markerheight="6" markerwidth="6" orient="auto" refx="5" refy="3">
+<polygon fill="#6C5CE7" points="0 0, 6 3, 0 6"></polygon>
+</marker>
+</defs>
+</svg>
+<div class="h-8 rounded-lg bg-primary/20 overflow-hidden absolute left-[300px] w-[400px] border border-primary/30">
+<div class="h-full bg-gradient-to-r from-primary to-primary-dim w-1/5"></div>
+</div>
+</div>
+<!-- Workout Plan (Coral) -->
+<div class="relative pt-24">
+<div class="h-8 rounded-lg bg-secondary/20 overflow-hidden absolute left-0 w-[480px] border border-secondary/30">
+<div class="h-full bg-gradient-to-r from-secondary to-secondary-dim w-full"></div>
+</div>
+</div>
+<!-- Milestone Marker -->
+<div class="absolute left-[560px] top-[140px] flex flex-col items-center">
+<div class="milestone w-4 h-4 bg-tertiary shadow-[0_0_12px_rgba(173,255,255,0.8)] mb-2"></div>
+<span class="text-[10px] font-black text-tertiary uppercase text-center w-20">Project Deadline</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Status Bar) -->
+<footer class="fixed bottom-0 left-64 right-0 h-10 bg-[#121223]/90 backdrop-blur-md z-40 flex justify-start items-center px-8 gap-8 border-t border-[#474659]/20 shadow-[0_-4px_24px_rgba(108,92,231,0.05)]">
+<div class="flex items-center gap-2 group">
+<span class="material-symbols-outlined text-[#aba9bf] text-sm">list</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.05em] text-[#aba9bf]">Total: 12</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#6C5CE7] text-sm">check_circle</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.05em] text-[#aca3ff]">On Track: 8</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#ff706f] text-sm">warning</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.05em] text-[#aba9bf]">At Risk: 3</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#ff6e84] text-sm">error</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.05em] text-[#aba9bf]">Overdue: 1</span>
+</div>
+</footer>
+</body></html>

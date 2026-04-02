@@ -1,7 +1,7 @@
 ---
-page: templates-marketplace
+page: notifications
 ---
-A community templates marketplace page for SmartTask where users browse, share, download, and rate reusable task templates created by the community.
+A notifications center page for SmartTask where users manage alerts for task reminders, social interactions, AI suggestions, and achievement unlocks.
 
 **DESIGN SYSTEM (REQUIRED):**
 
@@ -18,9 +18,7 @@ Use a **dark-mode, premium SaaS aesthetic** with the following specifications:
 
 **Page Structure:**
 1. Sticky navigation with glass morphism
-2. Header: "📋 Template Marketplace" with "Create Template" button and search bar
-3. Category filter bar: All, Productivity, Study, Fitness, Work, Creative, Morning Routines
-4. Featured templates carousel: 3 top-rated community templates with author info, ratings, usage stats
-5. Template grid: 3x3 grid of template cards with name, description, subtask count, rating, downloads, author avatar, "Use Template" and "Preview" buttons
-6. My Templates section: templates the user has created with edit/delete/share options and download stats
-7. Recently used templates with quick-apply buttons
+2. Header: "🔔 Notifications" with filter tabs (All, Tasks, Social, AI, Achievements) and "Mark All Read" button
+3. Notification list grouped by date (Today, Yesterday, This Week)
+4. Each notification card: icon, title, description, timestamp, read/unread indicator, action button
+5. Empty state with illustration when no notifications

@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartTask — Entity Relationship Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0a0a1a;
+            color: #e2e8f0;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, #6c5ce7, #00d2d3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #94a3b8;
+            background: rgba(255,255,255,0.05);
+            padding: 0.35rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+            padding: 1rem;
+        }
+        .mermaid svg {
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<h1>SmartTask — ERD</h1>
+<p class="subtitle">27 Entities · 7 Modules · Hexagonal Architecture</p>
+
+<div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#a78bfa"></div>auth (existing)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#6c5ce7"></div>task</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#22c55e"></div>social</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#eab308"></div>gamification</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div>room</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#00d2d3"></div>ai</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#94a3b8"></div>notification</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#f97316"></div>template</div>
+</div>
+
+<div class="mermaid">
+erDiagram
+    %% ═══ AUTH MODULE (existing) ═══
+    User {
+        UUID id PK
+        string email UK
+        string password
+        string fullName
+        string avatarUrl
+        enum role
+        enum provider
+        boolean emailVerified
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    %% ═══ TASK MODULE ═══
+    Task {
+        UUID id PK
+        UUID userId FK
+        string title
+        string description
+        enum priority
+        enum status
+        enum category
+        date scheduledDate
+        time scheduledTime
+        date dueDate
+        double estimatedHours
+        boolean isTemplate
+        UUID templateId FK
+        int displayOrder
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    TaskAssignment {
+        UUID id PK
+        UUID taskId FK
+        UUID userId FK
+        datetime assignedAt
+    }
+
+    Subtask {
+        UUID id PK
+        UUID parentTaskId FK
+        string title
+        boolean isCompleted
+        int displayOrder
+    }
+
+    %% ═══ TEMPLATE MODULE ═══
+    TaskTemplate {
+        UUID id PK
+        string title
+        int subtaskCount
+        double rating
+        int usageCount
+        int downloadCount
+        UUID createdBy FK
+        boolean isPublic
+        enum category
+        datetime createdAt
+    }
+
+    TemplateSubtask {
+        UUID id PK
+        UUID templateId FK
+        string title
+        int displayOrder
+    }
+
+    %% ═══ SOCIAL MODULE ═══
+    Friendship {
+        UUID id PK
+        UUID userId FK
+        UUID friendId FK
+        enum status
+        datetime createdAt
+    }
+
+    SocialGroup {
+        UUID id PK
+        string name
+        string abbreviation
+        string description
+        int memberCount
+        UUID createdBy FK
+        datetime createdAt
+    }
+
+    GroupMember {
+        UUID id PK
+        UUID groupId FK
+        UUID userId FK
+        enum role
+        datetime joinedAt
+    }
+
+    SocialPost {
+        UUID id PK
+        UUID userId FK
+        string content
+        enum postType
+        datetime createdAt
+    }
+
+    PostReaction {
+        UUID id PK
+        UUID postId FK
+        UUID userId FK
+        enum reactionType
+        datetime createdAt
+    }
+
+    PostComment {
+        UUID id PK
+        UUID postId FK
+        UUID userId FK
+        string content
+        datetime createdAt
+    }
+
+    %% ═══ GAMIFICATION MODULE ═══
+    Challenge {
+        UUID id PK
+        string title
+        string description
+        enum difficulty
+        int xpReward
+        int durationDays
+        date startDate
+        date endDate
+        enum status
+        string imageUrl
+        string category
+        UUID createdBy FK
+        datetime createdAt
+    }
+
+    ChallengeParticipant {
+        UUID id PK
+        UUID challengeId FK
+        UUID userId FK
+        int progress
+        int rank
+        datetime joinedAt
+    }
+
+    Badge {
+        UUID id PK
+        string name
+        string description
+        string iconName
+        string color
+        string unlockCriteria
+    }
+
+    UserBadge {
+        UUID id PK
+        UUID userId FK
+        UUID badgeId FK
+        int progress
+        datetime earnedAt
+    }
+
+    Streak {
+        UUID id PK
+        UUID userId FK
+        int currentStreak
+        int longestStreak
+        date lastActivityDate
+        string streakType
+    }
+
+    UserXp {
+        UUID id PK
+        UUID userId FK
+        int totalXp
+        int weeklyXp
+        int level
+    }
+
+    MoodEntry {
+        UUID id PK
+        UUID userId FK
+        int mood
+        string note
+        datetime loggedAt
+    }
+
+    %% ═══ ROOM MODULE ═══
+    Room {
+        UUID id PK
+        string roomNumber
+        string title
+        string description
+        date deadline
+        enum priority
+        enum status
+        UUID createdBy FK
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    RoomMember {
+        UUID id PK
+        UUID roomId FK
+        UUID userId FK
+        enum role
+        boolean isOnline
+        datetime joinedAt
+        datetime lastSeenAt
+    }
+
+    ChecklistItem {
+        UUID id PK
+        UUID roomId FK
+        string title
+        UUID assignedTo FK
+        UUID completedBy FK
+        enum status
+        double estimatedHours
+        int displayOrder
+        datetime completedAt
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    PhotoProof {
+        UUID id PK
+        UUID checklistItemId FK
+        UUID uploadedBy FK
+        string imageUrl
+        string caption
+        datetime uploadedAt
+    }
+
+    RoomActivityEvent {
+        UUID id PK
+        UUID roomId FK
+        UUID userId FK
+        enum eventType
+        string description
+        UUID referenceId
+        datetime createdAt
+    }
+
+    ChatMessage {
+        UUID id PK
+        UUID roomId FK
+        UUID senderId FK
+        string content
+        datetime sentAt
+    }
+
+    Huddle {
+        UUID id PK
+        UUID roomId FK
+        string title
+        datetime scheduledAt
+        UUID createdBy FK
+        datetime createdAt
+    }
+
+    %% ═══ AI MODULE ═══
+    AiConversation {
+        UUID id PK
+        UUID userId FK
+        string title
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    AiMessage {
+        UUID id PK
+        UUID conversationId FK
+        enum role
+        string content
+        datetime createdAt
+    }
+
+    FocusSession {
+        UUID id PK
+        UUID userId FK
+        UUID taskId FK
+        int durationMinutes
+        datetime startedAt
+        datetime endedAt
+        boolean completed
+        string ambientSounds
+    }
+
+    %% ═══ NOTIFICATION MODULE ═══
+    Notification {
+        UUID id PK
+        UUID userId FK
+        string title
+        string message
+        enum type
+        UUID referenceId
+        boolean isRead
+        datetime createdAt
+    }
+
+    %% ═══ RELATIONSHIPS ═══
+
+    %% Task
+    User ||--o{ Task : "owns"
+    Task ||--o{ TaskAssignment : "assigned via"
+    User ||--o{ TaskAssignment : "assigned to"
+    Task ||--o{ Subtask : "has"
+    TaskTemplate |o--o{ Task : "generates"
+
+    %% Template
+    User ||--o{ TaskTemplate : "creates"
+    TaskTemplate ||--o{ TemplateSubtask : "contains"
+
+    %% Social
+    User ||--o{ Friendship : "connects"
+    User ||--o{ SocialGroup : "creates"
+    SocialGroup ||--o{ GroupMember : "includes"
+    User ||--o{ GroupMember : "joins"
+    User ||--o{ SocialPost : "publishes"
+    SocialPost ||--o{ PostReaction : "receives"
+    User ||--o{ PostReaction : "reacts"
+    SocialPost ||--o{ PostComment : "has"
+    User ||--o{ PostComment : "writes"
+
+    %% Gamification
+    User ||--o{ ChallengeParticipant : "competes"
+    Challenge ||--o{ ChallengeParticipant : "has"
+    User ||--o{ Challenge : "creates"
+    User ||--o{ UserBadge : "earns"
+    Badge ||--o{ UserBadge : "awarded as"
+    User ||--|| Streak : "maintains"
+    User ||--|| UserXp : "accumulates"
+    User ||--o{ MoodEntry : "logs"
+
+    %% Room
+    User ||--o{ Room : "creates"
+    Room ||--o{ RoomMember : "has"
+    User ||--o{ RoomMember : "joins"
+    Room ||--o{ ChecklistItem : "contains"
+    ChecklistItem ||--o{ PhotoProof : "proven by"
+    Room ||--o{ RoomActivityEvent : "logs"
+    Room ||--o{ ChatMessage : "has"
+    Room ||--o{ Huddle : "schedules"
+    User ||--o{ ChatMessage : "sends"
+
+    %% AI
+    User ||--o{ AiConversation : "starts"
+    AiConversation ||--o{ AiMessage : "contains"
+    User ||--o{ FocusSession : "runs"
+    Task |o--o{ FocusSession : "focused on"
+
+    %% Notification
+    User ||--o{ Notification : "receives"
+</div>
+
+<script>
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'dark',
+        themeVariables: {
+            primaryColor: '#6c5ce7',
+            primaryTextColor: '#e2e8f0',
+            primaryBorderColor: '#4c3ec7',
+            lineColor: '#475569',
+            secondaryColor: '#141432',
+            tertiaryColor: '#1e1e3f',
+            fontSize: '14px',
+            fontFamily: 'Inter, Segoe UI, sans-serif'
+        },
+        er: {
+            diagramPadding: 20,
+            layoutDirection: 'TB',
+            minEntityWidth: 100,
+            minEntityHeight: 75,
+            entityPadding: 15,
+            useMaxWidth: false
+        }
+    });
+</script>
+
+</body>
+</html>

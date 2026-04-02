@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SmartTask | Task Calendar</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-container": "#56f9f9",
+              "on-secondary-container": "#ffc1be",
+              "surface-container": "#18182b",
+              "tertiary-fixed-dim": "#41eaeb",
+              "secondary": "#ff706f",
+              "on-surface-variant": "#aba9bf",
+              "surface-container-highest": "#24233b",
+              "on-primary-container": "#1d007a",
+              "tertiary-dim": "#37e4e5",
+              "secondary-dim": "#ff706f",
+              "on-secondary": "#490008",
+              "on-tertiary-fixed": "#004748",
+              "on-error-container": "#ffb2b9",
+              "on-background": "#e6e3fb",
+              "on-primary-fixed-variant": "#250094",
+              "on-tertiary-fixed-variant": "#006667",
+              "secondary-fixed": "#ffc3c0",
+              "on-error": "#490013",
+              "outline-variant": "#474659",
+              "surface-dim": "#0c0c1d",
+              "surface-tint": "#aca3ff",
+              "on-primary": "#27009a",
+              "inverse-surface": "#fcf8ff",
+              "surface-bright": "#2a2a43",
+              "background": "#0c0c1d",
+              "surface-container-low": "#121223",
+              "inverse-on-surface": "#545366",
+              "on-surface": "#e6e3fb",
+              "secondary-fixed-dim": "#ffafac",
+              "error-container": "#a70138",
+              "surface": "#0c0c1d",
+              "surface-container-lowest": "#000000",
+              "error-dim": "#d73357",
+              "surface-container-high": "#1d1d33",
+              "error": "#ff6e84",
+              "on-secondary-fixed": "#6f0011",
+              "primary-container": "#9e93ff",
+              "primary-fixed": "#9e93ff",
+              "surface-variant": "#24233b",
+              "on-tertiary-container": "#005c5c",
+              "primary": "#aca3ff",
+              "on-secondary-fixed-variant": "#9a2128",
+              "inverse-primary": "#5948d3",
+              "primary-dim": "#6f5fea",
+              "primary-fixed-dim": "#8f83ff",
+              "on-tertiary": "#006565",
+              "tertiary": "#adffff",
+              "tertiary-fixed": "#56f9f9",
+              "on-primary-fixed": "#000000",
+              "outline": "#757388",
+              "secondary-container": "#8c1520"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #0c0c1d; color: #e6e3fb; font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-panel { background: rgba(36, 35, 59, 0.6); backdrop-filter: blur(20px); }
+        .nebula-glow { box-shadow: 0 0 40px rgba(172, 163, 255, 0.08); }
+        .calendar-grid { grid-template-columns: repeat(7, 1fr); }
+    </style>
+</head>
+<body class="min-h-screen">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#0c0c1d]/70 backdrop-blur-xl border-b border-[#aba9bf]/15 shadow-[0_40px_40px_0_rgba(108,92,231,0.08)]">
+<div class="flex items-center justify-between px-8 py-4 max-w-[1280px] mx-auto">
+<div class="text-xl font-black tracking-tighter text-[#aca3ff]">SmartTask</div>
+<div class="hidden md:flex items-center gap-8 font-['Inter'] font-medium text-sm tracking-tight">
+<a class="text-[#aba9bf] hover:text-[#e6e3fb] transition-colors" href="#">Dashboard</a>
+<a class="text-[#aca3ff] font-bold border-b-2 border-[#aca3ff] pb-1" href="#">Tasks</a>
+<a class="text-[#aba9bf] hover:text-[#e6e3fb] transition-colors" href="#">Social</a>
+<a class="text-[#aba9bf] hover:text-[#e6e3fb] transition-colors" href="#">AI Assistant</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-[#aba9bf] hover:bg-[#18182b]/50 p-2 rounded-lg transition-all active:scale-95 duration-200" data-icon="notifications">notifications</button>
+<button class="material-symbols-outlined text-[#aba9bf] hover:bg-[#18182b]/50 p-2 rounded-lg transition-all active:scale-95 duration-200" data-icon="settings">settings</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-[#aca3ff]/30">
+<img alt="User Avatar" data-alt="close-up portrait of a professional man with a friendly expression, studio lighting, soft blue background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBas7wRDFyIEDwzIszCyq6vJq3L67feo6cQKlwHtlWGBu5e-ha3LgLDaXZwd4wScCoSBGZOjdNidO55pyifrwttVeTwXjyhPOHZWJkEMP3fo443Ub7TAkKBwt64PX993nvdfGItCXgUrtRnyY2xobeXaIMCSB4qt2Ar6LJcbTNsA9wPjUIJ6fiD21pgw1ME977UtNz3DKV9Yk_4P09nbIM6_lisFWxI7dP9T-ByPNCeY6Jmd1L2xxcqkBuY72Cg_z2hVu3H9HeeufVx"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="pt-24 pb-20 px-8 max-w-[1280px] mx-auto">
+<!-- Page Header -->
+<header class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+<div>
+<h1 class="text-4xl font-extrabold tracking-tight mb-4">📅 Task Calendar</h1>
+<div class="flex bg-surface-container-low p-1 rounded-xl w-fit">
+<button class="px-6 py-2 rounded-lg bg-surface-bright text-primary font-semibold shadow-sm text-sm">Calendar</button>
+<button class="px-6 py-2 rounded-lg text-on-surface-variant hover:text-on-surface transition-colors text-sm">Gantt Chart</button>
+<button class="px-6 py-2 rounded-lg text-on-surface-variant hover:text-on-surface transition-colors text-sm">Board</button>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-4">
+<div class="flex items-center bg-surface-container rounded-lg p-1">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span></button>
+<span class="px-4 font-bold text-lg min-w-[140px] text-center">March 2026</span>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span></button>
+</div>
+<button class="px-4 py-2 bg-surface-container hover:bg-surface-bright rounded-lg text-sm font-medium transition-all">Today</button>
+<div class="h-8 w-[1px] bg-outline-variant/30 mx-2"></div>
+<button class="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-br from-primary-dim to-primary text-on-primary-fixed rounded-xl font-bold text-sm shadow-[0_0_20px_rgba(108,92,231,0.3)] hover:scale-[1.02] active:scale-95 transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                    New Task
+                </button>
+</div>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Main Content: Calendar Grid -->
+<section class="lg:col-span-9">
+<div class="glass-panel nebula-glow rounded-3xl overflow-hidden">
+<!-- Day Headers -->
+<div class="grid calendar-grid bg-surface-container-high/50 border-b border-outline-variant/10">
+<div class="py-4 text-center text-xs font-bold text-on-surface-variant tracking-widest uppercase">Mon</div>
+<div class="py-4 text-center text-xs font-bold text-on-surface-variant tracking-widest uppercase">Tue</div>
+<div class="py-4 text-center text-xs font-bold text-on-surface-variant tracking-widest uppercase">Wed</div>
+<div class="py-4 text-center text-xs font-bold text-on-surface-variant tracking-widest uppercase">Thu</div>
+<div class="py-4 text-center text-xs font-bold text-on-surface-variant tracking-widest uppercase">Fri</div>
+<div class="py-4 text-center text-xs font-bold text-on-surface-variant tracking-widest uppercase">Sat</div>
+<div class="py-4 text-center text-xs font-bold text-on-surface-variant tracking-widest uppercase">Sun</div>
+</div>
+<!-- Calendar Days -->
+<div class="grid calendar-grid min-h-[700px]">
+<!-- Week 1 - Partial -->
+<div class="border-r border-b border-outline-variant/10 p-2 min-h-[120px] bg-surface-container-lowest/20"></div>
+<div class="border-r border-b border-outline-variant/10 p-2 min-h-[120px] bg-surface-container-lowest/20"></div>
+<div class="border-r border-b border-outline-variant/10 p-2 min-h-[120px] bg-surface-container-lowest/20"></div>
+<div class="border-r border-b border-outline-variant/10 p-2 min-h-[120px] bg-surface-container-lowest/20"></div>
+<div class="border-r border-b border-outline-variant/10 p-2 min-h-[120px] bg-surface-container-lowest/20"></div>
+<div class="border-r border-b border-outline-variant/10 p-2 min-h-[120px] group hover:bg-surface-container/30 transition-colors">
+<span class="text-sm font-medium text-on-surface-variant p-2 inline-block">1</span>
+</div>
+<div class="border-b border-outline-variant/10 p-2 min-h-[120px] group hover:bg-surface-container/30 transition-colors">
+<span class="text-sm font-medium text-on-surface-variant p-2 inline-block">2</span>
+</div>
+<!-- Week 2 -->
+<!-- Example with Task Pills and Overdue indicator -->
+<div class="border-r border-b border-outline-variant/10 p-2 min-h-[120px] group hover:bg-surface-container/30 transition-colors">
+<div class="flex justify-between items-center mb-1">
+<span class="text-sm font-medium text-on-surface-variant p-2">3</span>
+<div class="w-1.5 h-1.5 rounded-full bg-secondary mr-2"></div>
+</div>
+<div class="flex flex-col gap-1">
+<div class="px-2 py-0.5 rounded text-[10px] bg-secondary-container/40 text-secondary border-l-2 border-secondary">Audit Logs</div>
+</div>
+</div>
+<div class="border-r border-b border-outline-variant/10 p-2 min-h-[120px] group hover:bg-surface-container/30 transition-colors">
+<span class="text-sm font-medium text-on-surface-variant p-2 inline-block">4</span>
+</div>
+<div class="border-r border-b border-outline-variant/10 p-2 min-h-[120px] group hover:bg-surface-container/30 transition-colors">
+<span class="text-sm font-medium text-on-surface-variant p-2 inline-block">5</span>
+<div class="flex flex-col gap-1">
+<div class="px-2 py-0.5 rounded text-[10px] bg-tertiary/10 text-tertiary border-l-2 border-tertiary">Review PRs</div>
+</div>
+</div>
+<!-- ... More days ... -->
+<div class="border-r border-b border-outline-variant/10 p-2 min-h-[120px]">
+<span class="text-sm font-medium text-on-surface-variant p-2 inline-block">6</span>
+</div>
+<div class="border-r border-b border-outline-variant/10 p-2 min-h-[120px]">
+<span class="text-sm font-medium text-on-surface-variant p-2 inline-block">7</span>
+</div>
+<div class="border-r border-b border-outline-variant/10 p-2 min-h-[120px]">
+<span class="text-sm font-medium text-on-surface-variant p-2 inline-block">8</span>
+</div>
+<div class="border-b border-outline-variant/10 p-2 min-h-[120px]">
+<span class="text-sm font-medium text-on-surface-variant p-2 inline-block">9</span>
+</div>
+<!-- Week 3 (Contains Today) -->
+<div class="border-r border-b border-outline-variant/10 p-2 min-h-[120px]"><span class="text-sm font-medium p-2">10</span></div>
+<div class="border-r border-b border-outline-variant/10 p-2 min-h-[120px]"><span class="text-sm font-medium p-2">11</span></div>
+<div class="border-r border-b border-outline-variant/10 p-2 min-h-[120px]"><span class="text-sm font-medium p-2">12</span></div>
+<div class="border-r border-b border-outline-variant/10 p-2 min-h-[120px]"><span class="text-sm font-medium p-2">13</span></div>
+<div class="border-r border-b border-outline-variant/10 p-2 min-h-[120px]"><span class="text-sm font-medium p-2">14</span></div>
+<div class="border-r border-b border-outline-variant/10 p-2 min-h-[120px]"><span class="text-sm font-medium p-2">15</span></div>
+<div class="border-b border-outline-variant/10 p-2 min-h-[120px]"><span class="text-sm font-medium p-2">16</span></div>
+<!-- Week 4 -->
+<div class="border-r border-b border-outline-variant/10 p-2 min-h-[120px]"><span class="text-sm font-medium p-2">17</span></div>
+<div class="border-r border-b border-outline-variant/10 p-2 min-h-[120px]"><span class="text-sm font-medium p-2">18</span></div>
+<!-- TODAY March 19th -->
+<div class="border-r border-b border-outline-variant/20 p-2 min-h-[120px] relative bg-primary/5 shadow-[inset_0_0_20px_rgba(172,163,255,0.1)] ring-2 ring-primary/50 ring-inset">
+<span class="text-sm font-bold text-primary p-2 inline-block bg-primary/20 rounded-full w-8 h-8 flex items-center justify-center">19</span>
+<div class="flex flex-col gap-1 mt-1">
+<div class="px-2 py-0.5 rounded text-[10px] bg-secondary-container/40 text-secondary border-l-2 border-secondary">Design Sprint</div>
+<div class="px-2 py-0.5 rounded text-[10px] bg-tertiary/10 text-tertiary border-l-2 border-tertiary">AI Sync</div>
+</div>
+</div>
+<div class="border-r border-b border-outline-variant/10 p-2 min-h-[120px]"><span class="text-sm font-medium p-2">20</span></div>
+<div class="border-r border-b border-outline-variant/10 p-2 min-h-[120px]"><span class="text-sm font-medium p-2">21</span></div>
+<div class="border-r border-b border-outline-variant/10 p-2 min-h-[120px]"><span class="text-sm font-medium p-2">22</span></div>
+<div class="border-b border-outline-variant/10 p-2 min-h-[120px]"><span class="text-sm font-medium p-2">23</span></div>
+<!-- Filler for rest of month -->
+<div class="border-r border-outline-variant/10 p-2 min-h-[120px]"><span class="text-sm font-medium p-2">24</span></div>
+<div class="border-r border-outline-variant/10 p-2 min-h-[120px]"><span class="text-sm font-medium p-2">25</span></div>
+<div class="border-r border-outline-variant/10 p-2 min-h-[120px]"><span class="text-sm font-medium p-2">26</span></div>
+<div class="border-r border-outline-variant/10 p-2 min-h-[120px]"><span class="text-sm font-medium p-2">27</span></div>
+<div class="border-r border-outline-variant/10 p-2 min-h-[120px]"><span class="text-sm font-medium p-2">28</span></div>
+<div class="border-r border-outline-variant/10 p-2 min-h-[120px]"><span class="text-sm font-medium p-2">29</span></div>
+<div class="border-outline-variant/10 p-2 min-h-[120px]"><span class="text-sm font-medium p-2">30</span></div>
+</div>
+</div>
+</section>
+<!-- Right Sidebar: Today's Tasks -->
+<aside class="lg:col-span-3 flex flex-col gap-6">
+<div class="glass-panel nebula-glow rounded-3xl p-6 flex flex-col gap-6 h-full border border-outline-variant/10">
+<div>
+<h2 class="text-xl font-bold mb-4">Today's Tasks</h2>
+<div class="space-y-4">
+<!-- Task Item -->
+<div class="group flex items-center justify-between p-3 bg-surface-container rounded-2xl hover:bg-surface-bright transition-all">
+<div class="flex items-center gap-3">
+<div class="w-2 h-8 bg-secondary rounded-full"></div>
+<div>
+<p class="text-sm font-bold">Review Design Sprint</p>
+<p class="text-[11px] text-on-surface-variant">09:00 AM - 10:30 AM</p>
+</div>
+</div>
+<button class="material-symbols-outlined text-primary-dim hover:text-primary transition-colors" data-icon="photo_camera">photo_camera</button>
+</div>
+<!-- Task Item (Active/Clicked state example) -->
+<div class="group flex items-center justify-between p-3 bg-surface-bright ring-1 ring-primary/30 rounded-2xl">
+<div class="flex items-center gap-3">
+<div class="w-2 h-8 bg-amber-400 rounded-full"></div>
+<div>
+<p class="text-sm font-bold">AI Assistant Sync</p>
+<p class="text-[11px] text-on-surface-variant">01:00 PM - 02:00 PM</p>
+</div>
+</div>
+<button class="material-symbols-outlined text-primary transition-colors" data-icon="photo_camera" style="font-variation-settings: 'FILL' 1;">photo_camera</button>
+</div>
+<!-- Completed Task -->
+<div class="flex items-center justify-between p-3 bg-surface-container/40 rounded-2xl opacity-60">
+<div class="flex items-center gap-3">
+<div class="w-5 h-5 rounded-full border-2 border-emerald-500 bg-emerald-500/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] font-bold text-emerald-500" data-icon="check">check</span>
+</div>
+<div>
+<p class="text-sm font-medium line-through decoration-on-surface-variant/50">Morning Gym Session</p>
+<p class="text-[11px] text-on-surface-variant">Completed 07:45 AM</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-auto">
+<h3 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant mb-4">Photo Proof</h3>
+<div class="grid grid-cols-2 gap-2 mb-4">
+<div class="aspect-square rounded-xl overflow-hidden border border-outline-variant/20 hover:scale-105 transition-transform cursor-pointer">
+<img alt="AI Interface" data-alt="close up of a high-tech glowing AI interface screen with data visualization nodes, futuristic aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZaUzwxx93fLj0LJg7YZG1qPLCzih0lBq6ZU62eZBHxVZRsjXpKbth6iKhuTdv9itdJezzs3OPpl-P7kT80Qg93W6wj7yqZ1F0Ik37_LYMWr-mVCPRAm_vEz_odoDwc8s3rkbXPloYgMuCVhmxVOAAa-cbVTqjOV-Mlzh8cbqkoXVaff3Xn4q8LuQGcDh_URgSCh1SbbkFiZ6uC8OrZvL2KCgZ_6_y3SpYNJMcc3N11Xn4k9B17VaWNMa57RABk7x0yY4iZQq8vCcz"/>
+</div>
+<div class="aspect-square rounded-xl overflow-hidden border border-outline-variant/20 hover:scale-105 transition-transform cursor-pointer">
+<img alt="Gym proof" data-alt="top view of a dumbbell and sweat towel on a dark gym floor, dramatic moody lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-B9cN9YZqr-lcdui12djYHWMdV4MWV31ra5uV46iSDMWEuurkxB-FALPWwq1oT05PzzVczZ8MVEv0nPRycz3UvDoXVrzO-lOdNBWhdc47TKvsRhBZUDBd_-MskU7VIaa3BEeQAS4SXCh9WVkHBB-DAc6fPpQ1OeCShYVqhwb2D5Vsveiz31c80dALgIBfy7sOGeGejVxAyjxwIZ65cME6U0HCaiX5glTC7w4NmAjD9sXfsy6J7uP5sPumcAQcVt1xeHIQbvw1Bi1O"/>
+</div>
+</div>
+<div class="border-2 border-dashed border-outline-variant/30 rounded-2xl p-6 flex flex-col items-center justify-center gap-2 group hover:border-primary/50 transition-colors cursor-pointer bg-surface-container-low/50">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors" data-icon="cloud_upload">cloud_upload</span>
+<p class="text-[11px] text-on-surface-variant text-center leading-tight">Drop photo proof here or click to upload</p>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Bottom Stats Bar -->
+<footer class="fixed bottom-0 w-full z-40 bg-surface-container/90 backdrop-blur-md border-t border-outline-variant/10 px-8 py-3">
+<div class="max-w-[1280px] mx-auto flex items-center justify-between gap-4">
+<div class="flex gap-8 overflow-x-auto no-scrollbar py-1">
+<div class="flex items-center gap-2 whitespace-nowrap">
+<span class="text-on-surface-variant text-xs font-medium">Tasks Due Today:</span>
+<span class="text-primary font-bold">8</span>
+</div>
+<div class="flex items-center gap-2 whitespace-nowrap">
+<span class="text-on-surface-variant text-xs font-medium">Completed:</span>
+<span class="text-emerald-500 font-bold">5</span>
+</div>
+<div class="flex items-center gap-2 whitespace-nowrap">
+<span class="text-on-surface-variant text-xs font-medium">Overdue:</span>
+<span class="text-secondary font-bold">1</span>
+</div>
+<div class="flex items-center gap-2 whitespace-nowrap">
+<span class="text-on-surface-variant text-xs font-medium">Streak:</span>
+<span class="text-tertiary font-bold">14 Days 🔥</span>
+</div>
+</div>
+<div class="hidden md:flex items-center gap-3">
+<span class="text-[10px] text-on-surface-variant uppercase tracking-tighter">AI Efficiency Score</span>
+<div class="w-32 h-1.5 bg-outline-variant/20 rounded-full overflow-hidden">
+<div class="w-[85%] h-full bg-gradient-to-r from-primary to-tertiary shadow-[0_0_8px_rgba(172,163,255,0.5)]"></div>
+</div>
+<span class="text-xs font-bold text-on-surface">85%</span>
+</div>
+</div>
+</footer>
+<!-- Floating Modal Overlay -->
+<div class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
+<div class="glass-panel w-full max-w-md rounded-[32px] overflow-hidden shadow-2xl border border-outline-variant/20">
+<div class="p-8">
+<div class="flex justify-between items-start mb-6">
+<div>
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-secondary-container/40 text-secondary text-[10px] font-bold rounded-full mb-3 uppercase tracking-wider">High Priority</div>
+<h2 class="text-2xl font-black">Review Design Sprint</h2>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-on-surface transition-colors" data-icon="close">close</button>
+</div>
+<p class="text-sm text-on-surface-variant leading-relaxed mb-6">
+                    Evaluate the finalized wireframes for the new AI-powered analytics dashboard. Check for color contrast and accessibility compliance with the design system.
+                </p>
+<div class="space-y-4 mb-8">
+<div class="flex items-center gap-4 text-sm">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="schedule">schedule</span>
+<span class="font-medium">09:00 AM - 10:30 AM (90 mins)</span>
+</div>
+<div class="flex items-center gap-4 text-sm">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="checklist">checklist</span>
+<div class="flex-1">
+<p class="font-medium mb-2">Subtasks (2/3)</p>
+<div class="space-y-2">
+<div class="flex items-center gap-2 opacity-50">
+<span class="material-symbols-outlined text-emerald-500 text-sm" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-xs line-through">Color accessibility audit</span>
+</div>
+<div class="flex items-center gap-2 opacity-50">
+<span class="material-symbols-outlined text-emerald-500 text-sm" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-xs line-through">Check mobile responsive grid</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3.5 h-3.5 border border-outline-variant rounded-full"></div>
+<span class="text-xs">Final approval from product lead</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex gap-4">
+<button class="flex-1 py-3 px-6 bg-surface-container hover:bg-surface-bright border border-outline-variant/20 rounded-2xl font-bold text-sm transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg" data-icon="upload">upload</span>
+                        Upload Proof
+                    </button>
+<button class="flex-1 py-3 px-6 bg-gradient-to-br from-primary-dim to-primary text-on-primary font-bold text-sm rounded-2xl shadow-lg hover:shadow-primary/20 transition-all">
+                        Complete Task
+                    </button>
+</div>
+</div>
+</div>
+</div>
+</body></html>

@@ -25,7 +25,7 @@
                         "display": ["Inter", "sans-serif"]
                     },
                     borderRadius: {
-                        "DEFAULT": "0.5rem",
+                        "DEFAULT": "0.25rem",
                         "lg": "0.5rem",
                         "xl": "0.75rem",
                         "2xl": "1rem",
@@ -54,6 +54,12 @@
             background: rgba(108, 92, 231, 0.2);
             border-radius: 10px;
         }
+        .drag-handle {
+            cursor: grab;
+        }
+        .drag-handle:active {
+            cursor: grabbing;
+        }
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen selection:bg-primary/30">
@@ -73,12 +79,16 @@
 <a class="px-4 py-2 text-sm font-semibold text-primary bg-primary/10 rounded-lg" href="#">Tasks</a>
 <a class="px-4 py-2 text-sm font-medium text-slate-400 hover:text-white transition-colors" href="#">Social</a>
 <a class="px-4 py-2 text-sm font-medium text-slate-400 hover:text-white transition-colors flex items-center gap-1.5" href="#">
-                        AI Assistant
-                        <span class="flex h-1.5 w-1.5 rounded-full bg-success animate-pulse"></span>
+                            AI Assistant
+                            <span class="flex h-1.5 w-1.5 rounded-full bg-success animate-pulse"></span>
 </a>
 </nav>
 </div>
 <div class="flex items-center gap-4">
+<button class="hidden sm:flex items-center gap-2 px-4 py-1.5 bg-primary text-white text-xs font-bold rounded-lg shadow-lg shadow-primary/20 hover:opacity-90 transition-all">
+<span class="material-symbols-outlined text-base">add</span>
+                        New Task
+                    </button>
 <button class="p-2 text-slate-400 hover:text-white hover:bg-white/5 rounded-full transition-all relative">
 <span class="material-symbols-outlined">notifications</span>
 <span class="absolute top-2 right-2 size-2 bg-urgency rounded-full border-2 border-background-dark"></span>
@@ -109,30 +119,49 @@
 <p class="text-slate-400 text-sm">Organize your flow with AI assistance</p>
 </div>
 <div class="flex items-center gap-3">
+<div class="flex bg-white/5 p-1 rounded-xl border border-white/5">
+<button class="p-2 bg-primary rounded-lg text-white shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-sm">format_list_bulleted</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">grid_view</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">calendar_month</span>
+</button>
+</div>
 <button class="flex items-center gap-2 px-5 py-2.5 gradient-primary text-white text-sm font-bold rounded-xl shadow-lg shadow-primary/30 hover:opacity-90 transition-all">
 <span class="material-symbols-outlined text-lg">add</span>
-                        New Task
-                    </button>
+                            New Task
+                        </button>
+</div>
+</div>
+<!-- Quick Add Input -->
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary font-bold transition-transform group-focus-within:scale-110">add</span>
+<input class="w-full bg-primary/5 border border-primary/20 hover:border-primary/40 focus:border-primary rounded-2xl py-4 pl-12 pr-4 text-sm focus:ring-1 focus:ring-primary text-white placeholder:text-slate-500 transition-all shadow-lg shadow-primary/5" placeholder="Quickly add a task..." type="text"/>
+<div class="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
+<kbd class="hidden sm:inline-block px-2 py-1 bg-white/5 border border-white/10 rounded text-[10px] text-slate-400 font-bold">ENTER</kbd>
 </div>
 </div>
 <!-- View Toggle Navigation Bar -->
-<div class="flex p-1 bg-white/5 rounded-2xl border border-white/10 w-fit">
-<button class="flex items-center gap-2 px-6 py-2.5 bg-primary text-white text-sm font-bold rounded-xl shadow-lg shadow-primary/20 transition-all">
-<span class="material-symbols-outlined text-lg">format_list_bulleted</span>
-                    List
-                </button>
-<button class="flex items-center gap-2 px-6 py-2.5 text-slate-400 hover:text-white text-sm font-medium rounded-xl transition-all">
-<span class="material-symbols-outlined text-lg">calendar_month</span>
-                    Calendar
-                </button>
-<button class="flex items-center gap-2 px-6 py-2.5 text-slate-400 hover:text-white text-sm font-medium rounded-xl transition-all">
-<span class="material-symbols-outlined text-lg">reorder</span>
-                    Gantt Chart
-                </button>
-<button class="flex items-center gap-2 px-6 py-2.5 text-slate-400 hover:text-white text-sm font-medium rounded-xl transition-all">
-<span class="material-symbols-outlined text-lg">grid_view</span>
-                    Board
-                </button>
+<div class="flex items-center p-1.5 bg-white/5 border border-white/10 rounded-2xl w-fit">
+<button class="flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-primary rounded-xl shadow-lg shadow-primary/20 transition-all">
+<span class="material-symbols-outlined text-base">format_list_bulleted</span>
+                        List
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 text-xs font-medium text-slate-400 hover:text-white transition-all">
+<span class="material-symbols-outlined text-base">calendar_month</span>
+                        Calendar
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 text-xs font-medium text-slate-400 hover:text-white transition-all">
+<span class="material-symbols-outlined text-base">reorder</span>
+                        Gantt Chart
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 text-xs font-medium text-slate-400 hover:text-white transition-all">
+<span class="material-symbols-outlined text-base">dashboard</span>
+                        Board
+                    </button>
 </div>
 <!-- Filters & Search -->
 <div class="flex flex-col gap-4">
@@ -157,7 +186,7 @@
 <button class="px-4 py-1.5 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white rounded-full text-xs font-medium border border-white/5 transition-all whitespace-nowrap">This Week</button>
 <button class="px-4 py-1.5 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white rounded-full text-xs font-medium border border-white/5 transition-all whitespace-nowrap flex items-center gap-1.5">
 <span class="size-1.5 bg-urgency rounded-full"></span> High Priority
-                        </button>
+                            </button>
 <button class="px-4 py-1.5 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white rounded-full text-xs font-medium border border-white/5 transition-all whitespace-nowrap">Shared</button>
 </div>
 <button class="text-xs font-semibold text-slate-500 hover:text-primary transition-colors pl-4">Clear completed</button>
@@ -173,8 +202,9 @@
 </div>
 <!-- Task List -->
 <div class="flex flex-col gap-3">
-<!-- Task Item 1: Completed with Photo Proof -->
+<!-- Task Item 1: Completed -->
 <div class="glass-card rounded-2xl p-4 flex items-center gap-4 group hover:border-primary/30 transition-all border-l-4 border-l-completion">
+<span class="material-symbols-outlined text-slate-600 drag-handle opacity-0 group-hover:opacity-100 transition-opacity">drag_indicator</span>
 <div class="flex items-center justify-center size-6 rounded-md bg-completion/20 text-completion cursor-pointer">
 <span class="material-symbols-outlined text-lg">check</span>
 </div>
@@ -192,20 +222,21 @@
 </div>
 </div>
 </div>
-<div class="flex items-center gap-2">
-<button class="relative size-9 flex items-center justify-center bg-white/5 hover:bg-white/10 rounded-xl transition-all group/cam">
-<span class="material-symbols-outlined text-xl text-slate-400 group-hover/cam:text-white">photo_camera</span>
-<span class="absolute -top-1 -right-1 size-4 bg-completion rounded-full flex items-center justify-center border-2 border-background-dark">
-<span class="material-symbols-outlined text-[10px] text-white font-bold">check</span>
-</span>
+<div class="relative">
+<button class="p-2 text-slate-400 hover:text-white bg-white/5 rounded-lg border border-white/5">
+<span class="material-symbols-outlined text-lg">photo_camera</span>
 </button>
+<span class="absolute -top-1 -right-1 size-3 bg-success rounded-full border border-background-dark flex items-center justify-center">
+<span class="material-symbols-outlined text-[8px] text-white font-bold">check</span>
+</span>
+</div>
 <button class="p-1.5 opacity-0 group-hover:opacity-100 transition-opacity text-slate-500 hover:text-white">
 <span class="material-symbols-outlined text-xl">more_vert</span>
 </button>
 </div>
-</div>
 <!-- Task Item 2: Pending High Priority -->
 <div class="glass-card rounded-2xl p-4 flex items-center gap-4 group hover:border-primary/30 transition-all border-l-4 border-l-urgency shadow-xl shadow-urgency/5">
+<span class="material-symbols-outlined text-slate-600 drag-handle opacity-0 group-hover:opacity-100 transition-opacity">drag_indicator</span>
 <div class="size-6 rounded-md border-2 border-white/20 hover:border-primary transition-colors cursor-pointer"></div>
 <div class="flex-1">
 <div class="flex items-center gap-2 mb-0.5">
@@ -219,17 +250,18 @@
 <span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">work</span> Work</span>
 </div>
 </div>
-<div class="flex items-center gap-2">
-<button class="size-9 flex items-center justify-center bg-white/5 hover:bg-white/10 rounded-xl transition-all group/cam">
-<span class="material-symbols-outlined text-xl text-slate-400 group-hover/cam:text-white">photo_camera</span>
+<div class="relative">
+<button class="p-2 text-slate-400 hover:text-white bg-white/5 rounded-lg border border-white/5">
+<span class="material-symbols-outlined text-lg">photo_camera</span>
 </button>
+</div>
 <button class="p-1.5 text-slate-500 hover:text-white">
 <span class="material-symbols-outlined text-xl">more_vert</span>
 </button>
 </div>
-</div>
 <!-- Task Item 3: Template Low Priority -->
 <div class="glass-card rounded-2xl p-4 flex items-center gap-4 group hover:border-primary/30 transition-all border-l-4 border-l-primary/40">
+<span class="material-symbols-outlined text-slate-600 drag-handle opacity-0 group-hover:opacity-100 transition-opacity">drag_indicator</span>
 <div class="size-6 rounded-md border-2 border-white/20 hover:border-primary transition-colors cursor-pointer"></div>
 <div class="flex-1">
 <div class="flex items-center gap-2 mb-0.5">
@@ -237,24 +269,28 @@
 <span class="px-2 py-0.5 bg-white/10 text-slate-400 text-[10px] font-bold rounded uppercase tracking-wider">Low</span>
 <span class="flex items-center gap-1 px-1.5 py-0.5 bg-primary/10 text-primary text-[9px] font-black rounded border border-primary/20">
 <span class="material-symbols-outlined text-[10px]">content_copy</span> TEMPLATE
-                            </span>
+                                </span>
 </div>
 <div class="flex items-center gap-4 text-[11px] text-slate-500">
 <span class="flex items-center gap-1 text-completion font-semibold"><span class="material-symbols-outlined text-xs">schedule</span> Today, 07:00 AM</span>
 <span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">person</span> Personal</span>
 </div>
 </div>
-<div class="flex items-center gap-2">
-<button class="size-9 flex items-center justify-center bg-white/5 hover:bg-white/10 rounded-xl transition-all group/cam">
-<span class="material-symbols-outlined text-xl text-slate-400 group-hover/cam:text-white">photo_camera</span>
+<div class="relative">
+<button class="p-2 text-slate-400 hover:text-white bg-white/5 rounded-lg border border-white/5">
+<span class="material-symbols-outlined text-lg">photo_camera</span>
 </button>
+<span class="absolute -top-1 -right-1 size-3 bg-success rounded-full border border-background-dark flex items-center justify-center">
+<span class="material-symbols-outlined text-[8px] text-white font-bold">check</span>
+</span>
+</div>
 <button class="p-1.5 text-slate-500 hover:text-white">
 <span class="material-symbols-outlined text-xl">more_vert</span>
 </button>
 </div>
-</div>
 <!-- Task Item 4: Work Medium -->
 <div class="glass-card rounded-2xl p-4 flex items-center gap-4 group hover:border-primary/30 transition-all border-l-4 border-l-amber-500">
+<span class="material-symbols-outlined text-slate-600 drag-handle opacity-0 group-hover:opacity-100 transition-opacity">drag_indicator</span>
 <div class="size-6 rounded-md border-2 border-white/20 hover:border-primary transition-colors cursor-pointer"></div>
 <div class="flex-1">
 <div class="flex items-center gap-2 mb-0.5">
@@ -266,19 +302,24 @@
 <span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">work</span> Work</span>
 </div>
 </div>
-<div class="flex items-center gap-2">
-<button class="size-9 flex items-center justify-center bg-white/5 hover:bg-white/10 rounded-xl transition-all group/cam">
-<span class="material-symbols-outlined text-xl text-slate-400 group-hover/cam:text-white">photo_camera</span>
+<div class="relative">
+<button class="p-2 text-slate-400 hover:text-white bg-white/5 rounded-lg border border-white/5">
+<span class="material-symbols-outlined text-lg">photo_camera</span>
 </button>
+</div>
 <button class="p-1.5 text-slate-500 hover:text-white">
 <span class="material-symbols-outlined text-xl">more_vert</span>
 </button>
 </div>
 </div>
 </div>
-</div>
 <!-- Right Column: Sidebar -->
 <aside class="w-full lg:w-80 flex flex-col gap-6">
+<!-- Sidebar Primary Action -->
+<button class="w-full flex items-center justify-center gap-3 py-4 bg-primary text-white font-black text-sm rounded-2xl shadow-xl shadow-primary/30 hover:shadow-primary/40 hover:-translate-y-0.5 active:translate-y-0 transition-all border border-white/10 uppercase tracking-widest">
+<span class="material-symbols-outlined text-2xl">add_circle</span>
+                    New Task
+                </button>
 <!-- AI Summary Mini Card -->
 <div class="p-5 rounded-2xl bg-gradient-to-br from-primary/20 to-success/10 border border-primary/20 relative overflow-hidden">
 <div class="absolute top-0 right-0 p-4 opacity-10">
@@ -290,8 +331,8 @@
 <span class="text-xs font-black text-white uppercase tracking-widest">AI Flow Analysis</span>
 </div>
 <p class="text-sm text-slate-200 leading-relaxed mb-4">
-                        You've completed <span class="text-success font-bold">12% more</span> tasks today. Focus on <span class="text-primary font-bold">Work</span> tasks next to stay ahead.
-                    </p>
+                            You've completed <span class="text-success font-bold">12% more</span> tasks today. Focus on <span class="text-primary font-bold">Work</span> tasks next to stay ahead.
+                        </p>
 <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
 <div class="bg-success h-full" style="width: 68%;"></div>
 </div>
@@ -305,34 +346,21 @@
 <div class="flex flex-col gap-4">
 <div class="flex items-center justify-between">
 <div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-success text-xl">verified</span>
+<span class="material-symbols-outlined text-primary text-xl">photo_library</span>
 <h3 class="text-sm font-bold text-white tracking-wide">Recent Photo Proofs</h3>
 </div>
-<span class="text-[10px] font-bold text-slate-500 uppercase">Latest</span>
 </div>
 <div class="grid grid-cols-2 gap-3">
-<div class="group relative rounded-xl overflow-hidden aspect-square border border-white/10 hover:border-primary/50 transition-all cursor-pointer">
-<img alt="Textbook proof" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACb_L6NuCItR1J7dtwto5OIQIBhA_i3W_JS_Ix3ft4SFDL27fa-uRKT-LIg_Rf1R9YW7NptJfpI_qoU7yWUrAWYtgvsi0_QY8lh1O6X3r5qLSUFVZgCEXZ7Vj23ZpUorQtw7SN1N-GWyKpGeIs0qR95GmqZeNZDDeTgpB_HZGF9kIbGcndr__fc8cMHxS9C2WotIsFAxSEDkkg38ZcIpqWahUU5POtVrG-W6wJexF56vmuT0Ut-Rq6v8XvsuoecpVn4mM8tX_kK8yN"/>
-<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-2">
-<span class="text-[8px] font-bold text-white">Today, 2:30 PM</span>
+<div class="group relative aspect-square rounded-xl overflow-hidden glass-card border-white/10 cursor-pointer">
+<img alt="Math Assignment Proof" class="w-full h-full object-cover transition-transform group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5f1wofXDd5PnZm2_LfsB9RD4MbRZnB6jK4hNmRA3llOggeX-0qpvrXwXXT_qL-H947gvxKFB21AFNKh_4blLW0H0knAbUMm9lYUdWqjxxnFc5MpHaeYZ2XlR3tszJAn1qkbSJowNGqVe7SyMs9ZdThoTGScd4ZSofEQMD2T76djw4Sue0koIzzEFyDncDVxIdESfv871fr1anX8KkalQBtVbIl8Lxk5kTJXqJ3iGM8dz0Lm4Vf775BgedIpTvX0aBjI0ETCvw_Rgk"/>
+<div class="absolute inset-x-0 bottom-0 p-2 bg-gradient-to-t from-black/80 to-transparent">
+<p class="text-[9px] font-bold text-white truncate">Math Assignment</p>
 </div>
 </div>
-<div class="group relative rounded-xl overflow-hidden aspect-square border border-white/10 hover:border-primary/50 transition-all cursor-pointer">
-<img alt="Gym proof" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCK4j20HsHiOZ0GD80KYzCicmdp5EedrUO_f355MaeneHhHIa-sFNqSrGsypiSSQn9F_JMb5hZ6ftTDHVSx5x5s7D9L4Z-uQ60lZzEWlceocX9oNyFihz-6tmkzVq9DaPwQDarAYGMyllG2Pd_aNdVbCvYivrOMiI1uNjdBjrjrLwQVhE3GlGlS7clFcUAMAr5QBmjcqAIcid98A5_ASYf_r8LjT63lGGIXM4wORfHGZYFNrNNjUOQ9_0Y50Cbr3aLVA-1V45AooYX-"/>
-<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-2">
-<span class="text-[8px] font-bold text-white">Today, 8:15 AM</span>
-</div>
-</div>
-<div class="group relative rounded-xl overflow-hidden aspect-square border border-white/10 hover:border-primary/50 transition-all cursor-pointer">
-<img alt="Code proof" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCU4K0VvjW3I8SLqlEurJ4hIAcj7K5GsQfO5WJui0rYvDyJAL27NeysDm6MfOXuA5E5LOno02YIY07yHFCUMtpGp8OCvtjYvZkRdelbCo-rj7-V3x07-ezx_H24bKYCJf7id1C60QslAeaBlsjT2JD6Jd6MM272o_4ieIVBgY-ogTeL6rozayhIBnV_1oTDpuf2zgeaHJYNBm8GF1QNs0RLWVYx-zf6YM05tsSQoB-0eT_ZSSQgwXV41lFstgnfadRJQ0oZCGIfI67n"/>
-<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-2">
-<span class="text-[8px] font-bold text-white">Yesterday, 11:45 PM</span>
-</div>
-</div>
-<div class="group relative rounded-xl overflow-hidden aspect-square border border-white/10 hover:border-primary/50 transition-all cursor-pointer">
-<img alt="Yoga proof" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuALEp4g_4-HFrtqNvzh1F6AVLLtn1ZmsIktAx1-k5WSQ4DyaEjRAIGz7rTd5FziMCI_m99WU-79duwU7pbxVJOoYMw4MB4wDIlmdKikqlJJMq9IgjLwCt26sWZFa0VsH7fBjlMWClbLGDX8LHWCi5kWq1uN5Xqzv7cNriwu-2a3gXCxwoT5hg0hoUSmChSEscKgAZPJtw5JeDOfEHmUpZG0cenBvmNGNsqihSMzKNAkoHOWUAd-ij9Dr580H7NovT73cN6qxKR84Uni"/>
-<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-2">
-<span class="text-[8px] font-bold text-white">Yesterday, 7:00 AM</span>
+<div class="group relative aspect-square rounded-xl overflow-hidden glass-card border-white/10 cursor-pointer">
+<img alt="Yoga Proof" class="w-full h-full object-cover transition-transform group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9zj8SiZB6SDlbFWUaCuN7q7tzne3HS18djHdPulkBN4g1nhwFf2Z11tkDfl99FcqbP7HI-h3HV71eNlyr729qLN4tndmwYSNJ1_dolutX2w0kCB3RHvSYXRm0bRcaPE8UnH1h7R8g77rZNUapzvVKaZY3hu5VabZvUo7uo30UfuI8jmI_owW6jcYC3gg5_UJCLpUWkzX_zuWDFkjkyw1PXIqT6arvx214YqFcbbFTnuxXdU6k9MRXmKH7Fba857spNFWOcaIz-ZUa"/>
+<div class="absolute inset-x-0 bottom-0 p-2 bg-gradient-to-t from-black/80 to-transparent">
+<p class="text-[9px] font-bold text-white truncate">Morning Yoga</p>
 </div>
 </div>
 </div>
@@ -353,7 +381,7 @@
 <h4 class="text-sm font-bold text-white group-hover:text-primary transition-colors">Deep Work Block</h4>
 <div class="flex items-center gap-1 text-[10px] text-amber-400">
 <span class="material-symbols-outlined text-xs fill-1">star</span> 4.9
-                            </div>
+                                </div>
 </div>
 <div class="flex items-center gap-3 text-[10px] text-slate-500 mb-3">
 <span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">list_alt</span> 6 subtasks</span>
@@ -361,48 +389,20 @@
 </div>
 <button class="w-full py-2 bg-white/5 hover:bg-primary text-white text-[11px] font-bold rounded-xl transition-all border border-white/5">Use Template</button>
 </div>
-<!-- Template 2 -->
-<div class="glass-card p-3.5 rounded-2xl hover:bg-white/10 transition-all cursor-pointer group">
-<div class="flex justify-between items-start mb-2">
-<h4 class="text-sm font-bold text-white group-hover:text-primary transition-colors">Study Session</h4>
-<div class="flex items-center gap-1 text-[10px] text-amber-400">
-<span class="material-symbols-outlined text-xs fill-1">star</span> 4.8
-                            </div>
 </div>
-<div class="flex items-center gap-3 text-[10px] text-slate-500 mb-3">
-<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">list_alt</span> 4 subtasks</span>
-<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">group</span> 850 uses</span>
-</div>
-<button class="w-full py-2 bg-white/5 hover:bg-primary text-white text-[11px] font-bold rounded-xl transition-all border border-white/5">Use Template</button>
-</div>
-</div>
+<a class="text-center py-2 text-xs font-bold text-slate-500 hover:text-primary transition-colors flex items-center justify-center gap-1 group" href="#">
+                        Browse Community Templates 
+                        <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
 </div>
 <!-- Quick Upload Zone -->
-<div class="group cursor-pointer">
-<div class="flex flex-col items-center justify-center gap-3 p-6 border-2 border-dashed border-white/10 rounded-2xl bg-white/5 hover:bg-white/10 hover:border-primary/50 transition-all">
-<div class="size-12 bg-primary/10 rounded-full flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined text-2xl">cloud_upload</span>
+<div class="p-6 border-2 border-dashed border-white/10 hover:border-primary/40 rounded-2xl transition-all group cursor-pointer text-center bg-white/2 bg-white/5:hover">
+<div class="size-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary">cloud_upload</span>
 </div>
-<div class="text-center">
-<p class="text-xs font-bold text-white">Quick Upload</p>
-<p class="text-[10px] text-slate-400 mt-1 leading-tight">Drop photo proof here or <span class="text-primary underline">click to upload</span></p>
-<p class="text-[9px] text-slate-500 mt-2 uppercase tracking-tighter">JPG, PNG up to 10MB</p>
-</div>
-</div>
-</div>
-<!-- Trending Topics -->
-<div class="glass-card rounded-2xl p-5 border-dashed border-white/10">
-<h3 class="text-xs font-black text-slate-500 uppercase tracking-widest mb-4">Trending in Social</h3>
-<div class="flex flex-col gap-3">
-<div class="flex items-center justify-between">
-<span class="text-xs font-medium text-slate-300">#NoProcrastinationChallenge</span>
-<span class="text-[10px] text-primary font-bold">LIVE</span>
-</div>
-<div class="flex items-center justify-between">
-<span class="text-xs font-medium text-slate-300">UX Design Group Study</span>
-<span class="text-[10px] text-slate-500">42 active</span>
-</div>
-</div>
+<p class="text-[11px] font-bold text-white mb-1">Quick Proof Upload</p>
+<p class="text-[10px] text-slate-500 leading-tight px-4">Drop photo proof here or click to upload</p>
+<p class="text-[8px] text-slate-600 mt-2">JPG, PNG up to 10MB</p>
 </div>
 </aside>
 </main>

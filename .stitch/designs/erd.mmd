@@ -1,0 +1,346 @@
+erDiagram
+    %% ═══════════════════════════════════════
+    %% AUTH MODULE [PostgreSQL]
+    %% ═══════════════════════════════════════
+    User {
+        UUID id PK "UUIDv7"
+        string email UK
+        string password
+        string fullName
+        string avatarUrl
+        enum role
+        enum provider
+        boolean emailVerified
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    %% ═══════════════════════════════════════
+    %% TASK MODULE [PostgreSQL]
+    %% ═══════════════════════════════════════
+    Task {
+        UUID id PK "UUIDv7"
+        UUID userId FK
+        string title
+        text description
+        enum priority "LOW|MEDIUM|HIGH|CRITICAL"
+        enum status "PENDING|IN_PROGRESS|COMPLETED"
+        enum category "PERSONAL|WORK|STUDY|HEALTH|SOCIAL"
+        date scheduledDate
+        time scheduledTime
+        date dueDate
+        decimal estimatedHours "decimal(5,2)"
+        UUID sourceTemplateId FK "nullable"
+        int displayOrder
+        datetime deletedAt "nullable, soft-delete"
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    TaskAssignment {
+        UUID id PK "UUIDv7"
+        UUID taskId FK
+        UUID userId FK
+        datetime assignedAt
+    }
+
+    Subtask {
+        UUID id PK "UUIDv7"
+        UUID parentTaskId FK
+        string title
+        boolean isCompleted
+        int displayOrder
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    %% ═══════════════════════════════════════
+    %% TEMPLATE MODULE [PostgreSQL]
+    %% ═══════════════════════════════════════
+    TaskTemplate {
+        UUID id PK "UUIDv7"
+        string title
+        int usageCount
+        int downloadCount
+        UUID createdBy FK
+        boolean isPublic
+        enum category "PERSONAL|WORK|STUDY|HEALTH|SOCIAL"
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    TemplateSubtask {
+        UUID id PK "UUIDv7"
+        UUID templateId FK
+        string title
+        int displayOrder
+    }
+
+    %% ═══════════════════════════════════════
+    %% SOCIAL MODULE [PostgreSQL + MongoDB]
+    %% ═══════════════════════════════════════
+    Friendship {
+        UUID id PK "UUIDv7 · PostgreSQL"
+        UUID userIdA FK "LEAST(a,b)"
+        UUID userIdB FK "GREATEST(a,b)"
+        enum status "PENDING|ACCEPTED|BLOCKED"
+        UUID initiatedBy FK
+        datetime createdAt
+    }
+
+    Group {
+        UUID id PK "UUIDv7 · PostgreSQL"
+        string name
+        string abbreviation
+        text description
+        UUID createdBy FK
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    GroupMember {
+        UUID id PK "UUIDv7 · PostgreSQL"
+        UUID groupId FK
+        UUID userId FK
+        enum role "OWNER|ADMIN|MEMBER"
+        datetime joinedAt
+    }
+
+    ActivityLog {
+        ObjectId _id PK "MongoDB"
+        UUID userId "indexed"
+        string actorType "USER|SYSTEM"
+        string verb "TASK_COMPLETED|ROOM_JOINED|..."
+        UUID objectId "nullable"
+        string objectType "TASK|ROOM|TEMPLATE|..."
+        object meta "flexible subdocument"
+        datetime createdAt "TTL index optional"
+    }
+
+    ActivityReaction {
+        ObjectId _id PK "MongoDB · embedded or ref"
+        ObjectId activityId "indexed"
+        UUID userId
+        string reactionType "CHEER|LIKE"
+        datetime createdAt
+    }
+
+    ActivityComment {
+        ObjectId _id PK "MongoDB · embedded or ref"
+        ObjectId activityId "indexed"
+        UUID userId
+        string content
+        datetime createdAt
+    }
+
+    MoodEntry {
+        UUID id PK "UUIDv7 · PostgreSQL"
+        UUID userId FK
+        smallint mood "1-5"
+        string note
+        datetime loggedAt
+    }
+
+    %% ═══════════════════════════════════════
+    %% ROOM MODULE [PostgreSQL + MongoDB]
+    %% ═══════════════════════════════════════
+    Room {
+        UUID id PK "UUIDv7 · PostgreSQL"
+        string roomNumber
+        string title
+        text description
+        date deadline
+        enum priority "LOW|MEDIUM|HIGH|CRITICAL"
+        enum status "ACTIVE|ARCHIVED|COMPLETED"
+        UUID createdBy FK
+        datetime deletedAt "nullable, soft-delete"
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    RoomMember {
+        UUID id PK "UUIDv7 · PostgreSQL"
+        UUID roomId FK
+        UUID userId FK
+        enum role "OWNER|MEMBER"
+        datetime joinedAt
+        datetime lastSeenAt "online = lastSeenAt > now-30s"
+    }
+
+    ChecklistItem {
+        UUID id PK "UUIDv7 · PostgreSQL"
+        UUID roomId FK
+        string title
+        UUID assignedToUserId FK "nullable"
+        UUID completedByUserId FK "nullable"
+        enum status "PENDING|IN_PROGRESS|COMPLETED"
+        decimal estimatedHours "decimal(5,2)"
+        int displayOrder
+        datetime completedAt "nullable"
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    ChecklistProof {
+        UUID id PK "UUIDv7 · PostgreSQL"
+        UUID checklistItemId FK
+        UUID uploadedByUserId FK
+        string fileUrl
+        string mimeType
+        string caption
+        datetime uploadedAt
+    }
+
+    RoomEvent {
+        ObjectId _id PK "MongoDB"
+        UUID roomId "indexed"
+        UUID userId
+        string eventType "TASK_COMPLETED|MEMBER_JOINED|..."
+        string description
+        UUID referenceId "nullable"
+        string referenceType "CHECKLIST_ITEM|CHAT_MESSAGE|..."
+        datetime createdAt "TTL index 30d"
+    }
+
+    ChatMessage {
+        ObjectId _id PK "MongoDB"
+        UUID roomId "indexed + sentAt compound"
+        UUID senderId
+        string content
+        datetime sentAt "ms precision"
+    }
+
+    Huddle {
+        UUID id PK "UUIDv7 · PostgreSQL"
+        UUID roomId FK
+        string title
+        datetime scheduledAt
+        UUID createdBy FK
+        datetime createdAt
+    }
+
+    HuddleParticipant {
+        UUID id PK "UUIDv7 · PostgreSQL"
+        UUID huddleId FK
+        UUID userId FK
+        datetime joinedAt
+    }
+
+    %% ═══════════════════════════════════════
+    %% AI MODULE [MongoDB]
+    %% ═══════════════════════════════════════
+    Conversation {
+        ObjectId _id PK "MongoDB"
+        UUID userId "indexed"
+        string title
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    AiMessage {
+        ObjectId _id PK "MongoDB · or embedded in Conversation"
+        ObjectId conversationId "indexed"
+        string role "USER|ASSISTANT"
+        string content "large text"
+        datetime createdAt
+    }
+
+    FocusSession {
+        UUID id PK "UUIDv7 · PostgreSQL"
+        UUID userId FK
+        UUID taskId FK "nullable"
+        int durationMinutes
+        enum ambientSound "RAIN|FOREST|CAFE|LOFI|OCEAN|WHITE_NOISE|NONE"
+        datetime startedAt
+        datetime endedAt "nullable"
+        boolean completed
+    }
+
+    %% ═══════════════════════════════════════
+    %% NOTIFICATION MODULE [MongoDB]
+    %% ═══════════════════════════════════════
+    Notification {
+        ObjectId _id PK "MongoDB"
+        UUID userId "indexed"
+        string title
+        string message
+        string type "TASK_DUE|SOCIAL|ROOM"
+        UUID referenceId "nullable"
+        boolean isRead
+        datetime createdAt
+        datetime archivedAt "TTL index 90d"
+    }
+
+    %% ═══════════════════════════════════════
+    %% CROSS-CUTTING [PostgreSQL]
+    %% ═══════════════════════════════════════
+    UserPreference {
+        UUID userId PK_FK "PostgreSQL"
+        string theme "LIGHT|DARK"
+        string timezone
+        jsonb notificationPrefs
+        datetime updatedAt
+    }
+
+    Attachment {
+        UUID id PK "UUIDv7 · PostgreSQL"
+        enum entityType "ACTIVITY|ROOM|CHECKLIST_ITEM"
+        UUID entityId
+        string url
+        string mimeType
+        int sizeBytes
+        UUID uploadedByUserId FK
+        datetime createdAt
+    }
+
+    %% ═══════════════════════════════════════
+    %% RELATIONSHIPS
+    %% ═══════════════════════════════════════
+
+    %% Task [PostgreSQL]
+    User ||--o{ Task : "owns"
+    Task ||--o{ TaskAssignment : "assigned via"
+    User ||--o{ TaskAssignment : "assigned to"
+    Task ||--o{ Subtask : "has"
+    TaskTemplate |o--o{ Task : "source of"
+
+    %% Template [PostgreSQL]
+    User ||--o{ TaskTemplate : "creates"
+    TaskTemplate ||--o{ TemplateSubtask : "contains"
+
+    %% Social [PostgreSQL relational + MongoDB feeds]
+    User ||--o{ Friendship : "connects"
+    User ||--o{ Group : "creates"
+    Group ||--o{ GroupMember : "includes"
+    User ||--o{ GroupMember : "joins"
+    User ||--o{ ActivityLog : "generates"
+    ActivityLog ||--o{ ActivityReaction : "receives"
+    User ||--o{ ActivityReaction : "reacts"
+    ActivityLog ||--o{ ActivityComment : "has"
+    User ||--o{ ActivityComment : "writes"
+
+    User ||--o{ MoodEntry : "logs"
+
+    %% Room [PostgreSQL structure + MongoDB events/chat]
+    User ||--o{ Room : "creates"
+    Room ||--o{ RoomMember : "has"
+    User ||--o{ RoomMember : "joins"
+    Room ||--o{ ChecklistItem : "contains"
+    ChecklistItem ||--o{ ChecklistProof : "proven by"
+    Room ||--o{ RoomEvent : "logs"
+    Room ||--o{ ChatMessage : "has"
+    Room ||--o{ Huddle : "schedules"
+    Huddle ||--o{ HuddleParticipant : "attended by"
+    User ||--o{ HuddleParticipant : "attends"
+    User ||--o{ ChatMessage : "sends"
+
+    %% AI [MongoDB conversations + PostgreSQL focus]
+    User ||--o{ Conversation : "starts"
+    Conversation ||--o{ AiMessage : "contains"
+    User ||--o{ FocusSession : "runs"
+    Task |o--o{ FocusSession : "focused on"
+
+    %% Notification [MongoDB] & Cross-cutting [PostgreSQL]
+    User ||--o{ Notification : "receives"
+    User ||--|| UserPreference : "configures"
+    User ||--o{ Attachment : "uploads"

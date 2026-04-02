@@ -18,6 +18,8 @@ SmartTask is an AI-powered social task and time management platform. It combines
 - **Task Templates** – Reusable templates for common routines (morning routine, study blocks, workout plans)
 - **Mood Check-ins** – Quick mood tracking that influences AI scheduling recommendations
 - **Progress Insights** – Visual analytics showing productivity trends over time
+- **Multi-View Task Management** – Calendar, Gantt chart, and Kanban board views for flexible task visualization
+- **Photo Proof** – Upload photo evidence for task completion verification
 
 ## 4. Sitemap
 
@@ -32,20 +34,28 @@ SmartTask is an AI-powered social task and time management platform. It combines
 - [x] `weekly-review` – AI-generated weekly productivity report with charts, insights, goals
 - [x] `challenges` – Group challenges with leaderboards, team progress, rewards, achievements
 - [x] `templates` – Templates marketplace with community templates, ratings, downloads, My Templates
+- [x] `task-calendar` – Calendar view for tasks (monthly/weekly/daily, photo proof upload)
+- [x] `task-gantt` – Gantt chart timeline view (project timelines, dependencies, milestones)
+- [x] `task-board` – Kanban drag-and-drop board (status columns, photo proof panel)
 
 ## 5. Roadmap
 
-### Phase 1 – Core Pages
+### Phase 1 – Core Pages ✅
 1. Landing page (`index`)
 2. Dashboard (`dashboard`)
 3. Task management (`tasks`)
 
-### Phase 2 – Social & AI
+### Phase 2 – Social & AI ✅
 4. Social hub (`social`)
 5. AI assistant (`ai-assistant`)
 
-### Phase 3 – Profile & Polish
+### Phase 3 – Profile & Polish ✅
 6. User profile (`profile`)
+
+### Phase 4 – Advanced Task Views ✅
+7. Task calendar view (`task-calendar`)
+8. Gantt chart view (`task-gantt`)
+9. Kanban board view (`task-board`)
 
 ## 6. Creative Freedom (All Completed ✅)
 

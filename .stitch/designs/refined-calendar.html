@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kinetic Sanctuary | Task Calendar</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container": "#17172c",
+              "on-tertiary": "#650c02",
+              "surface-container-lowest": "#000000",
+              "tertiary-fixed": "#ff937f",
+              "on-tertiary-fixed-variant": "#711609",
+              "secondary-fixed": "#00fcca",
+              "secondary-dim": "#00edbd",
+              "on-tertiary-fixed": "#380200",
+              "primary-container": "#9e93ff",
+              "secondary": "#00fcca",
+              "inverse-primary": "#5948d3",
+              "tertiary": "#ff937f",
+              "surface-container-highest": "#23233c",
+              "surface-variant": "#23233c",
+              "on-error": "#490013",
+              "inverse-on-surface": "#545367",
+              "on-primary-fixed": "#000000",
+              "error": "#ff6e84",
+              "surface-tint": "#aca3ff",
+              "background": "#0c0c1d",
+              "primary-fixed-dim": "#8f83ff",
+              "on-surface": "#e5e3fc",
+              "on-surface-variant": "#aba9c0",
+              "outline": "#747389",
+              "tertiary-fixed-dim": "#fe7d66",
+              "primary-dim": "#6f5fea",
+              "error-dim": "#d73357",
+              "on-secondary-fixed-variant": "#006650",
+              "secondary-fixed-dim": "#00edbd",
+              "on-error-container": "#ffb2b9",
+              "on-primary": "#27009a",
+              "outline-variant": "#47465a",
+              "secondary-container": "#006b54",
+              "on-primary-fixed-variant": "#250094",
+              "primary-fixed": "#9e93ff",
+              "on-tertiary-container": "#510400",
+              "on-secondary-fixed": "#004737",
+              "inverse-surface": "#fcf8ff",
+              "surface-bright": "#292944",
+              "on-primary-container": "#1d007a",
+              "surface": "#0c0c1d",
+              "primary": "#aca3ff",
+              "on-background": "#e5e3fc",
+              "surface-dim": "#0c0c1d",
+              "on-secondary": "#005b47",
+              "tertiary-dim": "#f77861",
+              "surface-container-high": "#1d1d34",
+              "surface-container-low": "#111124",
+              "error-container": "#a70138",
+              "on-secondary-container": "#dffff1",
+              "tertiary-container": "#fe7d66"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #0c0c1d; color: #e5e3fc; font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-panel { backdrop-filter: blur(24px); border-top: 1px solid rgba(229, 227, 252, 0.1); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary/30 min-h-screen">
+<!-- TopNavBar Implementation -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-8 h-20 bg-surface-variant/70 backdrop-blur-2xl shadow-[0_24px_48px_rgba(0,0,0,0.4)]">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-black tracking-tighter text-indigo-300 dark:text-indigo-200">Kinetic Sanctuary</span>
+<div class="hidden md:flex gap-6 items-center">
+<a class="text-slate-400 dark:text-slate-500 hover:text-indigo-200 transition-colors font-inter tracking-tight text-sm font-medium" href="#">Dashboard</a>
+<a class="text-indigo-300 dark:text-indigo-200 font-bold border-b-2 border-indigo-300 font-inter tracking-tight text-sm font-medium" href="#">Tasks</a>
+<a class="text-slate-400 dark:text-slate-500 hover:text-indigo-200 transition-colors font-inter tracking-tight text-sm font-medium" href="#">Social</a>
+<a class="text-slate-400 dark:text-slate-500 hover:text-indigo-200 transition-colors font-inter tracking-tight text-sm font-medium" href="#">AI Assistant</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden lg:block">
+<input class="bg-surface-container-low border-none rounded-full px-6 py-2 w-64 text-sm focus:ring-1 focus:ring-primary" placeholder="Search tasks..." type="text"/>
+<span class="material-symbols-outlined absolute right-4 top-2 text-outline" style="font-size: 18px;">search</span>
+</div>
+<button class="material-symbols-outlined text-indigo-300 hover:scale-[1.02] transition-transform duration-200">notifications</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
+<img alt="User profile" data-alt="close-up portrait of a professional man with a minimalist aesthetic and soft cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkssUy_gvkfSkETt36rudz2MXNCgp1_pmpTsPhmYtANztKVncMPH0iXwJoM6vyV0kcU4LuO0Gv6lbl1owqh16FhORmqza0BKsLLsSKOeAjlGSb3zpbXR7dEsZIgbZprjJwfDzedVxQUOEi72qjnRbetaaQXqKHa1bKoc25VWUxh7kC-m1_UyzDsNOEfOlmabi9_6LQs-O_1cMuuAL0AnXZGDm_yoKfxPCk1YHcKo2H6bTsen7bbb3djA1VmNVoikOWPWg9pGiNG8cA"/>
+</div>
+</div>
+</nav>
+<div class="flex pt-20 h-screen overflow-hidden">
+<!-- SideNavBar Implementation -->
+<aside class="fixed left-0 top-0 h-full flex flex-col pt-24 pb-8 bg-surface-container-low dark:bg-slate-900/50 backdrop-blur-xl w-72 z-40">
+<div class="px-8 mb-8">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-8 h-8 rounded-lg bg-primary-dim flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-sm">rocket_launch</span>
+</div>
+<div>
+<h3 class="font-inter text-sm uppercase tracking-widest font-bold text-indigo-300">Project Alpha</h3>
+<p class="text-[10px] text-tertiary uppercase tracking-widest">High Priority</p>
+</div>
+</div>
+</div>
+<nav class="flex-1">
+<div class="space-y-1">
+<a class="flex items-center gap-4 text-slate-400 px-6 py-4 hover:bg-surface-container-high transition-all duration-200 uppercase tracking-widest text-[11px]" href="#">
+<span class="material-symbols-outlined">format_list_bulleted</span> List
+                    </a>
+<a class="flex items-center gap-4 bg-indigo-500/10 text-indigo-300 border-l-2 border-emerald-400 px-6 py-4 scale-[1.01] uppercase tracking-widest text-[11px]" href="#">
+<span class="material-symbols-outlined">calendar_month</span> Calendar
+                    </a>
+<a class="flex items-center gap-4 text-slate-400 px-6 py-4 hover:bg-surface-container-high transition-all duration-200 uppercase tracking-widest text-[11px]" href="#">
+<span class="material-symbols-outlined">stacked_line_chart</span> Gantt Chart
+                    </a>
+<a class="flex items-center gap-4 text-slate-400 px-6 py-4 hover:bg-surface-container-high transition-all duration-200 uppercase tracking-widest text-[11px]" href="#">
+<span class="material-symbols-outlined">dashboard_customize</span> Board
+                    </a>
+</div>
+</nav>
+<div class="px-6 mb-8">
+<button class="w-full bg-gradient-to-r from-primary-dim to-primary text-on-primary-container font-bold py-3 rounded-xl hover:scale-[1.02] transition-transform shadow-lg shadow-primary/20">
+                    New Task
+                </button>
+</div>
+<div class="border-t border-outline-variant/10 pt-4">
+<a class="flex items-center gap-4 text-slate-400 px-6 py-3 hover:bg-surface-container-high transition-all duration-200 text-[11px] uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined">settings</span> Settings
+                </a>
+<a class="flex items-center gap-4 text-slate-400 px-6 py-3 hover:bg-surface-container-high transition-all duration-200 text-[11px] uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined">help</span> Support
+                </a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-72 flex-1 flex flex-col bg-surface overflow-hidden">
+<!-- Calendar Header -->
+<header class="p-8 flex items-end justify-between">
+<div>
+<p class="text-on-surface-variant uppercase tracking-[0.2em] text-xs font-bold mb-2">March 2026</p>
+<h1 class="text-5xl font-black tracking-tighter text-on-surface">Task Calendar</h1>
+</div>
+<div class="flex gap-4 items-center glass-panel bg-surface-container-high rounded-full p-1">
+<button class="px-6 py-2 rounded-full text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors">List</button>
+<button class="px-6 py-2 rounded-full text-sm font-bold bg-primary text-on-primary-container shadow-sm">Calendar</button>
+<button class="px-6 py-2 rounded-full text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors">Gantt</button>
+<button class="px-6 py-2 rounded-full text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors">Board</button>
+</div>
+</header>
+<!-- Calendar Grid -->
+<div class="flex-1 overflow-y-auto px-8 pb-8 no-scrollbar">
+<div class="grid grid-cols-7 gap-[1px] bg-outline-variant/20 rounded-2xl overflow-hidden border border-outline-variant/10 shadow-2xl">
+<!-- Day Labels -->
+<div class="bg-surface-container-low py-4 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant border-b border-outline-variant/20">Sun</div>
+<div class="bg-surface-container-low py-4 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant border-b border-outline-variant/20">Mon</div>
+<div class="bg-surface-container-low py-4 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant border-b border-outline-variant/20">Tue</div>
+<div class="bg-surface-container-low py-4 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant border-b border-outline-variant/20">Wed</div>
+<div class="bg-surface-container-low py-4 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant border-b border-outline-variant/20">Thu</div>
+<div class="bg-surface-container-low py-4 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant border-b border-outline-variant/20">Fri</div>
+<div class="bg-surface-container-low py-4 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant border-b border-outline-variant/20">Sat</div>
+<!-- Calendar Cells (Manual Generation for March 2026) -->
+<!-- Empty slots for Feb end -->
+<div class="bg-surface/30 h-40 p-4 opacity-30">1</div>
+<div class="bg-surface/30 h-40 p-4 opacity-30">2</div>
+<div class="bg-surface/30 h-40 p-4 opacity-30">3</div>
+<!-- March Starts on Wednesday (just an example layout) -->
+<div class="bg-surface-container-low h-40 p-4 group hover:bg-surface-container transition-colors">
+<span class="text-on-surface-variant font-bold">1</span>
+</div>
+<div class="bg-surface-container-low h-40 p-4 group hover:bg-surface-container transition-colors">
+<span class="text-on-surface-variant font-bold">2</span>
+</div>
+<div class="bg-surface-container-low h-40 p-4 group hover:bg-surface-container transition-colors">
+<span class="text-on-surface-variant font-bold">3</span>
+</div>
+<div class="bg-surface-container-low h-40 p-4 group hover:bg-surface-container transition-colors">
+<span class="text-on-surface-variant font-bold">4</span>
+<div class="mt-3 space-y-1">
+<div class="px-2 py-1 rounded bg-secondary/10 border-l-2 border-secondary text-[10px] text-secondary font-bold">Launch Site</div>
+</div>
+</div>
+<!-- Week 2 -->
+<div class="bg-surface-container-low h-40 p-4 group hover:bg-surface-container transition-colors">
+<span class="text-on-surface-variant font-bold">5</span>
+</div>
+<div class="bg-surface-container-low h-40 p-4 group hover:bg-surface-container transition-colors">
+<span class="text-on-surface-variant font-bold">6</span>
+</div>
+<div class="bg-surface-container-low h-40 p-4 group hover:bg-surface-container transition-colors">
+<span class="text-on-surface-variant font-bold">7</span>
+</div>
+<div class="bg-surface-container-low h-40 p-4 group hover:bg-surface-container transition-colors">
+<span class="text-on-surface-variant font-bold">8</span>
+</div>
+<div class="bg-surface-container-low h-40 p-4 group hover:bg-surface-container transition-colors">
+<span class="text-on-surface-variant font-bold">9</span>
+<div class="mt-3 space-y-1">
+<div class="px-2 py-1 rounded bg-tertiary/10 border-l-2 border-tertiary text-[10px] text-tertiary font-bold">Critical Debug</div>
+</div>
+</div>
+<div class="bg-surface-container-low h-40 p-4 group hover:bg-surface-container transition-colors">
+<span class="text-on-surface-variant font-bold">10</span>
+</div>
+<div class="bg-surface-container-low h-40 p-4 group hover:bg-surface-container transition-colors">
+<span class="text-on-surface-variant font-bold">11</span>
+</div>
+<!-- Week 3 -->
+<div class="bg-surface-container-low h-40 p-4 group hover:bg-surface-container transition-colors">
+<span class="text-on-surface-variant font-bold">12</span>
+</div>
+<div class="bg-surface-container-low h-40 p-4 group hover:bg-surface-container transition-colors">
+<span class="text-on-surface-variant font-bold">13</span>
+</div>
+<div class="bg-surface-container-low h-40 p-4 group hover:bg-surface-container transition-colors">
+<span class="text-on-surface-variant font-bold">14</span>
+</div>
+<div class="bg-surface-container-low h-40 p-4 group hover:bg-surface-container transition-colors">
+<span class="text-on-surface-variant font-bold">15</span>
+<div class="mt-3 space-y-1">
+<div class="px-2 py-1 rounded bg-tertiary-fixed/10 border-l-2 border-tertiary-fixed text-[10px] text-tertiary-fixed font-bold">UI Audit</div>
+</div>
+</div>
+<div class="bg-surface-container-low h-40 p-4 group hover:bg-surface-container transition-colors">
+<span class="text-on-surface-variant font-bold">16</span>
+</div>
+<div class="bg-surface-container-low h-40 p-4 group hover:bg-surface-container transition-colors">
+<span class="text-on-surface-variant font-bold">17</span>
+</div>
+<div class="bg-surface-container-low h-40 p-4 group hover:bg-surface-container transition-colors">
+<span class="text-on-surface-variant font-bold">18</span>
+</div>
+<!-- Today: March 19 -->
+<div class="bg-surface-container-high h-40 p-4 ring-2 ring-primary ring-inset relative">
+<span class="bg-primary text-on-primary-container px-2 py-0.5 rounded text-xs font-bold">19</span>
+<div class="mt-3 space-y-2">
+<div class="relative group/task">
+<div class="px-2 py-1 rounded bg-secondary/10 border-l-2 border-secondary text-[10px] text-secondary font-bold cursor-pointer transition-transform hover:scale-105">Final Review</div>
+<!-- Task Preview Popover (Hover State Mockup) -->
+<div class="invisible group-hover/task:visible absolute top-full left-0 z-50 mt-2 w-64 glass-panel bg-surface-container-highest p-4 rounded-xl shadow-2xl transition-all duration-300 transform scale-95 group-hover/task:scale-100 opacity-0 group-hover/task:opacity-100">
+<div class="flex justify-between items-start mb-4">
+<h4 class="text-sm font-bold text-on-surface">Final Review</h4>
+<span class="material-symbols-outlined text-primary text-lg">photo_camera</span>
+</div>
+<p class="text-[11px] text-on-surface-variant leading-relaxed mb-4">Complete the final visual audit of the sanctuary dashboard before the 6PM deadline.</p>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-2">
+<img alt="Friend avatar" class="w-6 h-6 rounded-full border border-surface-container-highest" data-alt="close-up portrait of a woman with a natural look and soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7hxa1yrzopR2eMyBDkAuuuT2qWZyogOGKzI41PibzSzjMPP5YKue-QOXY2KijyduSqoE6xkqrk3AbOIrD2A0X9CHgWEtWPaigo7iK_oNZf-g0owEdtjPQUcBjVp3telTr5VeVY394E7EuIxquBPez0wbIO_vBzhs-lXg2zyeWvOBev5yYkEqUVOOgd3smXbsm3vpDR1cduNsyV4z_jOiNug9Zc2_GanyO2m1hM07sjjDrY41kYJILIGZK-ly4af_qf8YbIGSkqEUT"/>
+<img alt="Friend avatar" class="w-6 h-6 rounded-full border border-surface-container-highest" data-alt="close-up portrait of a smiling man with clean modern lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWCcXTZuuUM_UXF0en8k7AP70nEobZwLhhdmrDbPbLFqK1CQn_TXbKx7d4xy2BR6nmsb41idD9Q4y2gcUEHVKTyB42iCvvgnSJetHGYsM5C7FcjCm1hp9g0DFtszjLMXDQaXWj7_xZ4FcMlMQ5UGgEiSkpydFMNEIWiyaSR4R35dzogvyuwKUUd7k_TOkOKFH6yEAMvlEiH89mzUiLxSJAEsfYqeAmezGJhUYn9_gvgai1EM_BkoLtpwF9tp7V_wDYctzQIyQPDNti"/>
+<div class="w-6 h-6 rounded-full bg-primary-container flex items-center justify-center text-[8px] font-bold text-on-primary-container border border-surface-container-highest">+3</div>
+</div>
+<span class="text-[10px] uppercase font-bold text-secondary">On Track</span>
+</div>
+</div>
+</div>
+<div class="px-2 py-1 rounded bg-tertiary/10 border-l-2 border-tertiary text-[10px] text-tertiary font-bold">Client Sync</div>
+</div>
+</div>
+<!-- Rest of March... -->
+<div class="bg-surface-container-low h-40 p-4 group hover:bg-surface-container transition-colors">
+<span class="text-on-surface-variant font-bold">20</span>
+</div>
+<div class="bg-surface-container-low h-40 p-4 group hover:bg-surface-container transition-colors">
+<span class="text-on-surface-variant font-bold">21</span>
+</div>
+<div class="bg-surface-container-low h-40 p-4 group hover:bg-surface-container transition-colors">
+<span class="text-on-surface-variant font-bold">22</span>
+</div>
+<div class="bg-surface-container-low h-40 p-4 group hover:bg-surface-container transition-colors">
+<span class="text-on-surface-variant font-bold">23</span>
+</div>
+<div class="bg-surface-container-low h-40 p-4 group hover:bg-surface-container transition-colors">
+<span class="text-on-surface-variant font-bold">24</span>
+</div>
+<div class="bg-surface-container-low h-40 p-4 group hover:bg-surface-container transition-colors">
+<span class="text-on-surface-variant font-bold">25</span>
+</div>
+<div class="bg-surface-container-low h-40 p-4 group hover:bg-surface-container transition-colors">
+<span class="text-on-surface-variant font-bold">26</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Right Side Panel -->
+<aside class="w-80 bg-surface-container-low border-l border-outline-variant/10 p-8 flex flex-col gap-8">
+<section>
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-xs font-bold uppercase tracking-[0.2em] text-on-surface-variant">Photo Proofs</h2>
+<span class="material-symbols-outlined text-primary" style="font-size: 20px;">history</span>
+</div>
+<div class="space-y-4">
+<div class="group relative rounded-2xl overflow-hidden aspect-video border border-outline-variant/20 hover:scale-[1.02] transition-transform cursor-pointer">
+<img alt="Proof 1" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="team working in a modern minimalist office space with warm wooden accents and large windows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCh6U9EN68R1oUMfxvANxpmXMqJA-aT5-HKLSOVAkj7SPda8oebJC9yO9Vgw7oPP7QWg5cSLBCZBn_mfFTRchWdp0QQ-VEl2Hm9OvrmLmxpZ9ClhoQK21FaRYyT-erFDUXmRuS5djfE86U3lvyncY5uKBiyiy6JV3UJifCE6VrxdmF2QPitMCzegU3Y5VRZTTIRBj-gyga0dJAl8NjLaQgvwVdddxdUBA1wF6JLujJXCWpZGCbzang3iDnloOrz27Zs6DoJYJVdCQar"/>
+<div class="absolute bottom-0 left-0 w-full p-3 bg-gradient-to-t from-black/80 to-transparent">
+<p class="text-[10px] font-bold text-white">Sprint Planning Done</p>
+</div>
+</div>
+<div class="group relative rounded-2xl overflow-hidden aspect-video border border-outline-variant/20 hover:scale-[1.02] transition-transform cursor-pointer">
+<img alt="Proof 2" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="close-up of a high-resolution laptop screen showing complex data visualizations and UI elements" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMicNuE-Y4W5w_0PiROEc7j0bpg5aIivv8tk3UnBeN93zhJiRR6sYzWxOSn2K5ful7GfrlFRb_9vDhoveR8-3sai8RLEFuzDCXvM3ijZs9ilk2f3bUk4Cm9Czg6HuM4Ze-jVvlp6w4a1Fpsoa-rmQwwYK4VAvlFnuh3WGNGsuREgfAkaiLiCbFV3h8OmrzxkOELjLRSGnZ9q_9pIVtyLtZqy8u2QkbzNrTN3HiZ5C_wMJYC3cPVpwYflepmnlt20FzJcieCP973uJJ"/>
+<div class="absolute bottom-0 left-0 w-full p-3 bg-gradient-to-t from-black/80 to-transparent">
+<p class="text-[10px] font-bold text-white">Dashboard V2 Final</p>
+</div>
+</div>
+<div class="group relative rounded-2xl overflow-hidden aspect-video border border-outline-variant/20 hover:scale-[1.02] transition-transform cursor-pointer">
+<img alt="Proof 3" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="group of creative professionals collaborating around a large table with mood boards and sketches" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_sAW_GkCLKkAWCplidlHEqsPpyX8fJA3PEAtJcoC4FAf1DdFOf-XBGYMgR5r_oVTy79OGi-G1uAc2hIBXBm8KRY2tWwspbeAYp13HlLKiqYbXD-z16yqUat-pQ-UQg4TAGh63-ZV_Ac4A6h9n1mTCDnwGewUFcq6HTPNe3Zu2UFGz01QB-L6p_1AGGvecSDaHJEmW-2Zc-OJY0bPALAGQCNh1Jarfxwwu5fwbtYHs1PgfzBQJTJyyb5ZjvA_8H0FY0VcT7UM4yJh-"/>
+<div class="absolute bottom-0 left-0 w-full p-3 bg-gradient-to-t from-black/80 to-transparent">
+<p class="text-[10px] font-bold text-white">User Testing Session</p>
+</div>
+</div>
+</div>
+</section>
+<section class="flex-1 flex flex-col">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-xs font-bold uppercase tracking-[0.2em] text-on-surface-variant">Quick Upload</h2>
+</div>
+<div class="flex-1 border-2 border-dashed border-outline-variant/30 rounded-3xl flex flex-col items-center justify-center p-6 text-center group hover:border-primary/50 transition-colors cursor-pointer bg-surface/10 hover:bg-primary/5">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary">add_a_photo</span>
+</div>
+<p class="text-sm font-bold text-on-surface mb-2">Drop photo proofs</p>
+<p class="text-[10px] text-on-surface-variant px-4">Drag and drop or click to browse files for instant task completion</p>
+</div>
+</section>
+</aside>
+</div>
+<!-- Floating Action for Mobile (Hidden on Desktop) -->
+<div class="md:hidden fixed bottom-8 right-8">
+<button class="w-16 h-16 rounded-full bg-primary text-on-primary-container shadow-2xl flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-size: 32px;">add</span>
+</button>
+</div>
+</body></html>

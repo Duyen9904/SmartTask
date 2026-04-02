@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "secondary-fixed-dim": "#ffafac",
+            "tertiary-dim": "#37e4e5",
+            "on-primary": "#27009a",
+            "secondary-container": "#8c1520",
+            "on-error-container": "#ffb2b9",
+            "surface-dim": "#0c0c1d",
+            "on-secondary": "#490008",
+            "tertiary-fixed": "#56f9f9",
+            "inverse-primary": "#5948d3",
+            "outline": "#757388",
+            "surface-container": "#18182b",
+            "primary-fixed-dim": "#8f83ff",
+            "primary-dim": "#6f5fea",
+            "error-container": "#a70138",
+            "on-primary-fixed": "#000000",
+            "tertiary-fixed-dim": "#41eaeb",
+            "inverse-surface": "#fcf8ff",
+            "on-tertiary-fixed-variant": "#006667",
+            "outline-variant": "#474659",
+            "tertiary": "#adffff",
+            "on-tertiary": "#006565",
+            "on-surface": "#e6e3fb",
+            "on-tertiary-container": "#005c5c",
+            "on-primary-fixed-variant": "#250094",
+            "error-dim": "#d73357",
+            "primary-container": "#9e93ff",
+            "on-surface-variant": "#aba9bf",
+            "surface-bright": "#2a2a43",
+            "on-background": "#e6e3fb",
+            "error": "#ff6e84",
+            "inverse-on-surface": "#545366",
+            "surface-container-lowest": "#000000",
+            "surface-tint": "#aca3ff",
+            "surface-container-highest": "#24233b",
+            "on-tertiary-fixed": "#004748",
+            "background": "#0c0c1d",
+            "on-error": "#490013",
+            "secondary-dim": "#ff706f",
+            "on-secondary-fixed-variant": "#9a2128",
+            "surface-container-high": "#1d1d33",
+            "secondary": "#ff706f",
+            "on-secondary-container": "#ffc1be",
+            "primary": "#aca3ff",
+            "on-secondary-fixed": "#6f0011",
+            "secondary-fixed": "#ffc3c0",
+            "surface-variant": "#24233b",
+            "tertiary-container": "#56f9f9",
+            "surface": "#0c0c1d",
+            "primary-fixed": "#9e93ff",
+            "on-primary-container": "#1d007a",
+            "surface-container-low": "#121223"
+          },
+          fontFamily: {
+            "headline": ["Inter"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style>
+    .glass-card {
+      background: rgba(36, 35, 59, 0.6);
+      backdrop-filter: blur(20px);
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary/30">
+<!-- TopNavBar (Shared Component) -->
+<nav class="fixed top-0 w-full flex justify-between items-center px-8 h-16 bg-[#0c0c1d]/70 backdrop-blur-xl border-b border-[#aba9bf]/15 z-50 font-['Inter'] antialiased text-sm font-medium tracking-tight shadow-[0_0_40px_0_rgba(108,92,231,0.08)]">
+<div class="text-2xl font-black tracking-tighter text-[#aca3ff]">SmartTask</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-[#aba9bf] hover:text-[#e6e3fb] transition-colors" href="#">Dashboard</a>
+<a class="text-[#aba9bf] hover:text-[#e6e3fb] transition-colors" href="#">Tasks</a>
+<a class="text-[#aca3ff] font-bold border-b-2 border-[#aca3ff] pb-1" href="#">Social</a>
+<a class="text-[#aba9bf] hover:text-[#e6e3fb] transition-colors" href="#">AI Assistant</a>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden lg:flex items-center bg-surface-container-high px-3 py-1.5 rounded-full border border-outline-variant/15">
+<span class="material-symbols-outlined text-on-surface-variant text-sm mr-2" data-icon="search">search</span>
+<input class="bg-transparent border-none text-xs focus:ring-0 text-on-surface w-40" placeholder="Global search..." type="text"/>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors" data-icon="settings">settings</span>
+<img alt="User profile" class="w-8 h-8 rounded-full border border-primary/20" data-alt="close-up profile portrait of a modern professional user with neutral expression and soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuANi2eQy9CdrZiHuNmLvVIkwawRSTFkRgaq9wuPaa8tnLQI97MioQDzKeOfgNBtYVzbBPOHIPmtabTAcbunfPqIspNssJGJcHdcW_OG9bDB_1_3Dr69kFYmZB_AzkK8eZOLC3xkmZ1eN-Q9zjEDkK4hDDcEEdRbIBL-dvc2i_HhHzwNfRelgufXYjHTgnCWPyas2ifltsQo5Xyxx8rjM_9vyTvGfjcuAgDA1zQpuFU3Ja-yTvppggEXbCPtTT68olDYv_6c1RtnovxN"/>
+</div>
+</nav>
+<div class="flex pt-16">
+<!-- SideNavBar (Shared Component) -->
+<aside class="h-screen w-64 fixed left-0 top-0 pt-20 flex flex-col p-4 gap-y-2 bg-[#0c0c1d]/60 backdrop-blur-2xl font-['Inter'] text-sm shadow-2xl shadow-[#6f5fea]/5 z-40">
+<div class="mb-8 px-2">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-dim to-primary flex items-center justify-center text-white shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined" data-icon="hub" style="font-variation-settings: 'FILL' 1;">hub</span>
+</div>
+<div>
+<h3 class="font-bold text-[#adffff] leading-none">Social Hub</h3>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest mt-1">Connect &amp; Sync</p>
+</div>
+</div>
+</div>
+<nav class="space-y-1">
+<div class="bg-gradient-to-r from-[#6f5fea] to-[#aca3ff] text-white rounded-lg shadow-[0_0_15px_rgba(111,95,234,0.4)] cursor-pointer p-3 flex items-center gap-3 transition-transform duration-200 active:opacity-80">
+<span class="material-symbols-outlined" data-icon="person_search">person_search</span>
+<span class="font-medium">Find Friends</span>
+</div>
+<div class="text-[#aba9bf] hover:bg-[#18182b] rounded-lg cursor-pointer p-3 flex items-center gap-3 transition-transform duration-200 hover:translate-x-1 active:opacity-80">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-medium">My Circles</span>
+</div>
+<div class="text-[#aba9bf] hover:bg-[#18182b] rounded-lg cursor-pointer p-3 flex items-center gap-3 transition-transform duration-200 hover:translate-x-1 active:opacity-80">
+<span class="material-symbols-outlined" data-icon="hourglass_empty">hourglass_empty</span>
+<span class="font-medium">Pending</span>
+</div>
+<div class="text-[#aba9bf] hover:bg-[#18182b] rounded-lg cursor-pointer p-3 flex items-center gap-3 transition-transform duration-200 hover:translate-x-1 active:opacity-80">
+<span class="material-symbols-outlined" data-icon="block">block</span>
+<span class="font-medium">Blocked</span>
+</div>
+</nav>
+<div class="mt-auto p-4 glass-card rounded-2xl border border-outline-variant/10 mb-4">
+<p class="text-xs text-on-surface-variant mb-3 leading-relaxed">Grow your productivity network and sync workflows.</p>
+<button class="w-full py-2 bg-primary/10 hover:bg-primary/20 text-primary font-bold rounded-lg transition-all text-xs flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="share">share</span>
+          Invite Friends
+        </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 w-full min-h-screen p-8 bg-surface-dim">
+<div class="max-w-6xl mx-auto space-y-12">
+<!-- Header & Search -->
+<header class="flex flex-col md:flex-row md:items-end justify-between gap-6 pt-4">
+<div class="space-y-2">
+<h1 class="text-4xl font-extrabold tracking-tight text-on-surface">Expand Your Network</h1>
+<p class="text-on-surface-variant max-w-lg">Find collaborators, friends, and productivity partners in the digital nebula.</p>
+</div>
+<div class="relative group w-full max-w-md">
+<div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-primary" data-icon="search">search</span>
+</div>
+<input class="w-full pl-12 pr-4 py-4 bg-surface-container rounded-2xl border-none focus:ring-2 focus:ring-primary/50 text-on-surface placeholder:text-on-surface-variant/50 shadow-xl transition-all" placeholder="Search by name or @username..." type="text"/>
+</div>
+</header>
+<!-- Categories / Filters (Horizontal on top of content) -->
+<div class="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+<button class="px-6 py-2.5 rounded-full bg-primary text-on-primary-fixed font-bold text-sm whitespace-nowrap shadow-lg shadow-primary/20">Recommended</button>
+<button class="px-6 py-2.5 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors font-medium text-sm whitespace-nowrap">Nearby</button>
+<button class="px-6 py-2.5 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors font-medium text-sm whitespace-nowrap">Contact Sync</button>
+<button class="px-6 py-2.5 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors font-medium text-sm whitespace-nowrap flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+            By Interests
+          </button>
+</div>
+<!-- Layout: Pending Requests (Sidebar of main content) & Suggestions (Bento Grid) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- People You May Know (Bento Grid Style) -->
+<section class="lg:col-span-8 space-y-6">
+<div class="flex items-center justify-between">
+<h2 class="text-xl font-bold flex items-center gap-2">
+                People You May Know
+                <span class="px-2 py-0.5 rounded bg-tertiary/20 text-tertiary text-[10px] uppercase font-black tracking-widest">AI Suggested</span>
+</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- User Card 1 -->
+<div class="group bg-surface-container hover:bg-surface-bright p-6 rounded-[24px] transition-all duration-300 relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div class="relative">
+<img alt="User Avatar" class="w-16 h-16 rounded-2xl object-cover ring-2 ring-primary/20 group-hover:ring-primary/50 transition-all" data-alt="vibrant portrait of a creative professional woman with colorful accessories and a modern workspace background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2tyOhqD7AUY7nHdRnwTKUJhcS84WdGhjJlTJgtYIXy_PkkSLnnZzc2KzJMFQnFLPil_-uHns4DZHwKaD_dnllHoWR8RCN3i0ry1eDjPTRNjEMj33-8FpZj-86KSAUQXq70UfUK_K0YYcPrt1mzCU7FBdGGB47pt_mpW4w7nGg9bGFgXNHKX9ZQeFEQ_xG3gViQ8AlK4cwR4zexzWEXgRS6TcDYlygHg6QoSeF0iagijxqzNZiOM0XKUF4dtVqqu4jaypw5OYAfZP_"/>
+<div class="absolute -bottom-2 -right-2 px-2 py-1 rounded-lg bg-surface-container-highest text-[10px] font-bold text-secondary flex items-center gap-1 shadow-lg">
+                      15 Day Streak 🔥
+                    </div>
+</div>
+<button class="p-2 rounded-xl bg-primary/10 text-primary hover:bg-primary hover:text-white transition-all">
+<span class="material-symbols-outlined" data-icon="person_add">person_add</span>
+</button>
+</div>
+<div class="mt-6 space-y-2">
+<h3 class="text-lg font-bold">Elena Vance</h3>
+<p class="text-xs text-on-surface-variant leading-relaxed">Productivity architect focused on <span class="text-tertiary font-medium">Deep Work</span> and creative flow systems.</p>
+</div>
+<div class="mt-4 pt-4 border-t border-outline-variant/10 flex gap-2">
+<span class="px-2 py-1 rounded-lg bg-surface-container-high text-[10px] text-on-surface-variant">4 Shared Groups</span>
+<span class="px-2 py-1 rounded-lg bg-surface-container-high text-[10px] text-on-surface-variant">UI Design</span>
+</div>
+</div>
+<!-- User Card 2 -->
+<div class="group bg-surface-container hover:bg-surface-bright p-6 rounded-[24px] transition-all duration-300 relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div class="relative">
+<img alt="User Avatar" class="w-16 h-16 rounded-2xl object-cover ring-2 ring-primary/20 group-hover:ring-primary/50 transition-all" data-alt="headshot of a young entrepreneur in a minimalist office setting with soft natural morning light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAm_JvtdyXCYaB4CheEQ0If-4hKxSfuDvukUt6EQ2e30AD4W1K0lpO82o5wZpu_BwC4rs9jsi1i_Ejr1oxX5gMhXWVJ_SzoBuN9Ejq4NN4M3qyOduYIzOKKdspqjT9DTgIGuxZyF81rCHBPw-WdhgQfWsxqb09yPenDRJX6YrVSJ1owSmR9nigNQhUOi8j3y03u1DmJw-9ovBg_yh9JQZzVQnz2VALgWPayyW-hvZXBxF_vZpM-D659kcAsbttf9o79dJhV5JUNEYFy"/>
+<div class="absolute -bottom-2 -right-2 px-2 py-1 rounded-lg bg-surface-container-highest text-[10px] font-bold text-secondary flex items-center gap-1 shadow-lg">
+                      42 Day Streak 🔥
+                    </div>
+</div>
+<button class="p-2 rounded-xl bg-primary/10 text-primary hover:bg-primary hover:text-white transition-all">
+<span class="material-symbols-outlined" data-icon="person_add">person_add</span>
+</button>
+</div>
+<div class="mt-6 space-y-2">
+<h3 class="text-lg font-bold">Marcus Chen</h3>
+<p class="text-xs text-on-surface-variant leading-relaxed">Early riser from San Francisco. Loves <span class="text-tertiary font-medium">Time Blocking</span> and fitness tracking.</p>
+</div>
+<div class="mt-4 pt-4 border-t border-outline-variant/10 flex gap-2">
+<span class="px-2 py-1 rounded-lg bg-surface-container-high text-[10px] text-on-surface-variant">2 Shared Groups</span>
+<span class="px-2 py-1 rounded-lg bg-surface-container-high text-[10px] text-on-surface-variant">SaaS</span>
+</div>
+</div>
+<!-- User Card 3 (AI Focus Highlight) -->
+<div class="md:col-span-2 group bg-gradient-to-br from-surface-container to-surface-container-low hover:to-surface-bright p-8 rounded-[24px] transition-all duration-300 border border-tertiary/10 flex flex-col md:flex-row gap-8 items-center">
+<div class="relative shrink-0">
+<img alt="User Avatar" class="w-24 h-24 rounded-3xl object-cover ring-4 ring-tertiary/20" data-alt="professional portrait of a tech leader with a clean background and futuristic studio lighting setup" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCppMDq9gqqIksUdlBcVUnETK03ERKN_If9kWxvxA7oV1jCksgOmyE7PAW5fVa1xp9yIdvFA4hCl8ghbOq0s-cGdIh1L7l-qRJOtPUGdSU-pcHyjLFfS57vPBV8oWYOBNM_IITzjvl8H1hAejyjt7BcbeaA4zkRNdsJhytYXaPvG8-Cnq5Prq4uJ97KDjc4v0TobEnd8ew6NlnU5ogD7QBi3X-5NSTiTN9s-gRFUV4QGNxz-ei6fZPYDOD4Dw3V9Jd7IshN4ul57omp"/>
+<div class="absolute -bottom-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-secondary text-xs font-black text-on-secondary flex items-center gap-1 shadow-xl">
+                    89 DAY STREAK ⚡
+                  </div>
+</div>
+<div class="flex-1 space-y-3 text-center md:text-left">
+<div class="flex items-center justify-center md:justify-start gap-2">
+<h3 class="text-2xl font-black">Sarah Jenkins</h3>
+<span class="material-symbols-outlined text-tertiary text-lg" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<p class="text-on-surface-variant leading-relaxed text-sm italic">"The best way to predict the future is to create it. Looking for sprint partners in AI ethics."</p>
+<div class="flex flex-wrap justify-center md:justify-start gap-2 pt-2">
+<span class="px-3 py-1 rounded-full bg-tertiary/10 text-tertiary text-xs font-bold border border-tertiary/20">AI Research</span>
+<span class="px-3 py-1 rounded-full bg-tertiary/10 text-tertiary text-xs font-bold border border-tertiary/20">Deep Work</span>
+<span class="px-3 py-1 rounded-full bg-tertiary/10 text-tertiary text-xs font-bold border border-tertiary/20">Ethical Hacking</span>
+</div>
+</div>
+<div class="shrink-0 space-y-3 w-full md:w-auto">
+<button class="w-full md:w-40 py-3 bg-gradient-to-r from-primary-dim to-primary text-white font-bold rounded-xl shadow-lg shadow-primary/25 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" data-icon="person_add">person_add</span>
+                    Connect
+                  </button>
+<button class="w-full md:w-40 py-3 bg-surface-bright border border-outline-variant/20 text-on-surface-variant hover:text-on-surface font-bold rounded-xl transition-all text-sm">
+                    View Profile
+                  </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Friend Requests (Side Column) -->
+<aside class="lg:col-span-4 space-y-6">
+<div class="flex items-center justify-between">
+<h2 class="text-xl font-bold">Friend Requests</h2>
+<span class="bg-secondary-container text-on-secondary-container text-xs font-bold px-2 py-0.5 rounded-full">3</span>
+</div>
+<div class="space-y-4">
+<!-- Request 1 -->
+<div class="glass-card p-4 rounded-2xl border border-outline-variant/10 hover:border-primary/30 transition-colors">
+<div class="flex items-center gap-4 mb-4">
+<img alt="Requester" class="w-12 h-12 rounded-xl object-cover" data-alt="close-up photo of a cheerful person with glasses in a modern library or workspace setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIHPteo0WUj46IHydynldDDnJgoOGME0l76gT7ERX9bQJ7juuNpvfeguSfknRBmiJtiBrDcX7W3olRexlDseT5u7jHaRH_bH-rL1JyQzdEqlBpF8IZjrjyiryevNtAPzB8V6pYvH0zzmV087EqjKlFRXu2mtlegRpRFC7ccn6IGjiysKyT8iBsJ9wGKo5SXune7ML5YgsaAlF-VjUBUavz_41kE0IoLdm-JCX_BzLk_6D0g6ToaDDMcpxhNFxvtWGWufvn-JmnMNu9"/>
+<div class="flex-1 min-w-0">
+<h4 class="font-bold truncate text-on-surface">David Miller</h4>
+<p class="text-[10px] text-on-surface-variant truncate">@david_pro • 5 mutuals</p>
+</div>
+<div class="text-[10px] font-bold text-secondary">12d Streak</div>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 py-2 bg-primary text-on-primary-fixed font-bold text-xs rounded-lg hover:brightness-110 active:scale-95 transition-all">Accept</button>
+<button class="flex-1 py-2 bg-surface-container-high text-on-surface-variant font-bold text-xs rounded-lg hover:text-error hover:bg-error/10 active:scale-95 transition-all">Decline</button>
+</div>
+</div>
+<!-- Request 2 -->
+<div class="glass-card p-4 rounded-2xl border border-outline-variant/10 hover:border-primary/30 transition-colors">
+<div class="flex items-center gap-4 mb-4">
+<img alt="Requester" class="w-12 h-12 rounded-xl object-cover" data-alt="portrait of a focused professional sitting in a contemporary minimalist office with warm ambient light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyEa6gNfxzUWdh-vrCxiSHQJEo_pCkdOVnw4Pfiqvyqy1Am1sSP3sRfbgjkZg3nNS6VmLSH4eQlkeKMgd38PgQbMbtT1_km9UpcI95mzCfmaU_U_lVSzntdAECJe-HUtG-3BmJk6au2PsVl6vXu6_5xzwRlEyqOEzBNQiUFPMfKLPOjBOHQFAmIQz-mkafb9eyWk3kV7T9b8eSODJy3BtoRhrtZmSu6-411Q6LvlsD8RkNG97EoZgKy5rwLx-BSBjNFhHtzuM4CF3U"/>
+<div class="flex-1 min-w-0">
+<h4 class="font-bold truncate text-on-surface">Aria Song</h4>
+<p class="text-[10px] text-on-surface-variant truncate">@ariasounds • Shared Circle: Notion Masters</p>
+</div>
+<div class="text-[10px] font-bold text-secondary">31d Streak</div>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 py-2 bg-primary text-on-primary-fixed font-bold text-xs rounded-lg hover:brightness-110 active:scale-95 transition-all">Accept</button>
+<button class="flex-1 py-2 bg-surface-container-high text-on-surface-variant font-bold text-xs rounded-lg hover:text-error hover:bg-error/10 active:scale-95 transition-all">Decline</button>
+</div>
+</div>
+<!-- Request 3 -->
+<div class="glass-card p-4 rounded-2xl border border-outline-variant/10 hover:border-primary/30 transition-colors">
+<div class="flex items-center gap-4 mb-4">
+<img alt="Requester" class="w-12 h-12 rounded-xl object-cover" data-alt="close-up photo of a young professional smiling with soft lighting and a blurred urban background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFKbGvnUG-u1UY8slurwcnWxv6_7n3uO831_358MmBK-YU_HQYsOc8UEXt-3ewo-OSCd_TdSfQ7_8qi_chbPtK9QOmXp2n7zCK7jpz9vTWvvDW7y71pX7enOlrK7SXikR86vqyp23vxlIR0DXPJ_jW7ZJ-CkYQ0v-GYUWUPaVT3Yd82NrrN1XRkUX2RtCgjJWV1urvBEKhdh2Z0BIPqXNZ-ATlbniYuM8xOSYzXYRCiEhy5AU6F5FfOkAEqU4_d2Vnx0Lo85OCM6vc"/>
+<div class="flex-1 min-w-0">
+<h4 class="font-bold truncate text-on-surface">Jordan Blake</h4>
+<p class="text-[10px] text-on-surface-variant truncate">@j_blake • Recently nearby</p>
+</div>
+<div class="text-[10px] font-bold text-secondary">2d Streak</div>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 py-2 bg-primary text-on-primary-fixed font-bold text-xs rounded-lg hover:brightness-110 active:scale-95 transition-all">Accept</button>
+<button class="flex-1 py-2 bg-surface-container-high text-on-surface-variant font-bold text-xs rounded-lg hover:text-error hover:bg-error/10 active:scale-95 transition-all">Decline</button>
+</div>
+</div>
+</div>
+<!-- Ad/Promotion Space within column -->
+<div class="p-6 rounded-3xl bg-gradient-to-br from-primary-dim/20 to-tertiary-dim/10 border border-primary/10 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-20 group-hover:scale-125 transition-transform duration-500">
+<span class="material-symbols-outlined text-6xl" data-icon="rocket_launch">rocket_launch</span>
+</div>
+<h5 class="text-sm font-black text-on-surface mb-2">Sync with Teams</h5>
+<p class="text-xs text-on-surface-variant leading-relaxed mb-4">Connect your professional workspace to find colleagues automatically.</p>
+<button class="text-xs font-bold text-tertiary flex items-center gap-1 group-hover:gap-3 transition-all">
+                Link Slack / Discord
+                <span class="material-symbols-outlined text-xs" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</aside>
+</div>
+<!-- Productivity Streaks Global Leaderboard Preview -->
+<section class="space-y-6 pb-20">
+<div class="flex items-center justify-between">
+<h2 class="text-xl font-bold">Trending Power Users</h2>
+<button class="text-xs font-bold text-primary hover:underline">View All</button>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+<!-- Streak Circle 1 -->
+<div class="flex flex-col items-center gap-3 p-4 bg-surface-container rounded-[24px] hover:bg-surface-bright transition-all cursor-pointer">
+<div class="relative">
+<img class="w-12 h-12 rounded-full border-2 border-secondary p-0.5" data-alt="close-up avatar portrait of a creative user with modern accessories" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPC5TFA7DIGSi-KBlxOv-Kku_0C0KDEXQ55h7fPHRvKz_5PmyOXRr0WTOZCUyPhJD5aDTmgxv08HM8aNIS0eVA2tK14XstNBN0ubIrzP0Tq9jvoJQzN1yrZtE-mwORkBJpkj0tO-KspiK0zb_7LLNbGg9nLV4UzAJl4UYNwhIWwAAL528FYwCI8M3qt7YmaFy96js6deWLo1deRsYP3T3iso76Q0_igIRAnG88zsYAjpSwDnM74QLagpIUc40OpB8-6taZj3ZwXk_8"/>
+<div class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-surface-container"></div>
+</div>
+<div class="text-center">
+<p class="text-xs font-bold truncate w-20">Leo G.</p>
+<p class="text-[10px] text-secondary font-black">124 🔥</p>
+</div>
+</div>
+<!-- Streak Circle 2 -->
+<div class="flex flex-col items-center gap-3 p-4 bg-surface-container rounded-[24px] hover:bg-surface-bright transition-all cursor-pointer">
+<div class="relative">
+<img class="w-12 h-12 rounded-full border-2 border-secondary p-0.5" data-alt="close-up avatar portrait of a creative user with modern accessories" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmXOYeA8Rrm8pb00RqPDvUUHu0yib4UD_7fG0CRENiXpdDBJgGm0-Yo3qQWywa5av6O7B26jgJCUhkXemuQCXQJmI8yZP-5AlXS1sD4t8TDJ2JTUjhqu9gX9Qo8PE8EDOz6lxG6W9mVowsnzVkh0hg5M5iMoVTRAg8SWRrSl4O6bVM5FstRm5cAZ6YbxFHj0xYguaKROWJuqP1RNK-vzQmt6nDROJVcqE7ci5j8icZI2yYnd5Vu1yBKzBpmWAjgz9w0WdYBitM81iZ"/>
+</div>
+<div class="text-center">
+<p class="text-xs font-bold truncate w-20">Maya R.</p>
+<p class="text-[10px] text-secondary font-black">98 🔥</p>
+</div>
+</div>
+<!-- Streak Circle 3 -->
+<div class="flex flex-col items-center gap-3 p-4 bg-surface-container rounded-[24px] hover:bg-surface-bright transition-all cursor-pointer">
+<div class="relative">
+<img class="w-12 h-12 rounded-full border-2 border-secondary p-0.5" data-alt="close-up avatar portrait of a creative user with modern accessories" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnXmRj3qaqlhEoyoQp_ghVdnX-r65UWHnatNgQ4j3jcy2vlwd89Ksa7zsXlUWMno9jlvmvIjQPtjr1VR8_bG_QwkTTHfEnWAU5MWqTPtrH67GisVVUteCUkir2RCfUjPM9_Jgc9LSAISXjzskWMqq5CNOJJ6Zt5If1jctsBiIxt1CUnyvsTCEhgVv1CqxZbl8z18SLoCB_YX3Ejq3IplHPyG-5hZifyzGanz1zqscqoLVbEbMUuaj22NC7wpMYZ-7vOX96Uvr_xYou"/>
+</div>
+<div class="text-center">
+<p class="text-xs font-bold truncate w-20">Sam T.</p>
+<p class="text-[10px] text-secondary font-black">76 🔥</p>
+</div>
+</div>
+<!-- Streak Circle 4 -->
+<div class="flex flex-col items-center gap-3 p-4 bg-surface-container rounded-[24px] hover:bg-surface-bright transition-all cursor-pointer">
+<div class="relative">
+<img class="w-12 h-12 rounded-full border-2 border-secondary p-0.5" data-alt="close-up avatar portrait of a creative user with modern accessories" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_p7vo3mlwToh1Lf_SP7GnFrkcz5lddxv0TP_kgu1R5XFlRBGAIy7JTbWIKIYSkR3nPBjfE9bLGegHRyglHR1TB-m4L9DxjpdkaJBu8jEhJVvRyVhpLW9TiZJkI37Rh9i3Opex5nNr0TDYOnlPZmBATLA1T1FxLm3WuyX_fw47yj9W4NCb4fmCFiX7mPas36cd74DzrEj6Y9PO_V6JuQYI-KFhBZLP5mvd14bopVYdYKeZh8gZkx1e36DydBsBZdx3KJtgD3P1C5h0"/>
+<div class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-surface-container"></div>
+</div>
+<div class="text-center">
+<p class="text-xs font-bold truncate w-20">Nina W.</p>
+<p class="text-[10px] text-secondary font-black">55 🔥</p>
+</div>
+</div>
+<!-- Streak Circle 5 -->
+<div class="hidden md:flex flex-col items-center gap-3 p-4 bg-surface-container rounded-[24px] hover:bg-surface-bright transition-all cursor-pointer">
+<div class="relative">
+<img class="w-12 h-12 rounded-full border-2 border-secondary p-0.5" data-alt="close-up avatar portrait of a creative user with modern accessories" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAd9X6KypU2BpeukAdJQDMerP2RzfepJJ8CgOwP7LaswW52JKjNRsogfmMOPTdNzWzETPxnE6lxwgAdrgvGK7r_WICyQWftxzVE5g5SHXAwlJsBZS50RmL2d4N0dcswlu3Sk9OPjinP0RHWA7CPJppppaw9ZyY71GVD8co_ze7mWDCFablGz7PyGYHRnLLVtrHr6PucWj7A8UmJKkPWdwqXAcRZMltELHDosk-UHjp4N3jLUKsr8dDSwhogMqNvWID22L5UWoEdEm62"/>
+</div>
+<div class="text-center">
+<p class="text-xs font-bold truncate w-20">Chris K.</p>
+<p class="text-[10px] text-secondary font-black">42 🔥</p>
+</div>
+</div>
+<!-- Streak Circle 6 -->
+<div class="hidden lg:flex flex-col items-center gap-3 p-4 bg-surface-container rounded-[24px] hover:bg-surface-bright transition-all cursor-pointer">
+<div class="relative">
+<img class="w-12 h-12 rounded-full border-2 border-secondary p-0.5" data-alt="close-up avatar portrait of a creative user with modern accessories" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiuZZ_HjI2FnOHtlL4S5xyudrzGNO2oEcoivWA3lBH6i-ih8htJgG3XMqGTndsYtpSEmxdSaXisJZ-SscSGlSTU4K7npLbzdvkLCG-CyppuX0S36kkxJG66rmH4rtkgVodOWt9hhXe5V-_56dmL24DvjuKzIBOiY1vhNfEi8yTNKf4BJMm7GUdTpMsF_dYylshUv81oAiYmxcff22PkEl9wqq01cy7qW52sUdUjt1tFn3SSgNPgFpMsYUTcFsHKcqgJKlF_HqXmTJN"/>
+</div>
+<div class="text-center">
+<p class="text-xs font-bold truncate w-20">Lara B.</p>
+<p class="text-[10px] text-secondary font-black">39 🔥</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+<!-- BottomNavBar (Shared Component - Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full h-16 bg-surface-dim/90 backdrop-blur-xl border-t border-outline-variant/15 flex items-center justify-around z-50">
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-[10px] font-medium">Dash</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="task_alt">task_alt</span>
+<span class="text-[10px] font-medium">Tasks</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" data-icon="group" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="text-[10px] font-bold">Social</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+<span class="text-[10px] font-medium">AI</span>
+</button>
+</nav>
+<!-- Contextual FAB (Suppressed on this specific detailed search screen as per mandate for task-focused sub-pages) -->
+</body></html>
