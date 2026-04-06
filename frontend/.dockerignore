@@ -1,0 +1,25 @@
+# Dependencies (will be installed fresh via npm ci)
+node_modules/
+
+# Build output
+dist/
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Version control
+.git/
+.gitignore
+
+# IDE files
+.idea/
+.vscode/
+
+# Documentation
+*.md
+
+# OS files
+.DS_Store
+Thumbs.db

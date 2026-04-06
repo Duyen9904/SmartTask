@@ -1,0 +1,10 @@
+// Auth feature — public API
+export { authService } from './api/authApi'
+export { useLoginMutation } from './api/useLoginMutation'
+export { useLogoutMutation } from './api/useLogoutMutation'
+export { useRegisterMutation } from './api/useRegisterMutation'
+export { LoginForm } from './ui/LoginForm'
+export { SignupForm } from './ui/SignupForm'
+export { loginSchema, registerSchema } from './model/authSchema'
+export type { LoginFormValues, RegisterFormValues } from './model/authSchema'
+export type { AuthSession, UserProfile, LoginPayload, RegisterPayload } from './model/authTypes'
