@@ -91,29 +91,8 @@ public class TaskController {
     }
 
     @GetMapping
-    @Operation(summary = "List tasks for current user")
-    public ResponseEntity<ApiResponse<List<TaskResponse>>> getTasks(
-            @CurrentUser UUID userId,
-            @RequestParam(required = false) String status) {
-
-        List<Task> tasks;
-        if (status != null) {
-            TaskStatus taskStatus = parseEnum(TaskStatus.class, status);
-            tasks = getTaskUseCase.getByUserAndStatus(userId, taskStatus);
-        } else {
-            tasks = getTaskUseCase.getAllByUser(userId);
-        }
-
-        List<TaskResponse> responses = tasks.stream()
-                .map(this::toResponse)
-                .toList();
-
-        return ResponseEntity.ok(ApiResponse.success(responses));
-    }
-
-    @GetMapping("/search")
-    @Operation(summary = "Search tasks with filters and pagination")
-    public ResponseEntity<PagedApiResponse<TaskResponse>> searchTasks(
+    @Operation(summary = "List/search tasks for current user (paged)")
+    public ResponseEntity<PagedApiResponse<TaskResponse>> getTasks(
             @CurrentUser UUID userId,
             @RequestParam(required = false) String status,
             @RequestParam(required = false) String priority,
@@ -137,6 +116,22 @@ public class TaskController {
         Page<TaskResponse> responsePage = taskPage.map(this::toResponse);
 
         return ResponseEntity.ok(PagedApiResponse.of(responsePage));
+    }
+
+    @GetMapping("/search")
+    @Operation(summary = "Search tasks with filters and pagination (alias of GET /api/v1/tasks)")
+    public ResponseEntity<PagedApiResponse<TaskResponse>> searchTasks(
+            @CurrentUser UUID userId,
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String priority,
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) LocalDate from,
+            @RequestParam(required = false) LocalDate to,
+            @RequestParam(required = false) String q,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "displayOrder") String sort) {
+        return getTasks(userId, status, priority, category, from, to, q, page, size, sort);
     }
 
     @GetMapping("/{taskId}")

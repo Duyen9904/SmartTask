@@ -33,7 +33,6 @@ public interface JpaTaskRepository extends JpaRepository<TaskJpaEntity, UUID> {
               AND (:toDate IS NULL OR t.scheduledDate <= :toDate)
               AND (:keyword IS NULL OR LOWER(t.title) LIKE LOWER(CONCAT('%', :keyword, '%'))
                    OR LOWER(t.description) LIKE LOWER(CONCAT('%', :keyword, '%')))
-            ORDER BY t.displayOrder
             """)
     Page<TaskJpaEntity> findByFilters(
             @Param("userId") UUID userId,

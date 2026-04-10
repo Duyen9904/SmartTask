@@ -8,7 +8,7 @@ export function TasksBoard() {
   if (error) return <p className="error">Could not load tasks.</p>
 
   const grouped = groupTasksByStatus(data?.content ?? [])
-  const statuses = ['TODO', 'IN_PROGRESS', 'DONE']
+  const statuses = ['PENDING', 'IN_PROGRESS', 'COMPLETED']
 
   return (
     <div className="tasks-board">

@@ -1,6 +1,15 @@
 // Tasks feature — public API
 export { taskService } from './api/tasksApi'
 export { useTasksQuery, taskKeys } from './api/useTasksQuery'
+export { useCreateTaskMutation, useUpdateTaskMutation, useDeleteTaskMutation } from './api/useTaskMutation'
 export { TasksBoard } from './ui/TasksBoard'
+export { TaskListView } from './ui/TaskListView'
+export { KanbanBoard } from './ui/KanbanBoard'
+export { GanttChartView } from './ui/GanttChartView'
+export { ViewSwitcher } from './ui/ViewSwitcher'
+export { CreateEditTaskModal } from './ui/CreateEditTaskModal'
+export { TaskForm } from './ui/TaskForm'
+export { PrioritySelector } from './ui/PrioritySelector'
 export { groupTasksByStatus } from './model/tasksModel'
-export type { TaskSummary, CreateTaskPayload, TaskStatus, TaskPriority } from './model/taskTypes'
+export type { TaskSummary, CreateTaskPayload, UpdateTaskPayload, TaskStatus, TaskPriority, TaskCategory } from './model/taskTypes'
+

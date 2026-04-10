@@ -68,16 +68,30 @@ export const httpClient = {
   delete: <T>(path: string, token?: string) => request<T>(path, { method: 'DELETE', token }),
 }
 
-export const requestPaged = async <T>(path: string): Promise<PagedApiResponse<T>> => {
+export const requestPaged = async <T>(path: string, tokenOverride?: string): Promise<PagedApiResponse<T>> => {
+  const session = getSession()
+  const token = tokenOverride ?? session?.accessToken
+
   const response = await fetch(`${basePath}${path}`, {
     method: 'GET',
-    headers: jsonHeaders,
+    headers: {
+      ...jsonHeaders,
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
   })
 
-  const payload = (await response.json()) as PagedApiResponse<T>
+  const payload = (await response.json().catch(() => ({}))) as Partial<PagedApiResponse<T>>
+
+  if (response.status === 401 && session?.refreshToken) {
+    const refreshed = await refreshAccessToken(session.refreshToken)
+    if (refreshed) {
+      return requestPaged<T>(path, refreshed.accessToken)
+    }
+  }
+
   if (!response.ok) {
     throw new HttpError(payload.message ?? 'Request failed', response.status)
   }
 
-  return payload
+  return payload as PagedApiResponse<T>
 }
