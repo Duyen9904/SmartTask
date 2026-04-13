@@ -7,8 +7,14 @@ import {
   Circle,
   AlertTriangle,
   Camera,
+  Save,
+  Copy,
+  LayoutTemplate,
 } from 'lucide-react'
 import type { TaskPriority, TaskStatus, TaskSummary } from '../model/taskTypes'
+import { TemplatePickerModal } from '../../templates/ui/TemplatePickerModal'
+import { SaveAsTemplateModal } from '../../templates/ui/SaveAsTemplateModal'
+import { CopyDayModal } from './CopyDayModal'
 
 /* ─── Helpers ───────────────────────────────────────────────────── */
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
@@ -51,9 +57,15 @@ type CalendarTask = {
 function DayDetail({
   date,
   tasks,
+  onApplyTemplate,
+  onSaveTemplate,
+  onCopyDay,
 }: {
   date: Date
   tasks: CalendarTask[]
+  onApplyTemplate: () => void
+  onSaveTemplate: () => void
+  onCopyDay: () => void
 }) {
   const formatted = date.toLocaleDateString('en-US', {
     weekday: 'long',
@@ -64,7 +76,20 @@ function DayDetail({
 
   return (
     <div className="flex flex-col h-full">
-      <h3 className="text-lg font-bold text-white mb-1">Today's Tasks</h3>
+      <div className="flex items-center justify-between mb-1">
+        <h3 className="text-lg font-bold text-white">Today's Tasks</h3>
+        <div className="flex items-center gap-1">
+          <button onClick={onCopyDay} title="Copy Day" className="p-1.5 text-muted-foreground hover:text-white hover:bg-white/10 rounded">
+            <Copy className="h-4 w-4" />
+          </button>
+          <button onClick={onSaveTemplate} title="Save as Template" className="p-1.5 text-muted-foreground hover:text-white hover:bg-white/10 rounded">
+            <Save className="h-4 w-4" />
+          </button>
+          <button onClick={onApplyTemplate} title="Apply Template" className="p-1.5 text-muted-foreground hover:text-white hover:bg-white/10 rounded">
+            <LayoutTemplate className="h-4 w-4" />
+          </button>
+        </div>
+      </div>
       <p className="text-[11px] text-muted-foreground mb-5">{formatted}</p>
 
       {tasks.length === 0 ? (
@@ -158,6 +183,10 @@ export function CalendarView({ tasks, isLoading }: { tasks: TaskSummary[]; isLoa
   const [year, setYear] = useState(today.getFullYear())
   const [month, setMonth] = useState(today.getMonth())
   const [selectedDay, setSelectedDay] = useState(today.getDate())
+
+  const [showApplyTemplate, setShowApplyTemplate] = useState(false)
+  const [showSaveTemplate, setShowSaveTemplate] = useState(false)
+  const [showCopyDay, setShowCopyDay] = useState(false)
 
   const totalDays = daysInMonth(year, month)
   const startDow = firstDow(year, month)
@@ -322,10 +351,32 @@ export function CalendarView({ tasks, isLoading }: { tasks: TaskSummary[]; isLoa
           {isLoading ? (
             <div className="text-sm text-muted-foreground italic">Loading tasks…</div>
           ) : (
-            <DayDetail date={new Date(year, month, selectedDay)} tasks={selectedTasks} />
+            <DayDetail 
+              date={new Date(year, month, selectedDay)} 
+              tasks={selectedTasks} 
+              onApplyTemplate={() => setShowApplyTemplate(true)}
+              onSaveTemplate={() => setShowSaveTemplate(true)}
+              onCopyDay={() => setShowCopyDay(true)}
+            />
           )}
         </div>
       </aside>
+
+      <TemplatePickerModal 
+        isOpen={showApplyTemplate} 
+        onClose={() => setShowApplyTemplate(false)} 
+        targetDate={new Date(year, month, selectedDay)} 
+      />
+      <SaveAsTemplateModal 
+        isOpen={showSaveTemplate} 
+        onClose={() => setShowSaveTemplate(false)} 
+        sourceDate={new Date(year, month, selectedDay)} 
+      />
+      <CopyDayModal 
+        isOpen={showCopyDay} 
+        onClose={() => setShowCopyDay(false)} 
+        sourceDate={new Date(year, month, selectedDay)} 
+      />
     </div>
   )
 }

@@ -116,22 +116,33 @@ function buildGantt(tasks: TaskSummary[]) {
 
   const fmt = (d: Date) => d.toLocaleDateString(undefined, { month: 'short', day: '2-digit' })
   const timelineWeeks = [
-    { id: 'w1', label: `${fmt(w1Start)} - ${fmt(new Date(w2Start.getTime() - 86400000))}`, subLabel: 'Week 1' },
-    { id: 'w2', label: `${fmt(w2Start)} - ${fmt(new Date(w3Start.getTime() - 86400000))}`, subLabel: 'Week 2' },
-    { id: 'w3', label: `${fmt(w3Start)} - ${fmt(new Date(w4Start.getTime() - 86400000))}`, subLabel: 'Week 3' },
+    { id: 'w1', label: `${fmt(w1Start)} - ${fmt(new Date(w2Start.getTime() - 86400000))}`, subLabel: 'Week 1', isCurrent: false },
+    { id: 'w2', label: `${fmt(w2Start)} - ${fmt(new Date(w3Start.getTime() - 86400000))}`, subLabel: 'Week 2', isCurrent: false },
+    { id: 'w3', label: `${fmt(w3Start)} - ${fmt(new Date(w4Start.getTime() - 86400000))}`, subLabel: 'Week 3', isCurrent: false },
     { id: 'w4', label: `${fmt(w4Start)} - ${fmt(end)}`, subLabel: 'Week 4', isCurrent: true },
-  ] as const
+  ]
 
   const total = tasks.length
   const completed = tasks.filter((t) => t.status === 'COMPLETED').length
   const inProgress = tasks.filter((t) => t.status === 'IN_PROGRESS').length
   const health = total === 0 ? 0 : Math.round((completed / total) * 1000) / 10
 
-  const stats = [
-    { id: 'gs-1', label: 'Completion Rate', value: `${health}%`, icon: 'TrendingUp', color: 'teal' as const, progressPct: health },
-    { id: 'gs-2', label: 'Active Tasks', value: String(inProgress), icon: 'Zap', color: 'orange' as const, subtext: 'Currently in progress' },
-    { id: 'gs-3', label: 'Total Tasks', value: String(total), icon: 'Users', color: 'purple' as const, subtext: 'In current view' },
-  ] as const
+  type GanttStatItem = {
+    id: string
+    label: string
+    value: string
+    icon: string
+    color: 'teal' | 'orange' | 'purple'
+    progressPct?: number
+    unit?: string
+    subtext?: string
+  }
+
+  const stats: GanttStatItem[] = [
+    { id: 'gs-1', label: 'Completion Rate', value: `${health}%`, icon: 'TrendingUp', color: 'teal', progressPct: health },
+    { id: 'gs-2', label: 'Active Tasks', value: String(inProgress), icon: 'Zap', color: 'orange', subtext: 'Currently in progress' },
+    { id: 'gs-3', label: 'Total Tasks', value: String(total), icon: 'Users', color: 'purple', subtext: 'In current view' },
+  ]
 
   return { categories, ganttTasks, timelineWeeks, stats }
 }

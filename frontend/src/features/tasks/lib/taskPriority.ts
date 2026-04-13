@@ -4,5 +4,5 @@ export const priorityWeight: Record<TaskPriority, number> = {
   LOW: 1,
   MEDIUM: 2,
   HIGH: 3,
-  URGENT: 4,
+  CRITICAL: 4,
 }

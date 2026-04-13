@@ -8,7 +8,8 @@ import { GanttChartView } from '@/features/tasks/ui/GanttChartView'
 import { CalendarView } from '@/features/tasks/ui/CalendarView'
 import { CreateEditTaskModal } from '@/features/tasks/ui/CreateEditTaskModal'
 import { useTasksQuery } from '@/features/tasks/api/useTasksQuery'
-import type { TaskCategory, TaskPriority, TaskSearchParams, TaskSummary } from '@/features/tasks/model/taskTypes'
+import { useUpdateTaskMutation } from '@/features/tasks/api/useTaskMutation'
+import type { TaskCategory, TaskPriority, TaskSearchParams, TaskStatus, TaskSummary } from '@/features/tasks/model/taskTypes'
 
 const quickFilters = ['All Tasks', 'Today', 'This Week', 'High Priority', 'Shared'] as const
 const categoryTabs = ['All Tasks', 'Personal', 'Work', 'Study', 'Shared'] as const
@@ -25,9 +26,16 @@ function startOfWeek(d: Date) {
   return copy
 }
 
+const validViews = new Set<string>(['list', 'gantt', 'kanban', 'calendar'])
+
+function isTaskViewMode(value: string | null): value is TaskViewMode {
+  return typeof value === 'string' && validViews.has(value)
+}
+
 export function TasksPage() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const activeView = (searchParams.get('view') as TaskViewMode) || 'kanban'
+  const viewParam = searchParams.get('view')
+  const activeView: TaskViewMode = isTaskViewMode(viewParam) ? viewParam : 'kanban'
   const [activeFilter, setActiveFilter] = React.useState('All Tasks')
   const [activeTab, setActiveTab] = React.useState('All Tasks')
   const [searchText, setSearchText] = React.useState('')
@@ -36,6 +44,8 @@ export function TasksPage() {
     mode: 'create' | 'edit'
     task?: TaskSummary
   }>({ open: false, mode: 'create' })
+
+  const updateMutation = useUpdateTaskMutation()
 
   const handleViewChange = (view: TaskViewMode) => {
     setSearchParams({ view })
@@ -91,6 +101,32 @@ export function TasksPage() {
   const tasksQuery = useTasksQuery(queryParams)
   const tasks = tasksQuery.data?.content ?? []
   const totalCount = tasksQuery.data?.totalElements ?? tasks.length
+
+  /* ─── Shared callbacks ────────────────────────────────────────── */
+
+  /** Update task status (used by checkbox toggle & kanban quick-action) */
+  const handleStatusChange = React.useCallback(
+    (taskId: string, newStatus: TaskStatus) => {
+      updateMutation.mutate({ taskId, payload: { status: newStatus } })
+    },
+    [updateMutation],
+  )
+
+  /** Update task status + displayOrder (used by kanban drag-and-drop) */
+  const handleDisplayOrderChange = React.useCallback(
+    (taskId: string, newStatus: TaskStatus, newDisplayOrder: number) => {
+      updateMutation.mutate({
+        taskId,
+        payload: { status: newStatus, displayOrder: newDisplayOrder },
+      })
+    },
+    [updateMutation],
+  )
+
+  /** Open the edit modal for a task */
+  const handleEdit = React.useCallback((task: TaskSummary) => {
+    setModalState({ open: true, mode: 'edit', task })
+  }, [])
 
   return (
     <div className="flex flex-col gap-6">
@@ -194,8 +230,23 @@ export function TasksPage() {
       </div>
 
       {/* ─── Task Display Area (ONLY this part changes) ──────────── */}
-      {activeView === 'list' && <TaskListView tasks={tasks} isLoading={tasksQuery.isLoading} />}
-      {activeView === 'kanban' && <KanbanBoard tasks={tasks} isLoading={tasksQuery.isLoading} />}
+      {activeView === 'list' && (
+        <TaskListView
+          tasks={tasks}
+          isLoading={tasksQuery.isLoading}
+          onStatusChange={handleStatusChange}
+          onEdit={handleEdit}
+        />
+      )}
+      {activeView === 'kanban' && (
+        <KanbanBoard
+          tasks={tasks}
+          isLoading={tasksQuery.isLoading}
+          onStatusChange={handleStatusChange}
+          onDisplayOrderChange={handleDisplayOrderChange}
+          onEdit={handleEdit}
+        />
+      )}
       {activeView === 'calendar' && <CalendarView tasks={tasks} isLoading={tasksQuery.isLoading} />}
       {activeView === 'gantt' && <GanttChartView tasks={tasks} isLoading={tasksQuery.isLoading} />}
 
@@ -209,3 +260,4 @@ export function TasksPage() {
     </div>
   )
 }
+

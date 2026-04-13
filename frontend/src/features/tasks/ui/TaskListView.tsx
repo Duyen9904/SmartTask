@@ -1,12 +1,19 @@
 import { Zap } from 'lucide-react'
 import { TaskListItem } from './TaskListItem'
-import type { TaskSummary } from '../model/taskTypes'
+import type { TaskStatus, TaskSummary } from '../model/taskTypes'
+
+type TaskListViewProps = {
+  tasks: TaskSummary[]
+  isLoading?: boolean
+  onStatusChange?: (taskId: string, newStatus: TaskStatus) => void
+  onEdit?: (task: TaskSummary) => void
+}
 
 /**
  * List view — renders only the task rows and the AI summary card.
  * Search, filters, pills, and tabs are handled by TasksPage (shared).
  */
-export function TaskListView({ tasks, isLoading }: { tasks: TaskSummary[]; isLoading?: boolean }) {
+export function TaskListView({ tasks, isLoading, onStatusChange, onEdit }: TaskListViewProps) {
   return (
     <div className="flex flex-col gap-6">
       {/* ─── AI Flow Analysis ───────────────────────────────────── */}
@@ -40,9 +47,17 @@ export function TaskListView({ tasks, isLoading }: { tasks: TaskSummary[]; isLoa
         ) : tasks.length === 0 ? (
           <div className="text-sm text-muted-foreground italic">No tasks found.</div>
         ) : (
-          tasks.map((task) => <TaskListItem key={task.id} task={task} />)
+          tasks.map((task) => (
+            <TaskListItem
+              key={task.id}
+              task={task}
+              onStatusChange={onStatusChange}
+              onEdit={onEdit}
+            />
+          ))
         )}
       </div>
     </div>
   )
 }
+

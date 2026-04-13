@@ -21,4 +21,6 @@ export const taskService = {
   create: (payload: CreateTaskPayload) => httpClient.post<TaskSummary>('/tasks', payload),
   update: (taskId: string, payload: UpdateTaskPayload) => httpClient.put<TaskSummary>(`/tasks/${taskId}`, payload),
   remove: (taskId: string) => httpClient.delete<void>(`/tasks/${taskId}`),
+  copyDay: (payload: { sourceDate: string; targetDate: string }) => 
+    httpClient.post<TaskSummary[]>('/tasks/copy-day', payload),
 }

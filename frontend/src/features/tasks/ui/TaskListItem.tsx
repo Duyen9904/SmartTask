@@ -8,7 +8,7 @@ import {
   HeartPulse,
   Users,
 } from 'lucide-react'
-import type { TaskSummary } from '../model/taskTypes'
+import type { TaskStatus, TaskSummary } from '../model/taskTypes'
 
 const priorityConfig: Record<string, { bg: string; text: string; border: string }> = {
   CRITICAL: { bg: 'bg-red-500/20', text: 'text-red-400', border: 'border-l-red-500' },
@@ -32,30 +32,53 @@ function formatDueDateLabel(dueDate?: string): string | undefined {
   return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
 }
 
-export function TaskListItem({ task }: { task: TaskSummary }) {
+type TaskListItemProps = {
+  task: TaskSummary
+  onStatusChange?: (taskId: string, newStatus: TaskStatus) => void
+  onEdit?: (task: TaskSummary) => void
+}
+
+export function TaskListItem({ task, onStatusChange, onEdit }: TaskListItemProps) {
   const p = priorityConfig[task.priority] ?? priorityConfig.MEDIUM
   const CategoryIcon = categoryIcons[task.category] ?? User
   const completed = task.status === 'COMPLETED'
   const dueDateLabel = formatDueDateLabel(task.dueDate)
 
+  const handleToggle = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (!onStatusChange) return
+    onStatusChange(task.id, completed ? 'PENDING' : 'COMPLETED')
+  }
+
   return (
     <div
       className={[
-        'rounded-2xl p-4 flex items-center gap-4 group transition-all border-l-4',
+        'rounded-2xl p-4 flex items-center gap-4 group transition-all border-l-4 cursor-pointer',
         'bg-white/[0.03] backdrop-blur-xl border border-white/[0.06]',
         'hover:border-primary/30',
         p.border,
         completed ? 'opacity-60' : '',
         (task.priority === 'HIGH' || task.priority === 'CRITICAL') && !completed ? 'shadow-xl shadow-red-500/5' : '',
       ].join(' ')}
+      onClick={() => onEdit?.(task)}
     >
       {/* Checkbox */}
       {completed ? (
-        <div className="flex items-center justify-center h-6 w-6 rounded-md bg-emerald-500/20 text-emerald-400 cursor-pointer flex-shrink-0">
+        <div
+          className="flex items-center justify-center h-6 w-6 rounded-md bg-emerald-500/20 text-emerald-400 cursor-pointer flex-shrink-0 hover:bg-emerald-500/30 transition-colors"
+          onClick={handleToggle}
+          role="button"
+          aria-label="Mark as pending"
+        >
           <Check className="h-4 w-4" />
         </div>
       ) : (
-        <div className="h-6 w-6 rounded-md border-2 border-white/20 hover:border-primary transition-colors cursor-pointer flex-shrink-0" />
+        <div
+          className="h-6 w-6 rounded-md border-2 border-white/20 hover:border-primary hover:bg-primary/10 transition-colors cursor-pointer flex-shrink-0"
+          onClick={handleToggle}
+          role="button"
+          aria-label="Mark as completed"
+        />
       )}
 
       {/* Content */}
@@ -103,6 +126,10 @@ export function TaskListItem({ task }: { task: TaskSummary }) {
       {/* More menu */}
       <button
         type="button"
+        onClick={(e) => {
+          e.stopPropagation()
+          onEdit?.(task)
+        }}
         className="p-1.5 opacity-0 group-hover:opacity-100 transition-opacity text-slate-500 hover:text-white"
       >
         <MoreVertical className="h-5 w-5" />
@@ -110,3 +137,4 @@ export function TaskListItem({ task }: { task: TaskSummary }) {
     </div>
   )
 }
+

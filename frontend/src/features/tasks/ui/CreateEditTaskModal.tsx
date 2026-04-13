@@ -3,6 +3,7 @@ import { Dialog } from 'radix-ui'
 import { X, Sparkles, Trash2 } from 'lucide-react'
 import { TaskForm } from './TaskForm'
 import { useCreateTaskMutation, useUpdateTaskMutation, useDeleteTaskMutation } from '../api/useTaskMutation'
+import { AttachmentUploadPanel } from '@/features/attachments/ui/AttachmentUploadPanel'
 import type { TaskSummary, CreateTaskPayload } from '../model/taskTypes'
 
 type CreateEditTaskModalProps = {
@@ -116,23 +117,32 @@ export function CreateEditTaskModal({
                 onCancel={() => setShowDeleteConfirm(false)}
               />
             ) : (
-              <TaskForm
-                initialData={
-                  initialData
-                    ? {
-                        title: initialData.title,
-                        description: initialData.description,
-                        priority: initialData.priority,
-                        dueDate: initialData.dueDate,
-                        category: initialData.category,
-                      }
-                    : undefined
-                }
-                onSubmit={handleSubmit}
-                onCancel={onClose}
-                isSubmitting={isSubmitting}
-                submitLabel={isCreate ? 'Create Task' : 'Save Changes'}
-              />
+              <>
+                <TaskForm
+                  initialData={
+                    initialData
+                      ? {
+                          title: initialData.title,
+                          description: initialData.description,
+                          priority: initialData.priority,
+                          dueDate: initialData.dueDate,
+                          category: initialData.category,
+                        }
+                      : undefined
+                  }
+                  onSubmit={handleSubmit}
+                  onCancel={onClose}
+                  isSubmitting={isSubmitting}
+                  submitLabel={isCreate ? 'Create Task' : 'Save Changes'}
+                />
+
+                {/* ─── Proof / Attachment Upload (edit mode only) ── */}
+                {!isCreate && initialData && (
+                  <div className="mt-5 pt-5 border-t border-white/5">
+                    <AttachmentUploadPanel taskId={initialData.id} />
+                  </div>
+                )}
+              </>
             )}
           </div>
         </Dialog.Content>

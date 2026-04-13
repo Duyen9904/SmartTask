@@ -1,7 +1,7 @@
 // Tasks feature — public API
 export { taskService } from './api/tasksApi'
 export { useTasksQuery, taskKeys } from './api/useTasksQuery'
-export { useCreateTaskMutation, useUpdateTaskMutation, useDeleteTaskMutation } from './api/useTaskMutation'
+export { useCreateTaskMutation, useUpdateTaskMutation, useUpdateTaskStatusMutation, useDeleteTaskMutation } from './api/useTaskMutation'
 export { TasksBoard } from './ui/TasksBoard'
 export { TaskListView } from './ui/TaskListView'
 export { KanbanBoard } from './ui/KanbanBoard'
