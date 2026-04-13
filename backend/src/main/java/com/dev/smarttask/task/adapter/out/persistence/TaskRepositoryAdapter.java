@@ -38,7 +38,7 @@ public class TaskRepositoryAdapter implements TaskRepositoryPort {
 
     @Override
     public List<Task> findAllByUserId(UUID userId) {
-        return jpaTaskRepository.findAllByUserIdAndDeletedAtIsNullOrderByDisplayOrder(userId)
+        return jpaTaskRepository.findAllByUserIdAndDeletedAtIsNullAndParentTemplateIdIsNullOrderByDisplayOrder(userId)
                 .stream()
                 .map(mapper::toDomain)
                 .toList();
@@ -46,7 +46,7 @@ public class TaskRepositoryAdapter implements TaskRepositoryPort {
 
     @Override
     public List<Task> findAllByUserIdAndStatus(UUID userId, TaskStatus status) {
-        return jpaTaskRepository.findAllByUserIdAndStatusAndDeletedAtIsNull(userId, status)
+        return jpaTaskRepository.findAllByUserIdAndStatusAndDeletedAtIsNullAndParentTemplateIdIsNull(userId, status)
                 .stream()
                 .map(mapper::toDomain)
                 .toList();
@@ -54,7 +54,7 @@ public class TaskRepositoryAdapter implements TaskRepositoryPort {
 
     @Override
     public Page<Task> findAllByUserId(UUID userId, Pageable pageable) {
-        return jpaTaskRepository.findAllByUserIdAndDeletedAtIsNullOrderByDisplayOrder(userId, pageable)
+        return jpaTaskRepository.findAllByUserIdAndDeletedAtIsNullAndParentTemplateIdIsNullOrderByDisplayOrder(userId, pageable)
                 .map(mapper::toDomain);
     }
 
@@ -70,5 +70,21 @@ public class TaskRepositoryAdapter implements TaskRepositoryPort {
     @Override
     public void deleteById(UUID id) {
         jpaTaskRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Task> findBlueprintsByTemplateId(UUID templateId) {
+        return jpaTaskRepository.findAllByParentTemplateIdOrderByDisplayOrder(templateId)
+                .stream()
+                .map(mapper::toDomain)
+                .toList();
+    }
+
+    @Override
+    public List<Task> findAllByDate(UUID userId, LocalDate date) {
+        return jpaTaskRepository.findAllByUserIdAndScheduledDateAndDeletedAtIsNullAndParentTemplateIdIsNull(userId, date)
+                .stream()
+                .map(mapper::toDomain)
+                .toList();
     }
 }

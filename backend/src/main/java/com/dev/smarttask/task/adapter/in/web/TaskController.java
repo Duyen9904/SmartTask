@@ -134,6 +134,22 @@ public class TaskController {
         return getTasks(userId, status, priority, category, from, to, q, page, size, sort);
     }
 
+    @PostMapping("/copy-day")
+    @Operation(summary = "Copy all tasks from one date to another")
+    public ResponseEntity<ApiResponse<List<TaskResponse>>> copyDay(
+            @CurrentUser UUID userId,
+            @Valid @RequestBody com.dev.smarttask.task.adapter.in.web.dto.CopyDayRequest request) {
+
+        List<Task> copiedTasks = createTaskUseCase.copyTasks(userId, request.getSourceDate(), request.getTargetDate());
+
+        List<TaskResponse> responses = copiedTasks.stream()
+                .map(this::toResponse)
+                .toList();
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.success(responses, "Day copied successfully"));
+    }
+
     @GetMapping("/{taskId}")
     @Operation(summary = "Get task details with subtasks")
     public ResponseEntity<ApiResponse<TaskDetailResponse>> getTaskById(

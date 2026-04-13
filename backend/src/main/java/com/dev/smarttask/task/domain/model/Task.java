@@ -42,6 +42,7 @@ public class Task {
     private LocalDate dueDate;
     private BigDecimal estimatedHours;
     private UUID sourceTemplateId;
+    private UUID parentTemplateId;
 
     @Builder.Default
     private int displayOrder = 0;

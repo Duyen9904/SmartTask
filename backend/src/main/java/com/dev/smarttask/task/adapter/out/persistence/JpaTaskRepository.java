@@ -16,23 +16,28 @@ import java.util.UUID;
 
 public interface JpaTaskRepository extends JpaRepository<TaskJpaEntity, UUID> {
 
-    List<TaskJpaEntity> findAllByUserIdAndDeletedAtIsNullOrderByDisplayOrder(UUID userId);
+    List<TaskJpaEntity> findAllByUserIdAndDeletedAtIsNullAndParentTemplateIdIsNullOrderByDisplayOrder(UUID userId);
 
-    List<TaskJpaEntity> findAllByUserIdAndStatusAndDeletedAtIsNull(UUID userId, TaskStatus status);
+    List<TaskJpaEntity> findAllByUserIdAndStatusAndDeletedAtIsNullAndParentTemplateIdIsNull(UUID userId, TaskStatus status);
 
-    Page<TaskJpaEntity> findAllByUserIdAndDeletedAtIsNullOrderByDisplayOrder(UUID userId, Pageable pageable);
+    Page<TaskJpaEntity> findAllByUserIdAndDeletedAtIsNullAndParentTemplateIdIsNullOrderByDisplayOrder(UUID userId, Pageable pageable);
+
+    List<TaskJpaEntity> findAllByParentTemplateIdOrderByDisplayOrder(UUID templateId);
+
+    List<TaskJpaEntity> findAllByUserIdAndScheduledDateAndDeletedAtIsNullAndParentTemplateIdIsNull(UUID userId, LocalDate date);
 
     @Query("""
             SELECT t FROM TaskJpaEntity t
             WHERE t.userId = :userId
               AND t.deletedAt IS NULL
+              AND t.parentTemplateId IS NULL
               AND (:status IS NULL OR t.status = :status)
               AND (:priority IS NULL OR t.priority = :priority)
               AND (:category IS NULL OR t.category = :category)
               AND (:fromDate IS NULL OR t.scheduledDate >= :fromDate)
               AND (:toDate IS NULL OR t.scheduledDate <= :toDate)
-              AND (:keyword IS NULL OR LOWER(t.title) LIKE LOWER(CONCAT('%', :keyword, '%'))
-                   OR LOWER(t.description) LIKE LOWER(CONCAT('%', :keyword, '%')))
+              AND (:keyword IS NULL OR LOWER(CAST(t.title AS string)) LIKE LOWER(CONCAT('%', CAST(:keyword AS string), '%'))
+                   OR LOWER(CAST(t.description AS string)) LIKE LOWER(CONCAT('%', CAST(:keyword AS string), '%')))
             """)
     Page<TaskJpaEntity> findByFilters(
             @Param("userId") UUID userId,

@@ -65,6 +65,32 @@ public class TaskService implements CreateTaskUseCase, GetTaskUseCase,
         return saved;
     }
 
+    @Override
+    public List<Task> copyTasks(UUID userId, LocalDate sourceDate, LocalDate targetDate) {
+        List<Task> sourceTasks = taskRepository.findAllByDate(userId, sourceDate);
+        List<Task> copiedTasks = new java.util.ArrayList<>();
+        
+        for (Task task : sourceTasks) {
+            Task copied = Task.builder()
+                    .userId(userId)
+                    .title(task.getTitle())
+                    .description(task.getDescription())
+                    .priority(task.getPriority())
+                    .status(TaskStatus.PENDING)
+                    .category(task.getCategory())
+                    .scheduledDate(targetDate)
+                    .scheduledTime(task.getScheduledTime())
+                    .dueDate(targetDate)
+                    .estimatedHours(task.getEstimatedHours())
+                    .parentTemplateId(null) // just to be explicit
+                    .displayOrder(task.getDisplayOrder())
+                    .build();
+            copiedTasks.add(taskRepository.save(copied));
+        }
+        
+        return copiedTasks;
+    }
+
     // ── GetTaskUseCase ──
 
     @Override

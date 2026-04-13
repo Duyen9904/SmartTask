@@ -29,4 +29,8 @@ public interface TaskRepositoryPort {
                              String keyword, Pageable pageable);
 
     void deleteById(UUID id);
+
+    List<Task> findBlueprintsByTemplateId(UUID templateId);
+
+    List<Task> findAllByDate(UUID userId, LocalDate date);
 }

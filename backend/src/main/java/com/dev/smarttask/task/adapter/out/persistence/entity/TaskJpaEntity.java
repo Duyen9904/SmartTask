@@ -66,6 +66,9 @@ public class TaskJpaEntity extends BaseEntity {
     @Column(name = "source_template_id")
     private UUID sourceTemplateId;
 
+    @Column(name = "parent_template_id")
+    private UUID parentTemplateId;
+
     @Column(name = "display_order", nullable = false)
     private int displayOrder;
 
