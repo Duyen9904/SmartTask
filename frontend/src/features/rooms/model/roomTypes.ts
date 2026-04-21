@@ -4,6 +4,9 @@ export type Room = {
   id: string
   name: string
   subtitle: string
+  roomNumber: string
+  priority: 'high' | 'medium' | 'low'
+  deadline: string
   members: RoomMember[]
   activeMemberIds: string[]
   taskCounts: { todo: number; inProgress: number; done: number }
@@ -16,6 +19,50 @@ export type RoomMember = {
   avatarUrl: string
   role: 'admin' | 'member'
   isOnline: boolean
+}
+
+/* ─── Shared Checklist ───────────────────────────────────────────── */
+
+export type ChecklistItemStatus = 'unchecked' | 'in_progress' | 'completed'
+
+export type SharedChecklistItem = {
+  id: string
+  title: string
+  status: ChecklistItemStatus
+  assignee?: string
+  estimatedTime?: string
+  completedBy?: string
+  completedAgo?: string
+  waitingFor?: string
+  waitingReason?: string
+  hasAiSuggestion?: boolean
+}
+
+/* ─── Activity Feed ──────────────────────────────────────────────── */
+
+export type ActivityType = 'task_completed' | 'file_shared' | 'member_joined'
+
+export type ActivityFeedItem = {
+  id: string
+  type: ActivityType
+  memberName: string
+  memberAvatar: string
+  description: string
+  timestamp: string
+  imageUrl?: string
+}
+
+/* ─── AI Insight & Huddle ────────────────────────────────────────── */
+
+export type AIInsight = {
+  progressText: string
+  recommendation: string
+}
+
+export type HuddleInfo = {
+  title: string
+  timeRemaining: string
+  topic: string
 }
 
 /* ─── Tasks ──────────────────────────────────────────────────────── */

@@ -1,4 +1,12 @@
-import type { Room, RoomMember, RoomTask } from './roomTypes'
+import type {
+  ActivityFeedItem,
+  AIInsight,
+  HuddleInfo,
+  Room,
+  RoomMember,
+  RoomTask,
+  SharedChecklistItem,
+} from './roomTypes'
 
 /* ─── Members ────────────────────────────────────────────────────── */
 
@@ -56,6 +64,9 @@ export const roomsMock: Room[] = [
     id: 'sprint-24',
     name: 'Sprint 24 — Design System',
     subtitle: 'Situation Room',
+    roomNumber: '#4209',
+    priority: 'high',
+    deadline: 'Oct 24, 2023',
     members: allMembers,
     activeMemberIds: ['m-1', 'm-2', 'm-3', 'm-5'],
     taskCounts: { todo: 3, inProgress: 1, done: 2 },
@@ -65,6 +76,9 @@ export const roomsMock: Room[] = [
     id: 'onboarding-v2',
     name: 'Onboarding Flow V2',
     subtitle: 'Product Sprint',
+    roomNumber: '#4210',
+    priority: 'medium',
+    deadline: 'Nov 15, 2023',
     members: [memberAlex, memberSarah, memberElena],
     activeMemberIds: ['m-1', 'm-3'],
     taskCounts: { todo: 5, inProgress: 3, done: 8 },
@@ -74,6 +88,9 @@ export const roomsMock: Room[] = [
     id: 'q4-planning',
     name: 'Q4 Revenue Planning',
     subtitle: 'Strategy Room',
+    roomNumber: '#4211',
+    priority: 'low',
+    deadline: 'Dec 1, 2023',
     members: [memberAlex, memberJordan, memberMarcus],
     activeMemberIds: ['m-5'],
     taskCounts: { todo: 7, inProgress: 2, done: 1 },
@@ -81,7 +98,81 @@ export const roomsMock: Room[] = [
   },
 ]
 
-/* ─── Tasks for "Sprint 24" ──────────────────────────────────────── */
+/* ─── Shared Checklist ───────────────────────────────────────────── */
+
+export const sharedChecklistMock: SharedChecklistItem[] = [
+  {
+    id: 'cl-1',
+    title: 'Design final slide transitions',
+    status: 'unchecked',
+    assignee: '@Alex',
+    estimatedTime: 'Est. 2h',
+  },
+  {
+    id: 'cl-2',
+    title: 'Draft financial projections',
+    status: 'completed',
+    completedBy: '@Sarah',
+    completedAgo: '2h ago',
+  },
+  {
+    id: 'cl-3',
+    title: 'Review market analysis deck',
+    status: 'unchecked',
+    waitingFor: '@James',
+    waitingReason: 'to upload proof',
+    hasAiSuggestion: true,
+  },
+]
+
+/* ─── Activity Feed ──────────────────────────────────────────────── */
+
+export const activityFeedMock: ActivityFeedItem[] = [
+  {
+    id: 'af-1',
+    type: 'task_completed',
+    memberName: '@Alex',
+    memberAvatar: memberAlex.avatarUrl,
+    description: 'completed Slide 12 Revision',
+    timestamp: 'Just now',
+  },
+  {
+    id: 'af-2',
+    type: 'file_shared',
+    memberName: '@Sarah',
+    memberAvatar: memberSarah.avatarUrl,
+    description: 'shared photo proof',
+    timestamp: '15 mins ago',
+    imageUrl:
+      'https://lh3.googleusercontent.com/aida-public/AB6AXuCnsKtCPzzLSidJVxYY6u4LV4VZs2ymVYn9dnTZBYG92Bw166NaLz6F7gvXIByijkS1JxrXWR6--1q3AVVRC3LcFleqR01AE7DRw064tQjzf9FTL59hY6_eTNEWdsWOWU3V-xvDw-bzbiFzl1YIHgPSQHOdoczyd_63eWRAqXctoNxoqtyYOGwpfTik7I7iiN7kGJfgMHqNkEDLxmOUHnIM8CuvDl1W6KTCpJV4L4gGmKfgPnPZAFqy0vilb2L2LSIV98x4PSqb_tvg',
+  },
+  {
+    id: 'af-3',
+    type: 'member_joined',
+    memberName: '@James',
+    memberAvatar: memberJordan.avatarUrl,
+    description: 'joined the room',
+    timestamp: '1 hour ago',
+  },
+]
+
+/* ─── AI Insight ─────────────────────────────────────────────────── */
+
+export const aiInsightMock: AIInsight = {
+  progressText:
+    'Based on current progress, you are 12% ahead of schedule. We recommend focusing on "Design transitions" next to maintain momentum.',
+  recommendation: 'View Roadmap',
+}
+
+/* ─── Huddle ─────────────────────────────────────────────────────── */
+
+export const huddleMock: HuddleInfo = {
+  title: 'UPCOMING HUDDLE',
+  timeRemaining: 'In 14 Minutes',
+  topic: 'Sync with marketing team',
+}
+
+/* ─── Tasks for "Sprint 24" (legacy — kept for Kanban compatibility) */
 
 export const roomTasksMock: RoomTask[] = [
   {

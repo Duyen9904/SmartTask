@@ -12,6 +12,9 @@ export function RoomPage() {
     <TaskRoomView
       roomName={room.name}
       subtitle={room.subtitle}
+      roomNumber={room.roomNumber}
+      priority={room.priority}
+      deadline={room.deadline}
       members={room.members}
     />
   )
