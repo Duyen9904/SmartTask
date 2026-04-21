@@ -28,7 +28,7 @@ export function MessageArea({
           </div>
         </div>
         <div className="flex items-center gap-1">
-          {[Phone, Video, Pin, Search, MoreVertical].map((Icon, i) => (
+          {[Phone, Pin, Search, MoreVertical].map((Icon, i) => (
             <button
               key={i}
               className="w-9 h-9 rounded-lg hover:bg-white/10 flex items-center justify-center text-muted-foreground hover:text-white transition-colors"
@@ -36,6 +36,18 @@ export function MessageArea({
               <Icon className="h-4 w-4" />
             </button>
           ))}
+          {/* Video call button — navigates to /calls */}
+          <button
+            id="chat-video-call-btn"
+            onClick={() => window.open('/calls', '_blank')}
+            className="w-9 h-9 rounded-lg bg-primary/15 hover:bg-primary/30 flex items-center justify-center text-primary hover:text-white transition-all group relative"
+            title="Start Video Call"
+          >
+            <Video className="h-4 w-4" />
+            <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 rounded-md bg-black/80 text-[10px] text-white font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+              Video Call
+            </span>
+          </button>
         </div>
       </header>
 

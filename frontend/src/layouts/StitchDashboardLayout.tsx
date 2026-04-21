@@ -7,7 +7,6 @@ import {
   ListTodo,
   LogOut,
   MessageSquare,
-  Phone,
   Plus,
   Rocket,
   Search,
@@ -93,8 +92,7 @@ function Sidebar() {
         <SidebarLink to="/dashboard/tasks" icon={ListTodo}>Tasks</SidebarLink>
         <SidebarLink to="/dashboard/social" icon={Users}>Social</SidebarLink>
         <SidebarLink to="/chat" icon={MessageSquare}>Messages</SidebarLink>
-        <SidebarLink to="/calls" icon={Phone}>Calls</SidebarLink>
-        <SidebarLink to="/rooms" icon={DoorOpen}>Rooms</SidebarLink>
+        <SidebarLink to="/dashboard/rooms" icon={DoorOpen}>Rooms</SidebarLink>
         <SidebarLink to="/dashboard/ai" icon={Sparkles}>AI Assistant</SidebarLink>
       </nav>
 

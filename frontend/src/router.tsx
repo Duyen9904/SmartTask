@@ -6,6 +6,7 @@ import { CallHubView } from './features/social/ui/CallHubView'
 import { ChatHubView } from './features/social/ui/ChatHubView'
 import { FindFriendsView } from './features/social/ui/FindFriendsView'
 import { SocialHubView } from './features/social/ui/SocialHubView'
+import { AIAssistantPage } from './features/ai/ui/AIAssistantPage'
 import { StitchDashboardLayout } from './layouts/StitchDashboardLayout'
 import { DashboardPage } from './pages/DashboardPage'
 import { LandingPage } from './pages/LandingPage'
@@ -44,6 +45,9 @@ export const router = createBrowserRouter([
           { path: 'find', element: <FindFriendsView /> },
         ],
       },
+      { path: 'rooms', element: <RoomListView /> },
+      { path: 'rooms/:roomId', element: <RoomPage /> },
+      { path: 'ai', element: <AIAssistantPage /> },
     ],
   },
   {
@@ -53,14 +57,6 @@ export const router = createBrowserRouter([
   {
     path: '/calls',
     element: requireAuth(<CallHubView />),
-  },
-  {
-    path: '/rooms',
-    element: requireAuth(<RoomListView />),
-  },
-  {
-    path: '/room/:roomId',
-    element: requireAuth(<RoomPage />),
   },
   {
     path: '*',

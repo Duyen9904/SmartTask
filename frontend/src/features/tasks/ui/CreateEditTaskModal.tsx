@@ -127,6 +127,8 @@ export function CreateEditTaskModal({
                           priority: initialData.priority,
                           dueDate: initialData.dueDate,
                           category: initialData.category,
+                          startTime: initialData.scheduledTime ?? (initialData as Record<string, unknown>)._startTime as string | undefined,
+                          endTime: (initialData as Record<string, unknown>)._endTime as string | undefined,
                         }
                       : undefined
                   }

@@ -1,7 +1,8 @@
 import React from 'react'
-import { Calendar, Upload, Briefcase, GraduationCap, User, Users, HeartPulse } from 'lucide-react'
+import { Calendar, Clock, Upload, Briefcase, GraduationCap, User, Users, HeartPulse } from 'lucide-react'
 import { PrioritySelector } from './PrioritySelector'
 import type { TaskPriority, TaskCategory, CreateTaskPayload } from '../model/taskTypes'
+import { timeDiffMinutes, formatDuration } from '@/utils/date'
 
 const categories: { value: TaskCategory; label: string; icon: React.ElementType }[] = [
   { value: 'PERSONAL', label: 'Personal', icon: User },
@@ -18,6 +19,8 @@ type TaskFormProps = {
     priority?: TaskPriority
     dueDate?: string
     category?: TaskCategory
+    startTime?: string
+    endTime?: string
   }
   onSubmit: (payload: CreateTaskPayload) => void
   onCancel: () => void
@@ -37,7 +40,17 @@ export function TaskForm({
   const [priority, setPriority] = React.useState<TaskPriority>(initialData?.priority ?? 'MEDIUM')
   const [dueDate, setDueDate] = React.useState(initialData?.dueDate ?? '')
   const [category, setCategory] = React.useState<TaskCategory>(initialData?.category ?? 'PERSONAL')
-  const [errors, setErrors] = React.useState<Record<string, string>>({})
+  const [startTime, setStartTime] = React.useState(initialData?.startTime ?? '')
+  const [endTime, setEndTime] = React.useState(initialData?.endTime ?? '')
+  const [errors, setErrors] = React.useState<Record<string, string>>({})  
+
+  // Sync initial data when it changes (e.g. from timeline click)
+  React.useEffect(() => {
+    if (initialData?.startTime !== undefined) setStartTime(initialData.startTime)
+    if (initialData?.endTime !== undefined) setEndTime(initialData.endTime)
+    if (initialData?.title !== undefined) setTitle(initialData.title)
+    if (initialData?.dueDate !== undefined) setDueDate(initialData.dueDate)
+  }, [initialData?.startTime, initialData?.endTime, initialData?.title, initialData?.dueDate])
 
   const validate = (): boolean => {
     const newErrors: Record<string, string> = {}
@@ -45,6 +58,14 @@ export function TaskForm({
     if (title.trim().length > 200) newErrors.title = 'Title must be under 200 characters'
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
+  }
+
+  /** Calculate estimatedHours from start/end time strings (HH:mm) */
+  const calcEstimatedHours = (): string | undefined => {
+    if (!startTime || !endTime) return undefined
+    const diffMin = timeDiffMinutes(startTime, endTime)
+    if (diffMin <= 0) return undefined
+    return (diffMin / 60).toFixed(2)
   }
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -57,6 +78,8 @@ export function TaskForm({
       priority,
       dueDate: dueDate || undefined,
       scheduledDate: dueDate || undefined,
+      scheduledTime: startTime || undefined,
+      estimatedHours: calcEstimatedHours(),
       category,
     })
   }
@@ -126,6 +149,50 @@ export function TaskForm({
             className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-sm text-white outline-none transition-all focus:border-primary/50 focus:ring-1 focus:ring-primary/20 focus:bg-white/[0.08] [color-scheme:dark]"
           />
         </div>
+      </div>
+
+      {/* ─── Time Range ──────────────────────────────────────────── */}
+      <div className="space-y-2">
+        <label className="text-xs font-bold text-slate-300 uppercase tracking-widest">
+          Time Range
+        </label>
+        <div className="flex items-center gap-3">
+          <div className="relative flex-1">
+            <Clock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
+            <input
+              id="task-start-time"
+              type="time"
+              value={startTime}
+              onChange={(e) => setStartTime(e.target.value)}
+              className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-sm text-white outline-none transition-all focus:border-primary/50 focus:ring-1 focus:ring-primary/20 focus:bg-white/[0.08] [color-scheme:dark]"
+            />
+          </div>
+          <span className="text-muted-foreground text-sm font-medium">→</span>
+          <div className="relative flex-1">
+            <Clock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
+            <input
+              id="task-end-time"
+              type="time"
+              value={endTime}
+              onChange={(e) => setEndTime(e.target.value)}
+              className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-sm text-white outline-none transition-all focus:border-primary/50 focus:ring-1 focus:ring-primary/20 focus:bg-white/[0.08] [color-scheme:dark]"
+            />
+          </div>
+        </div>
+        {startTime && endTime && (() => {
+          const diffMin = timeDiffMinutes(startTime, endTime)
+          if (diffMin > 0) {
+            return (
+              <p className="text-[11px] text-primary/70 mt-1">
+                Duration: {formatDuration(diffMin)}
+              </p>
+            )
+          }
+          if (diffMin <= 0) {
+            return <p className="text-[11px] text-red-400 mt-1">End time must be after start time</p>
+          }
+          return null
+        })()}
       </div>
 
       {/* ─── Category ───────────────────────────────────────────── */}
