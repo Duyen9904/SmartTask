@@ -1,32 +1,23 @@
 import React from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 import { Plus, Search, SlidersHorizontal, ArrowUpDown } from 'lucide-react'
 import { ViewSwitcher, type TaskViewMode } from '@/features/tasks/ui/ViewSwitcher'
 import { TaskListView } from '@/features/tasks/ui/TaskListView'
 import { KanbanBoard } from '@/features/tasks/ui/KanbanBoard'
 import { GanttChartView } from '@/features/tasks/ui/GanttChartView'
 import { CalendarView } from '@/features/tasks/ui/CalendarView'
+import { DayTimelineView } from '@/features/tasks/ui/DayTimelineView'
 import { CreateEditTaskModal } from '@/features/tasks/ui/CreateEditTaskModal'
+import { TasksEmptyState } from '@/features/tasks/ui/TasksEmptyState'
 import { useTasksQuery } from '@/features/tasks/api/useTasksQuery'
 import { useUpdateTaskMutation } from '@/features/tasks/api/useTaskMutation'
 import type { TaskCategory, TaskPriority, TaskSearchParams, TaskStatus, TaskSummary } from '@/features/tasks/model/taskTypes'
+import { toIsoDate, startOfWeek } from '@/utils/date'
 
 const quickFilters = ['All Tasks', 'Today', 'This Week', 'High Priority', 'Shared'] as const
 const categoryTabs = ['All Tasks', 'Personal', 'Work', 'Study', 'Shared'] as const
 
-function toIsoDate(d: Date) {
-  return d.toISOString().slice(0, 10)
-}
-
-function startOfWeek(d: Date) {
-  const copy = new Date(d)
-  const dow = copy.getDay() // 0 Sun ... 6 Sat
-  const diff = (dow + 6) % 7 // make Monday=0
-  copy.setDate(copy.getDate() - diff)
-  return copy
-}
-
-const validViews = new Set<string>(['list', 'gantt', 'kanban', 'calendar'])
+const validViews = new Set<string>(['list', 'gantt', 'kanban', 'calendar', 'timeline'])
 
 function isTaskViewMode(value: string | null): value is TaskViewMode {
   return typeof value === 'string' && validViews.has(value)
@@ -34,6 +25,7 @@ function isTaskViewMode(value: string | null): value is TaskViewMode {
 
 export function TasksPage() {
   const [searchParams, setSearchParams] = useSearchParams()
+  const navigate = useNavigate()
   const viewParam = searchParams.get('view')
   const activeView: TaskViewMode = isTaskViewMode(viewParam) ? viewParam : 'kanban'
   const [activeFilter, setActiveFilter] = React.useState('All Tasks')
@@ -127,6 +119,25 @@ export function TasksPage() {
   const handleEdit = React.useCallback((task: TaskSummary) => {
     setModalState({ open: true, mode: 'edit', task })
   }, [])
+
+  /** Create from timeline slot click/drag */
+  const handleCreateFromSlot = React.useCallback(
+    (slot: { startTime: string; endTime: string; date: string }) => {
+      setModalState({
+        open: true,
+        mode: 'create',
+        task: {
+          title: '',
+          dueDate: slot.date,
+          scheduledDate: slot.date,
+          scheduledTime: slot.startTime,
+          _startTime: slot.startTime,
+          _endTime: slot.endTime,
+        } as unknown as TaskSummary,
+      })
+    },
+    [],
+  )
 
   return (
     <div className="flex flex-col gap-6">
@@ -230,25 +241,52 @@ export function TasksPage() {
       </div>
 
       {/* ─── Task Display Area (ONLY this part changes) ──────────── */}
-      {activeView === 'list' && (
-        <TaskListView
-          tasks={tasks}
-          isLoading={tasksQuery.isLoading}
-          onStatusChange={handleStatusChange}
-          onEdit={handleEdit}
+      {!tasksQuery.isLoading && tasks.length === 0 && activeView !== 'calendar' && activeView !== 'timeline' ? (
+        <TasksEmptyState
+          onCreateTask={() => setModalState({ open: true, mode: 'create' })}
+          onAIGenerate={() => navigate('/ai')}
+          onQuickSuggestion={(label) =>
+            setModalState({ open: true, mode: 'create', task: { title: label } as TaskSummary })
+          }
         />
+      ) : (
+        <>
+          {activeView === 'list' && (
+            <TaskListView
+              tasks={tasks}
+              isLoading={tasksQuery.isLoading}
+              onStatusChange={handleStatusChange}
+              onEdit={handleEdit}
+            />
+          )}
+          {activeView === 'kanban' && (
+            <KanbanBoard
+              tasks={tasks}
+              isLoading={tasksQuery.isLoading}
+              onStatusChange={handleStatusChange}
+              onDisplayOrderChange={handleDisplayOrderChange}
+              onEdit={handleEdit}
+            />
+          )}
+          {activeView === 'calendar' && (
+            <CalendarView
+              tasks={tasks}
+              isLoading={tasksQuery.isLoading}
+              onCreateFromSlot={handleCreateFromSlot}
+              onTaskClick={handleEdit}
+            />
+          )}
+          {activeView === 'timeline' && (
+            <DayTimelineView
+              tasks={tasks}
+              isLoading={tasksQuery.isLoading}
+              onCreateFromSlot={handleCreateFromSlot}
+              onTaskClick={handleEdit}
+            />
+          )}
+          {activeView === 'gantt' && <GanttChartView tasks={tasks} isLoading={tasksQuery.isLoading} />}
+        </>
       )}
-      {activeView === 'kanban' && (
-        <KanbanBoard
-          tasks={tasks}
-          isLoading={tasksQuery.isLoading}
-          onStatusChange={handleStatusChange}
-          onDisplayOrderChange={handleDisplayOrderChange}
-          onEdit={handleEdit}
-        />
-      )}
-      {activeView === 'calendar' && <CalendarView tasks={tasks} isLoading={tasksQuery.isLoading} />}
-      {activeView === 'gantt' && <GanttChartView tasks={tasks} isLoading={tasksQuery.isLoading} />}
 
       {/* ─── Create/Edit Task Modal ─────────────────────────────── */}
       <CreateEditTaskModal

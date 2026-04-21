@@ -1,6 +1,6 @@
-import { List, BarChart3, Columns3, CalendarDays } from 'lucide-react'
+import { List, BarChart3, Columns3, CalendarDays, Clock } from 'lucide-react'
 
-export type TaskViewMode = 'list' | 'gantt' | 'kanban' | 'calendar'
+export type TaskViewMode = 'list' | 'gantt' | 'kanban' | 'calendar' | 'timeline'
 
 type ViewSwitcherProps = {
   activeView: TaskViewMode
@@ -11,6 +11,7 @@ const views: { mode: TaskViewMode; icon: React.ElementType; label: string }[] = 
   { mode: 'list', icon: List, label: 'List' },
   { mode: 'kanban', icon: Columns3, label: 'Board' },
   { mode: 'calendar', icon: CalendarDays, label: 'Calendar' },
+  { mode: 'timeline', icon: Clock, label: 'Timeline' },
   { mode: 'gantt', icon: BarChart3, label: 'Gantt' },
 ]
 
